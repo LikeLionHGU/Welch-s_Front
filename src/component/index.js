@@ -1,1 +1,1 @@
-export { default as CKEditor } from "./ckeditor";
+export { default as CKEditor } from "./Ckeditor";

@@ -1,10 +1,10 @@
 // 글 수정 페이지
-import { CKEditor } from "../../component/index";
+import { Write } from "../../component/Write";
 
 export default function Update() {
   return (
     <>
-      <CKEditor />
+      <Write />
     </>
   );
 }
