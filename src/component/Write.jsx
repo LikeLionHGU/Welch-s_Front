@@ -73,6 +73,7 @@ export default function Write() {
 		return () => setIsLayoutReady(false);
 	}, []);
 
+  // 기능 수정
 	const editorConfig = {
 		toolbar: {
 			items: [
@@ -91,11 +92,11 @@ export default function Write() {
 				'italic',
 				'underline',
 				'|',
-				'link',
+				// 'link',
 				'insertTable',
 				'highlight',
 				'blockQuote',
-				'codeBlock',
+				// 'codeBlock',
 				'|',
 				'alignment',
 				'|',
