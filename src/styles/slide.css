@@ -1,3 +1,11 @@
 .slide-container {
   width: 500px;
 }
+
+.slick-arrow {
+  padding: 4px 6px;
+  transform: translate(30px, 150px);
+  background-color: transparent;
+  color: white;
+  border-radius: 3px;
+}
