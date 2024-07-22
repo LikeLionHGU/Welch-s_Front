@@ -4,8 +4,7 @@
 
 .slick-arrow {
   padding: 4px 6px;
-  transform: translate(30px, 150px);
   background-color: transparent;
-  color: white;
+  color: black;
   border-radius: 3px;
 }

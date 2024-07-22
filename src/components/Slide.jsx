@@ -13,7 +13,7 @@ export default function Slide() {
         className={className}
         style={{
           ...style,
-          display: "block",
+          // display: "block",
           background: "red",
           borderRadius: "50%",
           padding: "10px",
@@ -32,7 +32,7 @@ export default function Slide() {
         className={className}
         style={{
           ...style,
-          display: "block",
+          // display: "block",
           background: "green",
           borderRadius: "50%",
           padding: "10px",
@@ -44,14 +44,14 @@ export default function Slide() {
   };
 
   const settings = {
+    nextArrow: <PrevArrow />,
+    prevArrow: <NextArrow />,
     dots: true, // 아래 점들
     infinite: true, // 무한으로 돌것인가
     speed: 500, // 넘어갈 때 속도
     slidesToShow: 4, // 한번에 볼 수 있는 슬라이드 개수
     slidesToScroll: 1, // 한번에 넘어가는 슬라이드 개수
     arrows: true, // 양쪽 버튼
-    nextArrow: <PrevArrow />,
-    prevArrow: <NextArrow />,
     //   autoplay: false, // 자동으로 넘어가는가
     //   autoplaySpeed: 0, // 이동하는 속도
     //   cssEase: 'liner', // 이동 스타일
