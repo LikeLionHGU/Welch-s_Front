@@ -1,3 +1,16 @@
+.createContainer {
+  margin: 60px 132px;
+  min-width: 700px;
+}
+
+.menu {
+  margin-bottom: 80px;
+}
+
+#pageTitle {
+  margin-bottom: 107px;
+}
+
 .categoryContainer {
   display: flex;
   flex-wrap: wrap;
@@ -9,6 +22,13 @@
 }
 
 .radio-item {
+  display: flex;
+  align-items: center;
+
+  margin: 12px 0px;
+}
+
+.peopleNum {
   display: flex;
   align-items: center;
 }
