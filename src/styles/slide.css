@@ -1,0 +1,10 @@
+.slide-container {
+  width: 500px;
+}
+
+.slick-arrow {
+  padding: 4px 6px;
+  background-color: transparent;
+  color: black;
+  border-radius: 3px;
+}
