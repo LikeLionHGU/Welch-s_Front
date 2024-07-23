@@ -1,0 +1,14 @@
+.categoryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.category {
+  width: 15%;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+}
