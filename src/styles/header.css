@@ -1,0 +1,41 @@
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 10px;
+  margin-left: 100px;
+  border: 1px solid black;
+  border-radius: 50px;
+  width: 400px;
+  height: 40px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+#goWrite {
+  border: none;
+  background-color: white;
+  margin-right: 76px;
+
+  cursor: pointer;
+}
+
+.searchBox {
+  border: none;
+  outline: none;
+  width: 80%;
+}
+
+img {
+  cursor: pointer;
+}
