@@ -44,7 +44,7 @@ export default function Header({ mode }) {
         </div>
       </div>
       <div className="categoryContainer">
-        <div className="category">
+        <div className="category" id="upper-category">
           {Object.keys(categories).map((category) => (
             <button
               key={category}

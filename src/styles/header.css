@@ -56,3 +56,13 @@ img {
   display: flex;
   justify-content: space-evenly;
 }
+
+#upper-category {
+  padding: 15px 0;
+  background-color: #5ca54b;
+}
+
+#upper-category button {
+  background-color: #5ca54b;
+  color: white;
+}
