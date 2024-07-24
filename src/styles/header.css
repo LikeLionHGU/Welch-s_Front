@@ -2,6 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  margin-bottom: 40px;
 }
 
 .searchContainer {
@@ -38,4 +40,19 @@
 
 img {
   cursor: pointer;
+}
+
+.categoryContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryContainer button {
+  border: none;
+  background-color: white;
+}
+
+.category {
+  display: flex;
+  justify-content: space-evenly;
 }
