@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import React, { Component } from "react";
+import React from "react";
 import "../styles/slide.css";
 
 export default function Slide() {
@@ -14,9 +14,10 @@ export default function Slide() {
         style={{
           ...style,
           // display: "block",
-          background: "red",
-          borderRadius: "50%",
-          padding: "10px",
+          background: "gray",
+          borderRadius: "50px",
+          padding: "0",
+          paddingBottom: "-1px",
           zIndex: 1,
         }}
         onClick={onClick}
@@ -33,10 +34,9 @@ export default function Slide() {
         style={{
           ...style,
           // display: "block",
-          background: "green",
-          borderRadius: "50%",
-          padding: "10px",
+          background: "gray",
           zIndex: 1,
+          marginRight: "10px",
         }}
         onClick={onClick}
       />
@@ -44,8 +44,8 @@ export default function Slide() {
   };
 
   const settings = {
-    nextArrow: <PrevArrow />,
-    prevArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
     dots: true, // 아래 점들
     infinite: true, // 무한으로 돌것인가
     speed: 500, // 넘어갈 때 속도
@@ -59,7 +59,6 @@ export default function Slide() {
 
   return (
     <div>
-      <h2> Custom Arrow Slider </h2>
       <Slider {...settings} className="slide-container">
         <div>
           <h3>1</h3>
@@ -74,7 +73,7 @@ export default function Slide() {
           <h3>4</h3>
         </div>
         <div>
-          <h3>5</h3>
+          <h3 style={{ backgroundColor: "#999999" }}>5</h3>
         </div>
         <div>
           <h3>6</h3>
