@@ -4,7 +4,7 @@ import "../styles/mainpage.css";
 
 export default function Mainpage() {
   return (
-    <>
+    <div className="main">
       <Header />
       <div className="main-container">
         <div className="section">
@@ -41,6 +41,6 @@ export default function Mainpage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
