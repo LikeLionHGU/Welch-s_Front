@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  min-width: 800px;
 }
 
 .main-container {
@@ -9,7 +11,7 @@
   flex-direction: column;
   align-items: center;
 
-  width: 600px;
+  max-width: 90%;
 }
 
 .slide-container {
@@ -24,4 +26,5 @@
 .section-above {
   display: flex;
   justify-content: space-between;
+  padding: 0 50px;
 }

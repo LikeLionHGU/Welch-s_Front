@@ -8,9 +8,9 @@ export default function Mainpage() {
       <Header />
       <div className="main-container">
         <div className="section">
-          <div>베스트 책</div>
+          <div className="section-above">베스트 책</div>
           <div className="slide-container">
-            <Slide />
+            <Slide mode={1} />
           </div>
         </div>
         <div className="section">
@@ -19,7 +19,7 @@ export default function Mainpage() {
             <div>더보기</div>
           </div>
           <div className="slide-container">
-            <Slide />
+            <Slide mode={0} />
           </div>
         </div>
         <div className="section">
@@ -28,7 +28,7 @@ export default function Mainpage() {
             <div>더보기</div>
           </div>
           <div className="slide-container">
-            <Slide />
+            <Slide mode={0} />
           </div>
         </div>
         <div className="section">
@@ -37,7 +37,7 @@ export default function Mainpage() {
             <div>더보기</div>
           </div>
           <div className="slide-container">
-            <Slide />
+            <Slide mode={0} />
           </div>
         </div>
       </div>

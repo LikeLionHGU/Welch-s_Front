@@ -11,14 +11,14 @@
 
 /* 슬라이드 안 */
 .swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #eee;
-
-  /* Center slide text vertically */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column-reverse;
+
+  background-image: url("../imgs/sseuimCover.svg");
+  background-size: cover;
+  background-position: center;
+
+  border-radius: 8px;
 }
 
 .arrow {
@@ -33,4 +33,9 @@
 .arrow img {
   width: 30px;
   height: 30px;
+}
+
+.book-info {
+  background-color: white;
+  opacity: 0.8;
 }
