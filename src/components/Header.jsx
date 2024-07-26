@@ -20,6 +20,7 @@ export default function Header({ mode }) {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+
   return (
     <div id="header">
       <div className="headerContainer">
