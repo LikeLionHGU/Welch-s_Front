@@ -21,7 +21,7 @@ export default function Header({ mode }) {
     setSelectedCategory(category);
   };
   return (
-    <div>
+    <div id="header">
       <div className="headerContainer">
         <div>
           <img src={LogoImg} alt="logo" />
