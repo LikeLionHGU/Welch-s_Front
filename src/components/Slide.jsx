@@ -1,85 +1,83 @@
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import React, { Component } from "react";
+import React, { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper";
+import NextArrowImg from "../imgs/nextArrow.svg";
+import PrevArrowImg from "../imgs/prevArrow.svg";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/autoplay";
+
 import "../styles/slide.css";
 
-export default function Slide() {
-  // 커스텀 이전 화살표 컴포넌트
-  const PrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          // display: "block",
-          background: "red",
-          borderRadius: "50%",
-          padding: "10px",
-          zIndex: 1,
-        }}
-        onClick={onClick}
-      />
-    );
-  };
+// import required modules
+import { Navigation, Autoplay } from "swiper/modules";
+SwiperCore.use([Autoplay]);
 
-  // 커스텀 다음 화살표 컴포넌트
-  const NextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          // display: "block",
-          background: "green",
-          borderRadius: "50%",
-          padding: "10px",
-          zIndex: 1,
-        }}
-        onClick={onClick}
-      />
-    );
-  };
-
-  const settings = {
-    nextArrow: <PrevArrow />,
-    prevArrow: <NextArrow />,
-    dots: true, // 아래 점들
-    infinite: true, // 무한으로 돌것인가
-    speed: 500, // 넘어갈 때 속도
-    slidesToShow: 4, // 한번에 볼 수 있는 슬라이드 개수
-    slidesToScroll: 1, // 한번에 넘어가는 슬라이드 개수
-    arrows: true, // 양쪽 버튼
-    //   autoplay: false, // 자동으로 넘어가는가
-    //   autoplaySpeed: 0, // 이동하는 속도
-    //   cssEase: 'liner', // 이동 스타일
-  };
-
+// mode === 0 : 다른 책 슬라이드, mode === 1 : 베스트 책 슬라이드
+export default function Slide({ mode }) {
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
   return (
-    <div>
-      <h2> Custom Arrow Slider </h2>
-      <Slider {...settings} className="slide-container">
-        <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
-      </Slider>
+    <div className="slide-container">
+      {mode === 1 ? (
+        <div className="arrow"></div>
+      ) : (
+        <button className="arrow" ref={prevRef}>
+          <img src={PrevArrowImg} alt="prevarrow" />
+        </button>
+      )}
+      <Swiper
+        // 한번에 보이는 슬라이드
+        slidesPerView={mode === 1 ? 2.5 : 4}
+        // 슬라이드 사이 거리
+        spaceBetween={15}
+        // 중간으로
+        // centeredSlides={true}
+        // 무한
+        loop={true}
+        // 자동
+        autoplay={
+          mode === 1 ? { delay: 3000, disableOnInteraction: false } : false
+        }
+        // 전환 시간
+        speed={mode === 1 ? 3000 : 500}
+        // 화살표
+        modules={[Navigation]}
+        navigation={{
+          prevEl: prevRef.current, // 이전 버튼
+          nextEl: nextRef.current, // 다음 버튼
+        }}
+        onInit={(swiper) => {
+          swiper.params.navigation.prevEl = prevRef.current;
+          swiper.params.navigation.nextEl = nextRef.current;
+          swiper.navigation.init();
+          swiper.navigation.update();
+        }}
+        className="mySwiper"
+      >
+        <SwiperSlide>
+          <div className="book-info">
+            <div>title</div>
+            <div>author</div>
+            <div>category</div>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide></SwiperSlide>
+        <SwiperSlide></SwiperSlide>
+        <SwiperSlide></SwiperSlide>
+        <SwiperSlide></SwiperSlide>
+        <SwiperSlide></SwiperSlide>
+        <SwiperSlide></SwiperSlide>
+        <SwiperSlide></SwiperSlide>
+      </Swiper>
+      {mode === 1 ? (
+        <div className="arrow"></div>
+      ) : (
+        <button className="arrow" ref={nextRef}>
+          <img src={NextArrowImg} alt="nextarrow" />
+        </button>
+      )}
     </div>
   );
 }
