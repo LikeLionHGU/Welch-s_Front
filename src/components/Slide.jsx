@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import NextArrowImg from "../imgs/nextArrow.svg";
+import PrevArrowImg from "../imgs/prevArrow.svg";
 
 import "swiper/css";
 import "swiper/css/navigation";
-
 import "../styles/slide.css";
 
 // import required modules
@@ -14,10 +15,12 @@ export default function App() {
   const nextRef = useRef(null);
   return (
     <div className="slide-container">
-      <button ref={prevRef}>이전</button>
+      <button className="arrow" ref={prevRef}>
+        <img src={PrevArrowImg} alt="prevarrow" />
+      </button>
       <Swiper
         slidesPerView={4}
-        spaceBetween={30}
+        spaceBetween={15}
         centeredSlides={true}
         modules={[Navigation]}
         navigation={{
@@ -42,7 +45,9 @@ export default function App() {
         <SwiperSlide>Slide 7</SwiperSlide>
         <SwiperSlide>Slide 8</SwiperSlide>
       </Swiper>
-      <button ref={nextRef}>다음</button>
+      <button className="arrow" ref={nextRef}>
+        <img src={NextArrowImg} alt="nextarrow" />
+      </button>
     </div>
   );
 }
