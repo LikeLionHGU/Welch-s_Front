@@ -7,8 +7,10 @@ export default function Mainpage() {
     <div className="main">
       <Header />
       <div className="main-container">
-        <div className="section">
-          <div className="section-above">베스트 책</div>
+        <div className="section" id="best-book">
+          <div className="section-above" id="best-above">
+            베스트 책
+          </div>
           <div className="slide-container">
             <Slide mode={1} />
           </div>

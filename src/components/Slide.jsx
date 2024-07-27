@@ -21,7 +21,8 @@ export default function Slide({ mode }) {
   return (
     <div className="slide-container">
       {mode === 1 ? (
-        <div className="arrow"></div>
+        // <div className="arrow"></div>
+        <></>
       ) : (
         <button className="arrow" ref={prevRef}>
           <img src={PrevArrowImg} alt="prevarrow" />
@@ -48,6 +49,8 @@ export default function Slide({ mode }) {
           prevEl: prevRef.current, // 이전 버튼
           nextEl: nextRef.current, // 다음 버튼
         }}
+        // 시작지점 빈공간
+        slidesOffsetBefore={mode === 1 ? 85 : 0}
         onInit={(swiper) => {
           swiper.params.navigation.prevEl = prevRef.current;
           swiper.params.navigation.nextEl = nextRef.current;
@@ -72,7 +75,8 @@ export default function Slide({ mode }) {
         <SwiperSlide></SwiperSlide>
       </Swiper>
       {mode === 1 ? (
-        <div className="arrow"></div>
+        // <div className="arrow"></div>
+        <></>
       ) : (
         <button className="arrow" ref={nextRef}>
           <img src={NextArrowImg} alt="nextarrow" />
