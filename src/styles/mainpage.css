@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
 
-  max-width: 90%;
+  width: 100%;
 }
 
 .slide-container {
@@ -21,10 +21,20 @@
 
 .section {
   width: 100%;
+  max-width: 90%;
 }
 
 .section-above {
   display: flex;
   justify-content: space-between;
-  padding: 0 50px;
+  padding: 0 35px;
+}
+
+#best-book {
+  max-width: 100%;
+  background-image: linear-gradient(to bottom, #e5f0e2, white);
+}
+
+#best-above {
+  padding-left: 85px;
 }
