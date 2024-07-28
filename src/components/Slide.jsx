@@ -30,7 +30,7 @@ export default function Slide({ mode }) {
       )}
       <Swiper
         // 한번에 보이는 슬라이드
-        slidesPerView={mode === 1 ? 2.5 : 4}
+        slidesPerView={mode === 1 ? 2.7 : 4}
         // 슬라이드 사이 거리
         spaceBetween={15}
         // 중간으로

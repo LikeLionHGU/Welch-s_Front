@@ -2,11 +2,20 @@ import LogoImg from "../imgs/logo.svg";
 import SearchImg from "../imgs/search.svg";
 import ProfileImg from "../imgs/myprofile.svg";
 import "../styles/header.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 // mode == 0 : 메인 페이지, mode == 1 : 전체 페이지, mode == 2 : 프로젝트 상세 페이지
 export default function Header({ mode }) {
   const [selectedCategory, setSelectedCategory] = useState("소설");
+  const [onLogin, setOnLogin] = useState();
+  const query = useQuery();
+  const navigate = useNavigate();
 
   const categories = {
     소설: ["전체", "공포", "로맨스", "미스터리/추리", "역사", "판타지", "SF"],
@@ -20,6 +29,23 @@ export default function Header({ mode }) {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+
+  useEffect(() => {
+    const token = query.get("token");
+
+    if (token) {
+      localStorage.setItem("token", token);
+      setOnLogin(true);
+      navigate("/", { replace: true });
+    }
+    const storedToken = localStorage.getItem("token");
+
+    if (storedToken == null) {
+      setOnLogin(false);
+      navigate("/", { replace: true });
+      return;
+    }
+  }, []);
 
   return (
     <div id="header">
@@ -38,10 +64,23 @@ export default function Header({ mode }) {
         )}
 
         <div className="headerRight">
-          <button id="goWrite">책 발간하기</button>
-          <div>
-            <img className="profile" src={ProfileImg} alt="profile" />
-          </div>
+          {onLogin ? (
+            <>
+              <button id="goWrite">책 발간하기</button>
+              <div>
+                <img className="profile" src={ProfileImg} alt="profile" />
+              </div>
+            </>
+          ) : (
+            <button
+              onClick={() =>
+                (window.location.href =
+                  "https://likelion.info/login/oauth2/google")
+              }
+            >
+              로그인
+            </button>
+          )}
         </div>
       </div>
       <div className="categoryContainer">
