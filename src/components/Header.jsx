@@ -47,6 +47,14 @@ export default function Header({ mode }) {
     }
   }, []);
 
+  function toCreate() {
+    navigate("/create");
+  }
+
+  function toList() {
+    navigate("/list");
+  }
+
   return (
     <div id="header">
       <div className="headerContainer">
@@ -66,17 +74,24 @@ export default function Header({ mode }) {
         <div className="headerRight">
           {onLogin ? (
             <>
-              <button id="goWrite">책 발간하기</button>
+              <button
+                id="goWrite"
+                onClick={() => {
+                  toCreate();
+                }}
+              >
+                책 발간하기
+              </button>
               <div>
                 <img className="profile" src={ProfileImg} alt="profile" />
               </div>
             </>
           ) : (
             <button
-              onClick={() =>
-                (window.location.href =
-                  "https://likelion.info/login/oauth2/google")
-              }
+              onClick={() => {
+                window.location.href =
+                  "https://likelion.info/login/oauth2/google";
+              }}
             >
               로그인
             </button>
