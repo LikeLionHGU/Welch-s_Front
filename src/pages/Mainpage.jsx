@@ -1,12 +1,15 @@
 import Header from "../components/Header";
 import Slide from "../components/Slide";
+import { useNavigate } from "react-router-dom";
 import "../styles/mainpage.css";
 
 export default function Mainpage() {
+  const navigate = useNavigate();
+
   return (
     <div className="main">
       <Header />
-      <div className="main-container">
+      <div className="main-page-container">
         <div className="section" id="best-book">
           <div className="section-above" id="best-above">
             베스트 책

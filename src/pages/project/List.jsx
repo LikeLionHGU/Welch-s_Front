@@ -39,7 +39,7 @@ export default function List() {
     setDropdown(event.target.value);
   };
   return (
-    <div className="main-container">
+    <div className="main-list-container">
       <Header mode={1} />
       <div className="grid-container">
         <div className="dropdown-container">
