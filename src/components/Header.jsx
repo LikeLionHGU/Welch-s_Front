@@ -14,6 +14,7 @@ function useQuery() {
 export default function Header({ mode }) {
   const [selectedCategory, setSelectedCategory] = useState("소설");
   const [onLogin, setOnLogin] = useState();
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const query = useQuery();
   const navigate = useNavigate();
 
@@ -44,20 +45,24 @@ export default function Header({ mode }) {
       setOnLogin(false);
       navigate("/", { replace: true });
       return;
+    } else {
+      setOnLogin(true);
     }
+
+    setIsLoading(false); // 로딩 상태 완료
   }, []);
 
   function toCreate() {
     navigate("/create");
   }
 
-  function toList() {
-    navigate("/list");
+  if (isLoading) {
+    return <div></div>; // 로딩 중일 때 표시할 내용
   }
 
   return (
     <div id="header">
-      <div className="headerContainer">
+      <div className="header-headerContainer">
         <div>
           <img src={LogoImg} alt="logo" />
         </div>
@@ -65,13 +70,13 @@ export default function Header({ mode }) {
         {mode === 2 ? (
           <></>
         ) : (
-          <div className="searchContainer">
-            <input className="searchBox" placeholder="책 제목, 작가명" />
+          <div className="header-searchContainer">
+            <input className="header-searchBox" placeholder="책 제목, 작가명" />
             <img src={SearchImg} alt="search" />
           </div>
         )}
 
-        <div className="headerRight">
+        <div className="header-headerRight">
           {onLogin ? (
             <>
               <button
@@ -83,7 +88,11 @@ export default function Header({ mode }) {
                 책 발간하기
               </button>
               <div>
-                <img className="profile" src={ProfileImg} alt="profile" />
+                <img
+                  className="header-profile"
+                  src={ProfileImg}
+                  alt="profile"
+                />
               </div>
             </>
           ) : (
@@ -98,8 +107,8 @@ export default function Header({ mode }) {
           )}
         </div>
       </div>
-      <div className="categoryContainer">
-        <div className="category" id="upper-category">
+      <div className="header-categoryContainer">
+        <div className="header-category" id="upper-category">
           {Object.keys(categories).map((category) => (
             <button
               key={category}
@@ -111,7 +120,7 @@ export default function Header({ mode }) {
         </div>
         {/* 프로젝트 전체 페이지일 경우 보여줌 */}
         {mode === 1 ? (
-          <div className="category">
+          <div className="header-category">
             {categories[selectedCategory].map((option, index) => (
               <button key={index}>{option}</button>
             ))}

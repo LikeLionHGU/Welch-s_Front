@@ -302,7 +302,7 @@ export default function Write() {
 
   return (
     <div>
-      <div className="main-container">
+      <div className="main-write-container">
         <div
           className="editor-container editor-container_document-editor editor-container_include-style"
           ref={editorContainerRef}

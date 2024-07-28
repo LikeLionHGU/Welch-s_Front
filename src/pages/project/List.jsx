@@ -39,10 +39,10 @@ export default function List() {
     setDropdown(event.target.value);
   };
   return (
-    <div className="main-container">
+    <div className="main-list-container">
       <Header mode={1} />
-      <div className="grid-container">
-        <div className="dropdown-container">
+      <div className="list-grid-container">
+        <div className="list-dropdown-container">
           <select value={dropdown} onChange={handleSelectChange}>
             <option value="option1">모집 중</option>
             <option value="option2">완결</option>
@@ -56,7 +56,7 @@ export default function List() {
                 className="list-img"
                 style={{ backgroundImage: `url(${image.src})` }}
               >
-                <div className="img-inner">
+                <div className="list-img-inner">
                   <div>{image.title}</div>
                 </div>
               </div>
