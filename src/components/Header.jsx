@@ -14,6 +14,7 @@ function useQuery() {
 export default function Header({ mode }) {
   const [selectedCategory, setSelectedCategory] = useState("소설");
   const [onLogin, setOnLogin] = useState();
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const query = useQuery();
   const navigate = useNavigate();
 
@@ -44,15 +45,19 @@ export default function Header({ mode }) {
       setOnLogin(false);
       navigate("/", { replace: true });
       return;
+    } else {
+      setOnLogin(true);
     }
+
+    setIsLoading(false); // 로딩 상태 완료
   }, []);
 
   function toCreate() {
     navigate("/create");
   }
 
-  function toList() {
-    navigate("/list");
+  if (isLoading) {
+    return <div></div>; // 로딩 중일 때 표시할 내용
   }
 
   return (

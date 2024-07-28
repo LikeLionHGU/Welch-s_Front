@@ -4,14 +4,14 @@
   align-items: center;
 }
 
-.grid-container {
+.list-grid-container {
   display: flex;
   flex-direction: column;
 
   width: 80%;
 }
 
-.dropdown-container {
+.list-dropdown-container {
   display: flex;
   flex-direction: row-reverse;
 }
@@ -35,7 +35,4 @@
   background-size: cover;
 
   display: flex;
-}
-
-.img-inner {
 }
