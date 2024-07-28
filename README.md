@@ -2,4 +2,4 @@
 
 ## library
 * swiper
-* 
+* axios
