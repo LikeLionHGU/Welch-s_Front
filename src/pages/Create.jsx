@@ -1,8 +1,10 @@
 // 프로젝트 생성 페이지
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/create.css";
 import ImgUpLoad from "../components/ImgUpLoad";
 import ImgNone from "../imgs/img_none.svg";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const categories = {
   소설: ["공포", "로맨스", "미스터리/추리", "역사", "판타지", "SF"],
@@ -19,6 +21,8 @@ export default function Create() {
   const [visibility, setVisibility] = useState("공개");
   const [people, setPeople] = useState(0);
   const [image, setImage] = useState(`${ImgNone}`);
+
+  const navigate = useNavigate();
 
   // 카테고리
   const handleCategoryChange = (category, item) => {
@@ -48,7 +52,7 @@ export default function Create() {
         setPeople(people - 1);
       }
     }
-    console.log(people);
+    // console.log(people);
   };
 
   const handleImageUpload = (file) => {
@@ -56,22 +60,134 @@ export default function Create() {
   };
 
   // form data
-  const handleSubmit = (event) => {
+  // useEffect(() => {
+  // const storedToken = localStorage.getItem("token");
+
+  // if (storedToken == null) {
+  //   // setOnLogin(false);
+  //   navigate("/", { replace: true });
+  //   return;
+  // }
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //   const value = [
+  //     {
+  //       name: `${title}`,
+  //       category: `${selectedCategories}`,
+  //       information: `${description}`,
+  //       isPublic: `${visibility}`,
+  //       maximumNumber: `${people}`,
+  //       isFinished: false,
+  //       isRecruit: true,
+  //     },
+  //   ];
+  //   const formData = new FormData();
+
+  //   console.log(event);
+  //   formData.append("file", image); // 'file'는 서버에서 이미지를 받는 필드명
+  //   formData.append(
+  //     "post",
+  //     new Blob([JSON.stringify(value)], {
+  //       type: "application/json",
+  //     })
+  //   );
+
+  //   console.log("FormData:", value);
+  //   for (let [key, value] of formData.entries()) {
+  //     console.log(`${key}: ${value}`);
+  //   }
+
+  //   try {
+  //     const response = await axios.post(
+  //       "https://likelion.info/project/add", // Replace with your API endpoint
+  //       formData,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${storedToken}`,
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+
+  //     if (response.status === 200) {
+  //       console.log("Post uploaded successfully");
+  //       alert("게시물 업로드 성공");
+  //       navigate("/"); // Navigate back to the library page after successful post
+  //     } else {
+  //       console.error("Error uploading post");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error uploading post:", error);
+  //     navigate("/", { replace: true });
+  //   }
+  // };
+  // }, []);
+  const storedToken = localStorage.getItem("token");
+
+  if (storedToken == null) {
+    navigate("/", { replace: true });
+    return;
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const value = [
+      {
+        name: title,
+        category: selectedCategories,
+        information: description,
+        isPublic: visibility === "true",
+        maximumNumber: people,
+        isFinished: false,
+        isRecruit: true,
+      },
+    ];
+
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("visibility", visibility);
-    formData.append("people", people);
-    formData.append("categories", selectedCategories);
-    formData.append("image", image);
+    formData.append("file", image); // 'file'은 서버에서 이미지를 받는 필드명입니다
+    formData.append(
+      "post",
+      new Blob([JSON.stringify(value)], {
+        type: "application/json",
+      })
+    );
 
-    // fetch 들어갈 곳
+    try {
+      const response = await axios.post(
+        "https://likelion.info/project/add", // Replace with your API endpoint
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-    console.log("FormData:", formData);
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        alert("게시물 업로드 성공");
+        navigate("/"); // 성공적으로 업로드 후 라이브러리 페이지로 이동
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        // 서버가 응답을 보냈지만 상태 코드가 2xx 범위가 아님
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        // 요청이 만들어졌지만 응답을 받지 못함
+        console.error("No response received:", error.request);
+      } else {
+        // 요청을 설정하는 도중에 오류가 발생함
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      navigate("/", { replace: true });
     }
   };
 
