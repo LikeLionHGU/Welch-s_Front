@@ -1,22 +1,25 @@
 .list-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  /* gap: 10px; */
+  /* grid-template-columns: repeat(4, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 10px;
+
+  width: 100%;
   /* padding: 10px; */
 }
 
 .list-card {
-  /* border: 1px solid #ccc; */
-  border-radius: 8px;
-  overflow: hidden;
   text-align: center;
-  height: 300px;
 }
 
 .list-img {
   width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
+  height: 200px;
   background-repeat: no-repeat;
+  background-size: contain;
+
+  display: flex;
+}
+
+.img-inner {
 }

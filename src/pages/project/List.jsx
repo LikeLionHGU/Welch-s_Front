@@ -41,22 +41,26 @@ export default function List() {
   return (
     <>
       <Header mode={1} />
-      <select value={dropdown} onChange={handleSelectChange}>
-        <option value="option1">모집 중</option>
-        <option value="option2">완결</option>
-        <option value="option3">연재중</option>
-      </select>
-      <div className="list-container">
-        {imageData.map((image) => (
-          <div key={image.id} className="list-card">
-            <div
-              className="list-img"
-              style={{ backgroundImage: `url(${image.src})` }}
-            />
-            {/* <img src={image.src} alt={image.title} className="list-img" /> */}
-            <h2>{image.title}</h2>
-          </div>
-        ))}
+      <div>
+        <select value={dropdown} onChange={handleSelectChange}>
+          <option value="option1">모집 중</option>
+          <option value="option2">완결</option>
+          <option value="option3">연재중</option>
+        </select>
+        <div className="list-container">
+          {imageData.map((image) => (
+            <div key={image.id} className="list-card">
+              <div
+                className="list-img"
+                style={{ backgroundImage: `url(${image.src})` }}
+              >
+                <div className="img-inner">
+                  <div>{image.title}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
