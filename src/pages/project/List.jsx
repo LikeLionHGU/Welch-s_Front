@@ -39,14 +39,16 @@ export default function List() {
     setDropdown(event.target.value);
   };
   return (
-    <>
+    <div className="main-container">
       <Header mode={1} />
-      <div>
-        <select value={dropdown} onChange={handleSelectChange}>
-          <option value="option1">모집 중</option>
-          <option value="option2">완결</option>
-          <option value="option3">연재중</option>
-        </select>
+      <div className="grid-container">
+        <div className="dropdown-container">
+          <select value={dropdown} onChange={handleSelectChange}>
+            <option value="option1">모집 중</option>
+            <option value="option2">완결</option>
+            <option value="option3">연재중</option>
+          </select>
+        </div>
         <div className="list-container">
           {imageData.map((image) => (
             <div key={image.id} className="list-card">
@@ -62,6 +64,6 @@ export default function List() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
