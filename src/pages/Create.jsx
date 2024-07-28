@@ -52,7 +52,6 @@ export default function Create() {
         setPeople(people - 1);
       }
     }
-    // console.log(people);
   };
 
   const handleImageUpload = (file) => {
@@ -266,9 +265,9 @@ export default function Create() {
         <div className="menu">
           <div>작가 정원 *</div>
           <div className="peopleNum">
-            <button onClick={() => handlePeople(-1)}>-</button>
+            <div onClick={() => handlePeople(-1)}>-</div>
             <div>{people}</div>
-            <button onClick={() => handlePeople(+1)}>+</button>
+            <div onClick={() => handlePeople(+1)}>+</div>
           </div>
         </div>
         <button type="submit">발간하기</button>
