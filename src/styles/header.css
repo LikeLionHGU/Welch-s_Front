@@ -1,11 +1,14 @@
 #header {
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  z-index: 10000;
 }
 
-.header-headerContainer {
+
+.headerContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
