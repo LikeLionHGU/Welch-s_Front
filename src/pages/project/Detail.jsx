@@ -4,6 +4,7 @@ import TestImg from "../../imgs/test5.png";
 import LikeImg from "../../imgs/like.svg";
 import GrayLikeImg from "../../imgs/grayLike.svg";
 import RedLikeImg from "../../imgs/redLike.svg";
+import CommentArrowImg from "../../imgs/commentArrow.svg";
 
 import "../../styles/detail.css";
 import { useState } from "react";
@@ -11,10 +12,19 @@ import { useState } from "react";
 // 프로젝트 상세 페이지
 export default function Detail() {
   const [like, setLike] = useState(false);
+  const [comment, setComment] = useState("");
 
   const handleSetLike = () => {
     setLike(!like);
   };
+
+  const addComment = () => {
+    if (comment !== "") {
+      console.log(comment);
+      setComment("");
+    }
+  };
+
   return (
     <div id="detail-main">
       <Header mode={2} />
@@ -66,6 +76,23 @@ export default function Detail() {
         </div>
         <div>
           <button>게시판 접속하기</button>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            onKeyDown={(e) => (e.key === "Enter" ? addComment() : null)}
+          />
+          <img
+            src={CommentArrowImg}
+            alt="comment"
+            disabled=""
+            onClick={() => {
+              addComment();
+            }}
+          />
         </div>
         <div id="detail-comments-container">
           <div>닉네임</div>
