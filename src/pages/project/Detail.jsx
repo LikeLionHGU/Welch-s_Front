@@ -1,38 +1,54 @@
 import Header from "../../components/Header";
 
+import TestImg from "../../imgs/test5.png";
+import LikeImg from "../../imgs/like.svg";
+import GrayLikeImg from "../../imgs/grayLike.svg";
+
+import "../../styles/detail.css";
+
 // 프로젝트 상세 페이지
 export default function Detail() {
   return (
-    <>
-      <Header />
-      <div>
-        <div>
-          <div>img</div>
-          <div>
+    <div id="detail-main">
+      <Header mode={2} />
+      <div className="detail-container">
+        <div className="detail-above">
+          <div className="detail-img-container">
+            <div
+              style={{ backgroundImage: `url(${TestImg})` }}
+              className="detail-img-back"
+            ></div>
+            <img src={TestImg} alt="img" id="detail-img-cover" />
+          </div>
+          <div className="detail-above-right">
+            <div className="detail-above-right-bottom">
+              <div className="detail-mywrite">나도 글쓰기</div>
+              <div className="detail-readbegin">처음부터 읽기</div>
+              <div className="detail-like-container">
+                <img
+                  src={LikeImg}
+                  alt="like"
+                  style={{ width: "22px", height: "20px" }}
+                />
+                <div>123</div>
+              </div>
+            </div>
             <div>
               <div>제목</div>
               <div>저자</div>
               <div>책 정보</div>
               <div>정원</div>
             </div>
-            <div>
-              <div>나도 글쓰기</div>
-              <div>처음부터 읽기</div>
-              <div>
-                <div>좋아요</div>
-                <div>123</div>
-              </div>
-            </div>
           </div>
         </div>
-        <div>
+        <div id="detail-bookinfo">
           <div>책 소개</div>
-          <div>콘텐츠들</div>
+          <div id="detail-contents">콘텐츠들</div>
         </div>
-        <div>
+        <div id="detail-galpi-container">
           <div>갈비 목록</div>
-          <div>
-            <div>
+          <div id="detail-galpi-list">
+            <div id="detail-galpi">
               <div>1갈피</div>
               <div>
                 <div>수정하기</div>
@@ -44,8 +60,15 @@ export default function Detail() {
         <div>
           <button>게시판 접속하기</button>
         </div>
-        <div>댓글</div>
+        <div>
+          <div>닉네임</div>
+          <div>날짜</div>
+          <div>이번 작품 너무 재밌어요!</div>
+          <div>
+            <img src={GrayLikeImg} alt="like" />
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

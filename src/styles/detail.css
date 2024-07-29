@@ -1,0 +1,106 @@
+#detail-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  min-width: 900px;
+
+  margin-top: 50px;
+}
+
+.detail-img-container {
+  position: relative;
+  width: 476px;
+  height: 340px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-right: 20px;
+}
+
+.detail-img-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.6;
+  z-index: 0;
+}
+
+#detail-img-cover {
+  position: relative;
+  z-index: 1;
+}
+
+.detail-above {
+  display: flex;
+}
+
+.detail-above-right {
+  display: flex;
+  flex-direction: column-reverse;
+
+  border: 1px solid #5ca54b;
+}
+
+.detail-mywrite,
+.detail-readbegin {
+  border-right: 1px solid #5ca54b;
+}
+
+.detail-above-right-bottom {
+  display: flex;
+
+  border-top: 1px solid #5ca54b;
+}
+
+.detail-mywrite,
+.detail-readbegin,
+.detail-like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-like-container img {
+  cursor: pointer;
+}
+
+#detail-bookinfo {
+  width: 100%;
+}
+
+#detail-contents {
+  background-color: #f4f4f4;
+  width: 100%;
+  padding: 15px;
+  /* padding이 width를 넘어가는 현상 수정 */
+  box-sizing: border-box;
+}
+
+#detail-galpi-container {
+  width: 100%;
+}
+
+#detail-galpi-list {
+  background-color: #f4f4f4;
+  padding: 15px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#detail-galpi {
+  background-color: white;
+}
