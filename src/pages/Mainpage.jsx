@@ -12,7 +12,7 @@ export default function Mainpage() {
 
   return (
     <div className="main-page">
-      <Header />
+      <Header mode={0} />
       <div className="main-page-container">
         <div className="main-section" id="best-book">
           <div className="main-section-above" id="best-above">
