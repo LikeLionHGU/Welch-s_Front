@@ -3,11 +3,18 @@ import Header from "../../components/Header";
 import TestImg from "../../imgs/test5.png";
 import LikeImg from "../../imgs/like.svg";
 import GrayLikeImg from "../../imgs/grayLike.svg";
+import RedLikeImg from "../../imgs/redLike.svg";
 
 import "../../styles/detail.css";
+import { useState } from "react";
 
 // 프로젝트 상세 페이지
 export default function Detail() {
+  const [like, setLike] = useState(false);
+
+  const handleSetLike = () => {
+    setLike(!like);
+  };
   return (
     <div id="detail-main">
       <Header mode={2} />
@@ -60,12 +67,18 @@ export default function Detail() {
         <div>
           <button>게시판 접속하기</button>
         </div>
-        <div>
+        <div id="detail-comments-container">
           <div>닉네임</div>
           <div>날짜</div>
           <div>이번 작품 너무 재밌어요!</div>
           <div>
-            <img src={GrayLikeImg} alt="like" />
+            <img
+              onClick={() => {
+                handleSetLike();
+              }}
+              src={like ? RedLikeImg : GrayLikeImg}
+              alt="like"
+            />
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@
 
 .detail-img-container {
   position: relative;
-  width: 476px;
+  width: 100%;
   height: 340px;
   display: flex;
   justify-content: center;
@@ -45,13 +45,30 @@
 
 .detail-above {
   display: flex;
+
+  width: 100%;
 }
 
 .detail-above-right {
   display: flex;
   flex-direction: column-reverse;
 
+  width: 100%;
+
   border: 1px solid #5ca54b;
+}
+
+.detail-mywrite {
+  flex: 3;
+  background-color: #5ca54b;
+  color: white;
+}
+.detail-readbegin {
+  flex: 3;
+}
+
+.detail-like-container {
+  flex: 1;
 }
 
 .detail-mywrite,
@@ -103,4 +120,8 @@
 
 #detail-galpi {
   background-color: white;
+}
+
+#detail-comments-container {
+  width: 100%;
 }
