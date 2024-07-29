@@ -56,6 +56,10 @@ export default function Header({ mode }) {
     navigate("/create");
   }
 
+  function toMain() {
+    navigate("/");
+  }
+
   if (isLoading) {
     return <div></div>; // 로딩 중일 때 표시할 내용
   }
@@ -64,11 +68,20 @@ export default function Header({ mode }) {
     <div id="header">
       <div className="header-headerContainer">
         <div>
-          <img src={LogoImg} alt="logo" />
+          <img
+            src={LogoImg}
+            alt="logo"
+            onClick={() => {
+              toMain();
+            }}
+          />
         </div>
         {/* 프로젝트 상세 페이지일 경우 검색창을 없앰 */}
         {mode === 2 ? (
-          <></>
+          <div
+            className="header-searchContainer"
+            style={{ border: "none" }}
+          ></div>
         ) : (
           <div className="header-searchContainer">
             <input className="header-searchBox" placeholder="책 제목, 작가명" />
