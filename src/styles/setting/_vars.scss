@@ -1,0 +1,47 @@
+:root {
+    --mainEng-font: "Pretendard";
+    --mainKor-font: "Arita-buri";
+    --mainNum-font: "Pretendard";
+  
+    --mainBg-color: #FFFFFF;
+  
+    --white: #FFFFFF;
+    --black: #303030;
+
+    --primarycolor: #5CA54B;
+    --primarycolor-1: #356B28;
+    --primarycolor-2: #488839;
+    --primarycolor-3: #75AF67;
+    --primarycolor-4: #E5F0E2;
+
+    --seccolor: #F4623B;
+    --seccolor-1: #D24C28;
+    --seccolor-2: #FF7C59;
+    --seccolor-3: #FF997D;
+    --seccolor-4: #FFEAE5;
+
+    --gray-1: #F4F4F4;
+    --gray-2: #F7F7F7;
+    --gray-3: #6C6C6C;
+
+  
+    font-family: var(--mainEng-font), var(--mainKor-font);
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+  
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+  
+    @media (max-width: 800px) {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}
+  
+body {
+    background-color: var(--mainBg-color);
+}
