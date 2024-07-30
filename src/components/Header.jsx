@@ -10,7 +10,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-// mode == 0 : 메인 페이지, mode == 1 : 전체 페이지, mode == 2 : 프로젝트 상세 페이지
+// mode == 0 : 메인 페이지, mode == 1 : 전체 페이지, mode == 2 : 프로젝트 상세 페이지, mode == 3 그 외에 페이지
 export default function Header({ mode }) {
   const [selectedCategory, setSelectedCategory] = useState("소설");
   const [onLogin, setOnLogin] = useState();
@@ -59,6 +59,10 @@ export default function Header({ mode }) {
     navigate("/");
   }
 
+  function toMyPage() {
+    navigate("/mypage");
+  }
+
   if (isLoading) {
     return <div></div>; // 로딩 중일 때 표시할 내용
   }
@@ -76,7 +80,7 @@ export default function Header({ mode }) {
           />
         </div>
         {/* 프로젝트 상세 페이지일 경우 검색창을 없앰 */}
-        {mode === 2 ? (
+        {mode === 2 || mode === 3 ? (
           <div
             className="header-searchContainer"
             style={{ border: "none" }}
@@ -104,6 +108,9 @@ export default function Header({ mode }) {
                   className="header-profile"
                   src={ProfileImg}
                   alt="profile"
+                  onClick={() => {
+                    toMyPage();
+                  }}
                 />
               </div>
             </>
@@ -119,6 +126,10 @@ export default function Header({ mode }) {
           )}
         </div>
       </div>
+      {/* 프로젝트 이외에 경우에는 카테고리를 안보여줘도 됨 */}
+      {mode === 3 ? (
+        <></>
+      ) : (
       <div className="header-categoryContainer">
         <div className="header-category" id="upper-category">
           {Object.keys(categories).map((category) => (
@@ -141,6 +152,7 @@ export default function Header({ mode }) {
           <></>
         )}
       </div>
+      )}
     </div>
   );
 }

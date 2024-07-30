@@ -14,7 +14,7 @@ import "../styles/slide.css";
 import { Navigation, Autoplay } from "swiper/modules";
 SwiperCore.use([Autoplay]);
 
-// mode === 0 : 다른 책 슬라이드, mode === 1 : 베스트 책 슬라이드
+// mode === 0 : 다른 책 슬라이드, mode === 1 : 베스트 책 슬라이드, mode === 2
 export default function Slide({ mode }) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -30,7 +30,7 @@ export default function Slide({ mode }) {
       )}
       <Swiper
         // 한번에 보이는 슬라이드
-        slidesPerView={mode === 1 ? 2.7 : 4}
+        slidesPerView={mode === 1 ? 2.7 : (mode === 2 ? 6.3 : 4)}
         // 슬라이드 사이 거리
         spaceBetween={15}
         // 중간으로
