@@ -19,7 +19,7 @@ const SlideContent = ({ data, mode }) => {
     <div className="slide-best-container">
       <div className="slide-best-left">
         <div className="slide-best-category">{data.category}</div>
-        <div>김동규, 그는 신인가</div>
+        <div>{data.information}</div>
       </div>
       <div className="slide-best-img-container">
         <div
