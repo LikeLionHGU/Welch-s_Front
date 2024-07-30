@@ -3,7 +3,7 @@ import Slide from "../components/Slide";
 import { useNavigate } from "react-router-dom";
 import "../styles/mainpage.css";
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 export default function Mainpage() {
   const navigate = useNavigate();
@@ -14,34 +14,32 @@ export default function Mainpage() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     if (token == null) {
-      navigate('/', { replace: true });
+      navigate("/", { replace: true });
       return;
     }
 
     const fetchBestProjects = () => {
-      axios.get('https://likelion.info/project/get/best', {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true
-      })
-      .then(response => {
-        setBestProjects(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching posts:', error);
-        navigate('/', { replace: true });
-      });
+      axios
+        .get("https://likelion.info/project/get/best", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setBestProjects(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          navigate("/", { replace: true });
+        });
     };
     console.log(bestProjects);
 
     fetchBestProjects();
-
-    
-
-
   }, []);
+
   useEffect(() => {
     console.log(bestProjects);
   }, [bestProjects]);
@@ -55,7 +53,7 @@ export default function Mainpage() {
             베스트 책
           </div>
           <div className="main-slide-container">
-            <Slide mode={1} />
+            <Slide mode={1} data={bestProjects} />
           </div>
         </div>
         <div className="main-section">
@@ -70,7 +68,7 @@ export default function Mainpage() {
             </div>
           </div>
           <div className="main-slide-container">
-            <Slide mode={0} />
+            <Slide mode={0} data={bestProjects} />
           </div>
         </div>
         <div className="main-section">
@@ -85,7 +83,7 @@ export default function Mainpage() {
             </div>
           </div>
           <div className="main-slide-container">
-            <Slide mode={0} />
+            <Slide mode={0} data={bestProjects} />
           </div>
         </div>
         <div className="main-section">
@@ -100,7 +98,7 @@ export default function Mainpage() {
             </div>
           </div>
           <div className="main-slide-container">
-            <Slide mode={0} />
+            <Slide mode={0} data={bestProjects} />
           </div>
         </div>
       </div>
