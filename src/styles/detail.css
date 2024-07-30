@@ -125,3 +125,21 @@
 #detail-comments-container {
   width: 100%;
 }
+
+#detail-comments-list {
+  width: 100%;
+}
+
+#detail-write-comments {
+  display: flex;
+  background-color: #f4f4f4;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+#detail-write-container {
+  border: none;
+  outline: none;
+
+  width: 100%;
+}

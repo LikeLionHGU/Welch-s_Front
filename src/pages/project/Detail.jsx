@@ -2,6 +2,7 @@ import Header from "../../components/Header";
 
 import TestImg from "../../imgs/test5.png";
 import LikeImg from "../../imgs/like.svg";
+import WhiteLikeImg from "../../imgs/whiteLike.svg";
 import GrayLikeImg from "../../imgs/grayLike.svg";
 import RedLikeImg from "../../imgs/redLike.svg";
 import CommentArrowImg from "../../imgs/commentArrow.svg";
@@ -12,7 +13,12 @@ import { useState } from "react";
 // 프로젝트 상세 페이지
 export default function Detail() {
   const [like, setLike] = useState(false);
+  const [commentsLike, setCommentsLike] = useState(false);
   const [comment, setComment] = useState("");
+
+  const handleSetCommentsLike = () => {
+    setCommentsLike(!commentsLike);
+  };
 
   const handleSetLike = () => {
     setLike(!like);
@@ -43,7 +49,10 @@ export default function Detail() {
               <div className="detail-readbegin">처음부터 읽기</div>
               <div className="detail-like-container">
                 <img
-                  src={LikeImg}
+                  src={like ? LikeImg : WhiteLikeImg}
+                  onClick={() => {
+                    handleSetLike();
+                  }}
                   alt="like"
                   style={{ width: "22px", height: "20px" }}
                 />
@@ -74,38 +83,37 @@ export default function Detail() {
             </div>
           </div>
         </div>
-        <div>
-          <button>게시판 접속하기</button>
-        </div>
-
-        <div>
-          <input
-            type="text"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            onKeyDown={(e) => (e.key === "Enter" ? addComment() : null)}
-          />
-          <img
-            src={CommentArrowImg}
-            alt="comment"
-            disabled=""
-            onClick={() => {
-              addComment();
-            }}
-          />
-        </div>
-        <div id="detail-comments-container">
-          <div>닉네임</div>
-          <div>날짜</div>
-          <div>이번 작품 너무 재밌어요!</div>
-          <div>
-            <img
-              onClick={() => {
-                handleSetLike();
-              }}
-              src={like ? RedLikeImg : GrayLikeImg}
-              alt="like"
+        <div id="detail-comments-list">
+          <div id="detail-write-comments">
+            <input
+              type="text"
+              id="detail-write-container"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter" ? addComment() : null)}
             />
+            <img
+              src={CommentArrowImg}
+              alt="comment"
+              disabled=""
+              onClick={() => {
+                addComment();
+              }}
+            />
+          </div>
+          <div id="detail-comments-container">
+            <div>닉네임</div>
+            <div>날짜</div>
+            <div>이번 작품 너무 재밌어요!</div>
+            <div>
+              <img
+                onClick={() => {
+                  handleSetCommentsLike();
+                }}
+                src={commentsLike ? RedLikeImg : GrayLikeImg}
+                alt="like"
+              />
+            </div>
           </div>
         </div>
       </div>
