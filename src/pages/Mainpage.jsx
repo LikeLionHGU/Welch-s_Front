@@ -8,6 +8,7 @@ import axios from "axios";
 export default function Mainpage() {
   const navigate = useNavigate();
   const [bestProjects, setBestProjects] = useState([]);
+  const [projects, setProjects] = useState([]);
 
   function toList() {
     navigate("/list");
@@ -35,14 +36,38 @@ export default function Mainpage() {
           navigate("/", { replace: true });
         });
     };
-    console.log(bestProjects);
+
+    const fetchAllProjects = () => {
+      axios.get('https://likelion.info/project/get/all', {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true
+      })
+      .then(response => {
+        setProjects(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching posts:', error);
+        navigate('/', { replace: true });
+      });
+    };
+
+    
 
     fetchBestProjects();
+    fetchAllProjects();
+
+    
+
+
   }, []);
 
   useEffect(() => {
     console.log(bestProjects);
   }, [bestProjects]);
+
+  useEffect(() => {
+    console.log(projects);
+  }, [projects]);
 
   return (
     <div className="main-page">
