@@ -40,6 +40,7 @@ export default function Header({ mode }) {
       navigate("/", { replace: true });
     }
     const storedToken = localStorage.getItem("token");
+    setIsLoading(false); // 로딩 상태 완료
 
     if (storedToken == null) {
       setOnLogin(false);
@@ -48,8 +49,6 @@ export default function Header({ mode }) {
     } else {
       setOnLogin(true);
     }
-
-    setIsLoading(false); // 로딩 상태 완료
   }, []);
 
   function toCreate() {
