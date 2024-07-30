@@ -1,0 +1,141 @@
+@charset "UTF-8";
+@import url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard.woff");
+@import url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri.woff");
+.arita-buri {
+  font-family: "Arita-buri";
+}
+
+.gmarket {
+  font-family: "gmarket";
+}
+
+:root {
+  --mainEng-font: "Pretendard";
+  --mainKor-font: "Arita-buri";
+  --mainNum-font: "Pretendard";
+  --mainBg-color: #FFFFFF;
+  --white: #FFFFFF;
+  --black: #303030;
+  --primarycolor: #5CA54B;
+  --primarycolor-1: #356B28;
+  --primarycolor-2: #488839;
+  --primarycolor-3: #75AF67;
+  --primarycolor-4: #E5F0E2;
+  --seccolor: #F4623B;
+  --seccolor-1: #D24C28;
+  --seccolor-2: #FF7C59;
+  --seccolor-3: #FF997D;
+  --seccolor-4: #FFEAE5;
+  --gray-1: #F4F4F4;
+  --gray-2: #F7F7F7;
+  --gray-3: #6C6C6C;
+  font-family: var(--mainEng-font), var(--mainKor-font);
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+@media (max-width: 800px) {
+  :root {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
+
+body {
+  background-color: var(--mainBg-color);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body,
+button,
+dd,
+dl,
+dt,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+legend,
+li,
+ol,
+p,
+select,
+table,
+td,
+textarea,
+th,
+ul,
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+}
+
+body,
+button,
+input,
+select,
+table,
+textarea {
+  font-family: var(--mainEng-font), var(--mainKor-font), "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", helvetica, sans-serif;
+}
+
+a,
+a:hover,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+em,
+address {
+  font-style: normal;
+}
+
+strong {
+  font-weight: normal;
+}
+
+#skip a {
+  position: absolute;
+  left: 10px;
+  top: -92px;
+  z-index: 100000;
+  font-size: 1rem;
+  padding: 10px 30px;
+  color: var(--white);
+  background: var(--black);
+}
+
+#skip a:focus,
+#skip a:active {
+  top: 10px;
+}/*# sourceMappingURL=style.css.map */
