@@ -2,13 +2,49 @@ import Header from "../components/Header";
 import Slide from "../components/Slide";
 import { useNavigate } from "react-router-dom";
 import "../styles/mainpage.css";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 export default function Mainpage() {
   const navigate = useNavigate();
+  const [bestProjects, setBestProjects] = useState([]);
 
   function toList() {
     navigate("/list");
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token == null) {
+      navigate('/', { replace: true });
+      return;
+    }
+
+    const fetchBestProjects = () => {
+      axios.get('https://likelion.info/project/get/best', {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true
+      })
+      .then(response => {
+        setBestProjects(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching posts:', error);
+        navigate('/', { replace: true });
+      });
+    };
+    console.log(bestProjects);
+
+    fetchBestProjects();
+
+    
+
+
+  }, []);
+  useEffect(() => {
+    console.log(bestProjects);
+  }, [bestProjects]);
 
   return (
     <div className="main-page">
