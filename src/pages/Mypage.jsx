@@ -45,6 +45,8 @@ export default function Mypage() {
           withCredentials: true
         });
         setUserInfo(response.data);
+        setWallPaper(response.data.wallpaper || `${ImgNone}`);
+        setProFile(response.data.profile || `${ImgNone}`);
         setBookData({
           progress: response.data.progressBooks || [],
           completed: response.data.completedBooks || [],
@@ -52,7 +54,7 @@ export default function Mypage() {
         });
       } catch (error) {
         console.error('Error fetching user info:', error);
-        //navigate('/', { replace: true });
+        navigate('/', { replace: true });
       }
     };
 
@@ -68,11 +70,17 @@ export default function Mypage() {
       <Header mode={3} />
       <div className="my-page-container">
         <div className="wall-paper-section">
-          <WallPaperUpLoad onWallPaperUpload={handleWallPaperUpload} />
+          <img 
+            className="wall-pape-cover"
+            src={wallpaper}
+          />
           <div className="overlay-content">
             <h1>나의 프로필</h1>
             <div className="profile-section">
-              <ProfileUpload onProFileUpload={handleProFileUpload} />
+              <img 
+                className="profile-cover"
+                src={profile}
+              />
             </div>
           </div>
         </div>
@@ -80,7 +88,7 @@ export default function Mypage() {
         <div className="profile-details">
           <div className="profile-details-exp">
             <div className="profile-details-edit">
-              <div>{userInfo.userName}</div>
+              <div>{userInfo.name}</div>
               <button>
                 <div>
                   <img
@@ -96,20 +104,20 @@ export default function Mypage() {
             </div>
             <div>{userInfo.userOneliner}</div>
             <div>이메일</div>
-            <div>{userInfo.userEmail}</div>
+            <div>{userInfo.email}</div>
           </div>
           <div className="profile-details-count">
             <div className="books-progress-count">
               <div>진행 중인 책</div>
-              <div>3권</div>
+              <div>{userInfo.progressProjects}권</div>
             </div>
             <div className="books-completed-count">
               <div>완결된 책</div>
-              <div>3권</div>
+              <div>{userInfo.finishedProjects}권</div>
             </div>
             <div className="books-subscribe-count">
               <div>구독자</div>
-              <div>{userInfo.subscribersCount}명</div>
+              <div>{userInfo.subscribeUserCounts}명</div>
             </div>
           </div>
         </div>
