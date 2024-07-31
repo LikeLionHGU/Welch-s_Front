@@ -9,11 +9,12 @@ import CommentArrowImg from "../../imgs/commentArrow.svg";
 
 import "../../styles/detail.css";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 // 프로젝트 상세 페이지
 export default function Detail() {
-  const { id } = useParams();
+  const location = useLocation();
+  const { id } = location.state || {};
   const [like, setLike] = useState(false);
   const [commentsLike, setCommentsLike] = useState(false);
   const [comment, setComment] = useState("");
@@ -34,7 +35,7 @@ export default function Detail() {
   };
 
   // 클릭한 책의 id
-  console.log(id);
+  console.log("id:", id);
 
   return (
     <div id="detail-main">
