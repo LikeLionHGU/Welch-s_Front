@@ -52,6 +52,10 @@ const SlideContent = ({ data, mode }) => {
 export default function Slide({ mode, data }) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+
+  const handleSlideClick = (id) => {
+    console.log("id:", id);
+  };
   return (
     <div
       className="slide-container"
@@ -97,7 +101,7 @@ export default function Slide({ mode, data }) {
         className="slide-mySwiper"
       >
         {data.map((item, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} onClick={() => handleSlideClick(item.id)}>
             <SlideContent data={item} mode={mode} />
           </SwiperSlide>
         ))}

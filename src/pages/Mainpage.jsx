@@ -39,36 +39,33 @@ export default function Mainpage() {
     };
 
     const fetchAllProjects = () => {
-      axios.get('https://likelion.info/project/get/all', {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true
-      })
-      .then(response => {
-        setProjects(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching posts:', error);
-        navigate('/', { replace: true });
-      });
+      axios
+        .get("https://likelion.info/project/get/all", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setProjects(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          navigate("/", { replace: true });
+        });
     };
 
-    
-
-    fetchBestProjects();
     fetchAllProjects();
-
-    
-
-
+    fetchBestProjects();
   }, []);
 
-  useEffect(() => {
-    console.log(bestProjects);
-  }, [bestProjects]);
+  // useEffect(() => {
+  //   console.log(bestProjects);
+  // }, [bestProjects]);
 
-  useEffect(() => {
-    console.log(projects);
-  }, [projects]);
+  // useEffect(() => {
+  //   console.log(
+  //     projects.filter((project) => project.isRecruit && project.isPublic)
+  //   );
+  // }, [projects]);
 
   return (
     <div className="main-page">
@@ -94,7 +91,12 @@ export default function Mainpage() {
             </div>
           </div>
           <div className="main-slide-container">
-            <Slide mode={0} data={bestProjects} />
+            <Slide
+              mode={0}
+              data={projects.filter(
+                (project) => project.isRecruit && project.isPublic
+              )}
+            />
           </div>
         </div>
         <div className="main-section">
@@ -109,7 +111,12 @@ export default function Mainpage() {
             </div>
           </div>
           <div className="main-slide-container">
-            <Slide mode={0} data={bestProjects} />
+            <Slide
+              mode={0}
+              data={projects.filter(
+                (project) => project.isFinished && project.isPublic
+              )}
+            />
           </div>
         </div>
         <div className="main-section">
@@ -124,7 +131,10 @@ export default function Mainpage() {
             </div>
           </div>
           <div className="main-slide-container">
-            <Slide mode={0} data={bestProjects} />
+            <Slide
+              mode={0}
+              data={projects.filter((project) => !project.isFinished)}
+            />
           </div>
         </div>
       </div>

@@ -80,8 +80,8 @@ export default function Write() {
         "undo",
         "redo",
         "|",
-        "heading",
-        "style",
+        // "heading",
+        // "style",
         "|",
         "fontSize",
         "fontFamily",
@@ -301,46 +301,45 @@ export default function Write() {
   };
 
   return (
-    <div>
-      <div className="main-write-container">
-        <div
-          className="editor-container editor-container_document-editor editor-container_include-style"
-          ref={editorContainerRef}
-        >
-          <div
+    <div className="main-write-container">
+      <div
+        className="editor-container editor-container_document-editor editor-container_include-style"
+        ref={editorContainerRef}
+      >
+        {/* 수정 삽입 서식 도움말 */}
+        {/* <div
             className="editor-container__menu-bar"
             ref={editorMenuBarRef}
-          ></div>
-          <div
-            className="editor-container__toolbar"
-            ref={editorToolbarRef}
-          ></div>
-          <div className="editor-container__editor-wrapper">
-            <div className="editor-container__editor">
-              <div ref={editorRef}>
-                {isLayoutReady && (
-                  <CKEditor
-                    onReady={(editor) => {
-                      editorToolbarRef.current.appendChild(
-                        editor.ui.view.toolbar.element
-                      );
-                      editorMenuBarRef.current.appendChild(
-                        editor.ui.view.menuBarView.element
-                      );
-                    }}
-                    onAfterDestroy={() => {
-                      Array.from(editorToolbarRef.current.children).forEach(
-                        (child) => child.remove()
-                      );
-                      Array.from(editorMenuBarRef.current.children).forEach(
-                        (child) => child.remove()
-                      );
-                    }}
-                    editor={DecoupledEditor}
-                    config={editorConfig}
-                  />
-                )}
+          ></div> */}
+        <div className="editor-container__toolbar" ref={editorToolbarRef}></div>
+        <div className="editor-container__editor-wrapper">
+          <div className="editor-container__editor">
+            <div ref={editorRef}>
+              <div id="editor-history-btn-container">
+                <div id="editor-history-btn">History</div>
               </div>
+              {isLayoutReady && (
+                <CKEditor
+                  onReady={(editor) => {
+                    editorToolbarRef.current.appendChild(
+                      editor.ui.view.toolbar.element
+                    );
+                    editorMenuBarRef.current.appendChild(
+                      editor.ui.view.menuBarView.element
+                    );
+                  }}
+                  onAfterDestroy={() => {
+                    Array.from(editorToolbarRef.current.children).forEach(
+                      (child) => child.remove()
+                    );
+                    Array.from(editorMenuBarRef.current.children).forEach(
+                      (child) => child.remove()
+                    );
+                  }}
+                  editor={DecoupledEditor}
+                  config={editorConfig}
+                />
+              )}
             </div>
           </div>
         </div>
