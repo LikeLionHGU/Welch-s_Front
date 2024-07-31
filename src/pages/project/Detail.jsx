@@ -11,12 +11,13 @@ import { useNavigate } from "react-router-dom";
 
 import "../../styles/detail.css";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 // 프로젝트 상세 페이지
 export default function Detail() {
+  const location = useLocation();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id } = location.state || {};
   const [like, setLike] = useState(false);
   const [commentsLike, setCommentsLike] = useState(false);
   const [comment, setComment] = useState("");
@@ -70,7 +71,7 @@ export default function Detail() {
   }, [project]);
 
   // 클릭한 책의 id
-  console.log(id);
+  console.log("id:", id);
 
   return (
     <div id="detail-main">
