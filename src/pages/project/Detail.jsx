@@ -6,18 +6,22 @@ import WhiteLikeImg from "../../imgs/whiteLike.svg";
 import GrayLikeImg from "../../imgs/grayLike.svg";
 import RedLikeImg from "../../imgs/redLike.svg";
 import CommentArrowImg from "../../imgs/commentArrow.svg";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import "../../styles/detail.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 // 프로젝트 상세 페이지
 export default function Detail() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { id } = location.state || {};
   const [like, setLike] = useState(false);
   const [commentsLike, setCommentsLike] = useState(false);
   const [comment, setComment] = useState("");
+  const [project, setProject] = useState();
 
   const handleSetCommentsLike = () => {
     setCommentsLike(!commentsLike);
@@ -33,6 +37,38 @@ export default function Detail() {
       setComment("");
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token == null) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    const fetchProject = () => {
+      axios
+        .get(`https://likelion.info/project/get/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setProject(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          navigate("/", { replace: true });
+        });
+    };
+
+    fetchProject();
+
+
+  }, []);
+
+  useEffect(() => {
+    console.log(project);
+  }, [project]);
 
   // 클릭한 책의 id
   console.log("id:", id);
