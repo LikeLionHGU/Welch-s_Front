@@ -336,12 +336,21 @@ export default function Write() {
                       (child) => child.remove()
                     );
                   }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    // 입력한 부분. 태그 포함
+                    console.log(data);
+                  }}
                   editor={DecoupledEditor}
                   config={editorConfig}
                 />
               )}
             </div>
           </div>
+        </div>
+        <div>
+          <button>임시 저장</button>
+          <button>발행 검사</button>
         </div>
       </div>
     </div>

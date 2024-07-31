@@ -38,23 +38,58 @@ export default function Update() {
           <Write />
         </div>
         <div id="update-right">
-          {user === 0 ? (
-            <></>
-          ) : user === 1 ? (
-            <div id="update-right-contents">
-              <div>History</div>
+          <div id="update-right-contents">
+            {user === 0 ? (
               <div>
-                <div>현재 승인 검토가 진행되지 않음</div>
+                <div>History</div>
+                <div>
+                  <div>승인 대기 기록</div>
+                  <div>07.11</div>
+                  <div>23:00</div>
+                  <div>저자</div>
+                </div>
+                <div>
+                  <div>버전 기록</div>
+                  <div>07.11</div>
+                  <div>23:00</div>
+                  <div>저자</div>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div id="update-right-contents">
-              <div>History</div>
+            ) : user === 1 ? (
               <div>
-                <div>현재 승인 검토가 진행되지 않음</div>
+                <div>History</div>
+                <div>
+                  <div>버전 기록</div>
+                  <div>07.11</div>
+                  <div>23:00</div>
+                  <div>저자</div>
+                </div>
+                <div>승인/미승인</div>
               </div>
-            </div>
-          )}
+            ) : (
+              <div>
+                <div>History</div>
+                <div>
+                  <div>
+                    <div>승인 대기 기록</div>
+                    <div>07.11</div>
+                    <div>23:00</div>
+                    <div>저자</div>
+                  </div>
+                  <div>승인하러 가기</div>
+                </div>
+                <div>
+                  <div>
+                    <div>버전 기록</div>
+                    <div>07.11</div>
+                    <div>23:00</div>
+                    <div>저자</div>
+                  </div>
+                  <div>승인/미승인</div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
