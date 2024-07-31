@@ -14,6 +14,7 @@ export default function Mainpage() {
     navigate("/list");
   }
 
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 

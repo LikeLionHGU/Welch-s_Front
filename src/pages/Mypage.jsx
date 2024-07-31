@@ -3,101 +3,132 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import WallPaperUpLoad from "../components/WallPaperUpLoad";
 import ProfileUpload from "../components/ProfileUpLoad";
+import EditImg from "../imgs/edit.svg";
 import ImgNone from "../imgs/img_none.svg";
-import Header from "../components/Header"
+import Header from "../components/Header";
 import Slide from "../components/Slide";
 import axios from 'axios';
 
-import "../styles/WallPaperUpLoad.scss"
-
-
-
+import "../styles/mypage.scss";
 
 export default function Mypage() {
-    const navigate = useNavigate();
-    const [wallpaper, setWallPaper] = useState(`${ImgNone}`);
-    const [profile, setProFile] = useState(`${ImgNone}`);
-    const [userInfo, setUserInfo] = useState([]);
+  const navigate = useNavigate();
+  const [wallpaper, setWallPaper] = useState(`${ImgNone}`);
+  const [profile, setProFile] = useState(`${ImgNone}`);
+  const [userInfo, setUserInfo] = useState([]);
+  const [bookData, setBookData] = useState({ progress: [], completed: [], favorite: [] });
 
-    const handleWallPaperUpload = (file) => {
-      setWallPaper(file);
-    };
-    const handleProFileUpload = (file) => {
-      setProFile(file);
-    };
+  const handleWallPaperUpload = (file) => {
+    setWallPaper(file);
+  };
 
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-  
-      if (token == null) {
-        navigate('/', { replace: true });
-        return;
-      }
-  
-      const fetchUserInfo = () => {
-        axios.get('https://likelion.info/user/info', {
+  const handleProFileUpload = (file) => {
+    setProFile(file);
+  };
+
+  function toEdit() {
+    navigate("/mypage/edit");
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token == null) {
+      navigate('/', { replace: true });
+      return;
+    }
+
+    const fetchUserInfo = async () => {
+      try {
+        const response = await axios.get('https://likelion.info/user/info', {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true
-        })
-        .then(response => {
-          setUserInfo(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching posts:', error);
-          navigate('/', { replace: true });
         });
-      };
+        setUserInfo(response.data);
+        setBookData({
+          progress: response.data.progressBooks || [],
+          completed: response.data.completedBooks || [],
+          favorite: response.data.favoriteBooks || [],
+        });
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+        //navigate('/', { replace: true });
+      }
+    };
 
-      fetchUserInfo();
-  
-    }, []);
-    useEffect(() => {
-      console.log(userInfo);
-    }, [userInfo]);
+    fetchUserInfo();
+  }, [navigate]);
 
+  useEffect(() => {
+    console.log(userInfo);
+  }, [userInfo]);
 
-
-    return (
-      <div className="my-page">
-        <Header mode={3} />
-        <div className="my-page-container">
-
-          {/* <div className="wallpaper-container">
-            <img src={wallpaper} alt="Wallpaper" className="wallpaper-image" />
-          </div> */}
-
-          나의 프로필 
-
-          <div className="wall-paper-section">
-            <WallPaperUpLoad onWallPaperUpload={handleWallPaperUpload} />
-          </div>
-
-          <div className="my-profile-section">
-            <ProfileUpload onProFileUpload={handleProFileUpload}/>
-            <div className="profile-details">
-
+  return (
+    <div className="my-page">
+      <Header mode={3} />
+      <div className="my-page-container">
+        <div className="wall-paper-section">
+          <WallPaperUpLoad onWallPaperUpload={handleWallPaperUpload} />
+          <div className="overlay-content">
+            <h1>나의 프로필</h1>
+            <div className="profile-section">
+              <ProfileUpload onProFileUpload={handleProFileUpload} />
             </div>
           </div>
+        </div>
 
-          <div className="my-book-lists">
-            <div className="books-progress">
+        <div className="profile-details">
+          <div className="profile-details-exp">
+            <div className="profile-details-edit">
+              <div>{userInfo.userName}</div>
+              <button>
+                <div>
+                  <img
+                    className="profile-edit"
+                    src={EditImg}
+                    alt="profile/edit"
+                    onClick={() => {
+                      toEdit();
+                    }}
+                  />
+                </div>
+              </button>
+            </div>
+            <div>{userInfo.userOneliner}</div>
+            <div>이메일</div>
+            <div>{userInfo.userEmail}</div>
+          </div>
+          <div className="profile-details-count">
+            <div className="books-progress-count">
               <div>진행 중인 책</div>
-              <Slide mode={2}/>
+              <div>3권</div>
             </div>
-            <div className="books-completed">
+            <div className="books-completed-count">
               <div>완결된 책</div>
-              <Slide mode={2}/>
+              <div>3권</div>
             </div>
-            <div className="books-favorite ">
-              <div>좋아하는 책</div>
-              <Slide mode={2}/>
+            <div className="books-subscribe-count">
+              <div>구독자</div>
+              <div>{userInfo.subscribersCount}명</div>
             </div>
           </div>
+        </div>
 
-
+        <div className="my-book-lists">
+          <div className="books-progress">
+            <h3>진행 중인 책</h3>
+            <Slide mode={2} data={bookData.progress} />
+          </div>
+          <div className="books-completed">
+            <h3>완결된 책</h3>
+            <Slide mode={2} data={bookData.completed} />
+          </div>
+          <div className="books-favorite">
+            <h3>좋아하는 책</h3>
+            <Slide mode={2} data={bookData.favorite} />
+          </div>
         </div>
       </div>
-
-    )
-  }
-  
+    </div>
+  );
+}
