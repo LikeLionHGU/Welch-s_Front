@@ -38,27 +38,22 @@ export default function Mainpage() {
     };
 
     const fetchAllProjects = () => {
-      axios.get('https://likelion.info/project/get/all', {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true
-      })
-      .then(response => {
-        setProjects(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching posts:', error);
-        navigate('/', { replace: true });
-      });
+      axios
+        .get("https://likelion.info/project/get/all", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setProjects(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          navigate("/", { replace: true });
+        });
     };
 
-    
-
-    fetchBestProjects();
     fetchAllProjects();
-
-    
-
-
+    fetchBestProjects();
   }, []);
 
   useEffect(() => {
