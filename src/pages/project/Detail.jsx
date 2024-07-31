@@ -38,6 +38,10 @@ export default function Detail() {
     }
   };
 
+  const handleGoCommunity = (id) => {
+    navigate("/board", { state: { id } });
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -62,8 +66,6 @@ export default function Detail() {
     };
 
     fetchProject();
-
-
   }, []);
 
   useEffect(() => {
@@ -88,6 +90,12 @@ export default function Detail() {
           <div className="detail-above-right">
             <div className="detail-above-right-bottom">
               <div className="detail-mywrite">나도 글쓰기</div>
+              <div
+                className="detail-goCommunity"
+                onClick={() => handleGoCommunity(id)}
+              >
+                게시판 접속하기
+              </div>
               <div className="detail-readbegin">처음부터 읽기</div>
               <div className="detail-like-container">
                 <img
