@@ -3,11 +3,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import NextArrowImg from "../imgs/nextArrow.svg";
 import PrevArrowImg from "../imgs/prevArrow.svg";
+import { useNavigate } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
-
 import "../styles/slide.css";
 
 // import required modules
@@ -52,8 +52,10 @@ const SlideContent = ({ data, mode }) => {
 export default function Slide({ mode, data }) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleSlideClick = (id) => {
+    navigate(`/detail/${id}`);
     console.log("id:", id);
   };
   return (
