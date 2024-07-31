@@ -4,7 +4,7 @@ import Create from "./pages/Create";
 import List from "./pages/project/List";
 import Detail from "./pages/project/Detail";
 import Mypage from "./pages/Mypage";
-import Board from "./pages/Board";
+import MypageEdit from "./pages/MypageEdit";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/list" element={<List />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/mypage" element={<Mypage />} />
-        <Route path="/board" element={<Board />} />
+        <Route path="/mypage/edit" element={<MypageEdit />} />
       </Routes>
     </BrowserRouter>
   );
