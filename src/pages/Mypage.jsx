@@ -52,7 +52,7 @@ export default function Mypage() {
         });
       } catch (error) {
         console.error('Error fetching user info:', error);
-        //navigate('/', { replace: true });
+        navigate('/', { replace: true });
       }
     };
 
