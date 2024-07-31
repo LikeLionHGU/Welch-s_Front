@@ -7,7 +7,7 @@
 #update-write-container {
   display: flex;
 
-  width: 95%;
+  width: 100%;
 }
 
 #update-left {
@@ -27,4 +27,11 @@
 
 #update-right {
   flex: 1;
+}
+
+#update-right-contents {
+  margin-left: 40px;
+  background-color: #f7f7f7;
+
+  height: 100%;
 }
