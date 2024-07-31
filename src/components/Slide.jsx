@@ -55,7 +55,7 @@ export default function Slide({ mode, data }) {
   const navigate = useNavigate();
 
   const handleSlideClick = (id) => {
-    navigate(`/detail/${id}`);
+    navigate("/detail", { state: { id } });
     console.log("id:", id);
   };
   return (
