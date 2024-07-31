@@ -8,11 +8,13 @@
 }
 
 .main-write-container {
-  --ckeditor5-preview-height: 700px;
+  /* --ckeditor5-preview-height: 700px; */
   font-family: "Lato";
-  width: fit-content;
+  /* width: fit-content; */
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
+  height: 100%;
 }
 
 .ck-content {
@@ -23,7 +25,8 @@
 
 .editor-container__editor-wrapper {
   display: flex;
-  width: fit-content;
+  /* width: fit-content; */
+  width: 100%;
 }
 
 .editor-container_document-editor {
@@ -33,7 +36,7 @@
 .editor-container_document-editor .editor-container__toolbar {
   display: flex;
   position: relative;
-  box-shadow: 0 2px 3px hsla(0, 0%, 0%, 0.078);
+  /* box-shadow: 0 2px 3px hsla(0, 0%, 0%, 0.078); */
 }
 
 .editor-container_document-editor .editor-container__toolbar > .ck.ck-toolbar {
@@ -44,6 +47,17 @@
   border-top: 0;
   border-left: 0;
   border-right: 0;
+}
+#editor-history-btn-container {
+  display: flex;
+  flex-direction: row-reverse;
+
+  width: 100%;
+}
+
+#editor-history-btn {
+  border-bottom: 1px solid black;
+  margin: 10px 20px;
 }
 
 .editor-container_document-editor
@@ -60,12 +74,19 @@
   max-height: var(--ckeditor5-preview-height);
   min-height: var(--ckeditor5-preview-height);
   overflow-y: scroll;
+  /* 중간 배경 색 */
   background: var(--ck-color-base-foreground);
 }
 
-.editor-container_document-editor .editor-container__editor {
-  margin-top: 28px;
+.editor-container_document-editor {
+  /* margin-top: 28px; */
   margin-bottom: 28px;
+  height: 100%;
+}
+
+.editor-container__editor {
+  margin-bottom: 28px;
+  width: 100%;
   height: 100%;
 }
 
@@ -73,13 +94,15 @@
   .editor-container__editor
   .ck.ck-editor__editable {
   box-sizing: border-box;
-  min-width: calc(210mm + 2px);
-  max-width: calc(210mm + 2px);
+  min-width: 500px;
+  max-width: 1000px;
   min-height: 297mm;
   height: fit-content;
   padding: 20mm 12mm;
+  /* 안쪽 border */
   border: 1px hsl(0, 0%, 82.7%) solid;
   background: hsl(0, 0%, 100%);
+  /* 안쪽 그림자 */
   box-shadow: 0 2px 3px hsla(0, 0%, 0%, 0.078);
   flex: 1 1 auto;
   margin-left: 72px;
