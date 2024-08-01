@@ -19,7 +19,8 @@ export default function Detail() {
   const location = useLocation();
   //const navigate = useNavigate();
   const { id } = location.state || {};
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState();
+  const [likeCount, setLikeCount] = useState();
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
   const [project, setProject] = useState(false);
@@ -98,6 +99,42 @@ export default function Detail() {
       setComment("");
     }
 
+  };
+
+  const handleSetProjectLike = async () => {
+    const token = localStorage.getItem("token");
+    
+    try {
+      const response = await axios.post(
+        `https://likelion.info/project/like/switch/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
+        
+      
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        // alert("게시물 업로드 성공");
+        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
   };
 
 
@@ -183,6 +220,8 @@ export default function Detail() {
           setProject(response.data);
           setUserList(response.data.userProjectList);
           setCommentList(response.data.commentList);
+          setLike(response.data.isLiked);
+          setLikeCount(response.data.likeCount);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -234,12 +273,12 @@ export default function Detail() {
                 <img
                   src={like ? LikeImg : WhiteLikeImg}
                   onClick={() => {
-                    handleSetLike();
+                    handleSetProjectLike();
                   }}
                   alt="like"
                   style={{ width: "22px", height: "20px" }}
                 />
-                <div>123</div>
+                <div>{likeCount}</div>
               </div>
             </div>
             <div>
