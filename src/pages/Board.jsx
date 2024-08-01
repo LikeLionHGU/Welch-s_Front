@@ -14,6 +14,7 @@ export default function Board() {
   const { id } = location.state || {};
   const navigate = useNavigate();
 
+
   // console.log(id);
 
   const handleCreatePost = async (newPost) => {
@@ -91,6 +92,7 @@ export default function Board() {
         <BoardCreate
           onClose={() => setModalOpen(false)}
           onSubmit={handleCreatePost}
+          id={id}
         />
       )}
       {posts.map((post, index) => (
