@@ -286,7 +286,7 @@ export default function Detail() {
               <div>
                 <AuthorList authors={userList} />
               </div>
-              <div>책 정보</div>
+              <div>{project.description}</div>
               <div>{project.maximumNumber}명</div>
             </div>
           </div>

@@ -17,6 +17,7 @@ const categories = {
 export default function Create() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [information, setInformation] = useState("");
   const [selectedCategories, setSelectedCategories] = useState({});
   const [visibility, setVisibility] = useState("공개");
   const [people, setPeople] = useState(0);
@@ -71,7 +72,8 @@ export default function Create() {
     const value = {
       name: title,
       category: categoriesString,
-      information: description,
+      description: description, // 한 줄 소개
+      information: information, // 책 정보
       isPublic: visibility === "공개",
       maximumNumber: people,
       isFinished: false,
@@ -160,11 +162,19 @@ export default function Create() {
           </div>
         </div>
         <div className="create-menu">
-          <div>책 소개 *</div>
+          <div>책 한 줄 소개 *</div>
           <input
-            placeholder="책 소개를 입력해 주세요."
+            placeholder="책 한 줄 소개를 입력해 주세요."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <div className="create-menu">
+          <div>책 정보 *</div>
+          <input
+            placeholder="책 정보를 입력해주세요."
+            value={information}
+            onChange={(e) => setInformation(e.target.value)}
           />
         </div>
         <div className="create-menu">
