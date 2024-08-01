@@ -17,7 +17,19 @@ import "../styles/slide.css";
 import { Navigation, Autoplay } from "swiper/modules";
 SwiperCore.use([Autoplay]);
 
+
 const SlideContent = ({ data, mode }) => {
+  const navigate = useNavigate();
+
+  const toProjectSetting = (e, id) => {
+    e.stopPropagation(); 
+    navigate("/mypage/manage", {state: {id}});
+  };
+
+  const handleSlideClick = (id) => {
+    navigate("/detail", { state: { id } });
+  };
+
   return mode === 1 ? (
     <div className="slide-best-container">
       <div className="slide-best-left">
@@ -30,6 +42,7 @@ const SlideContent = ({ data, mode }) => {
           style={{
             backgroundImage: `url(${data.imageAddress})`,
           }}
+          onClick={() => handleSlideClick(data.id)}
         ></div>
       </div>
     </div>
@@ -40,6 +53,7 @@ const SlideContent = ({ data, mode }) => {
         backgroundImage: `url(${data.imageAddress})`,
       }}
       alt={data.name}
+      onClick={() => handleSlideClick(data.id)}
     >
       <div className="slide-book-info">
         <div>{data.name}</div>
@@ -54,6 +68,7 @@ const SlideContent = ({ data, mode }) => {
         backgroundImage: `url(${data.imageAddress})`,
       }}
       alt={data.name}
+      onClick={() => handleSlideClick(data.id)}
     >
       {data.isOwner ? (
         <div
@@ -66,7 +81,7 @@ const SlideContent = ({ data, mode }) => {
         >
           <img src={CrownImg} alt="crown" />
           <div>{data.name}</div>
-          <img src={SettingImg} alt="setting" />
+          <img src={SettingImg} alt="setting" onClick={(e) => toProjectSetting(e, data.id)}/>
         </div>
       ) : (
         <div className="slide-book-info" style={{ justifyContent: "center" }}>
@@ -77,16 +92,14 @@ const SlideContent = ({ data, mode }) => {
   );
 };
 
+
+
 // mode === 0 : 다른 책 슬라이드, mode === 1 : 베스트 책 슬라이드, mode === 2
 export default function Slide({ mode, data }) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleSlideClick = (id) => {
-    navigate("/detail", { state: { id } });
-    console.log("id:", data);
-  };
   return (
     <div
       className="slide-container"
@@ -132,7 +145,7 @@ export default function Slide({ mode, data }) {
         className="slide-mySwiper"
       >
         {data.map((item, index) => (
-          <SwiperSlide key={index} onClick={() => handleSlideClick(item.id)}>
+          <SwiperSlide key={index}>
             <SlideContent data={item} mode={mode} />
           </SwiperSlide>
         ))}
