@@ -18,6 +18,8 @@ export default function Mypage() {
   const [userInfo, setUserInfo] = useState([]);
   //const [bookData, setBookData] = useState({ progress: [], completed: [], favorite: [] });
 
+  
+
   const handleWallPaperUpload = (file) => {
     setWallPaper(file);
   };
