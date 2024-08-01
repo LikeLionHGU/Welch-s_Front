@@ -1,9 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
+import { useNavigate } from "react-router-dom";
+
 import NextArrowImg from "../imgs/nextArrow.svg";
 import PrevArrowImg from "../imgs/prevArrow.svg";
-import { useNavigate } from "react-router-dom";
+import SettingImg from "../imgs/setting.svg";
+import CrownImg from "../imgs/crown.svg";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -14,7 +17,19 @@ import "../styles/slide.css";
 import { Navigation, Autoplay } from "swiper/modules";
 SwiperCore.use([Autoplay]);
 
+
 const SlideContent = ({ data, mode }) => {
+  const navigate = useNavigate();
+
+  const toProjectSetting = (e, id) => {
+    e.stopPropagation(); 
+    navigate("/mypage/manage", {state: {id}});
+  };
+
+  const handleSlideClick = (id) => {
+    navigate("/detail", { state: { id } });
+  };
+
   return mode === 1 ? (
     <div className="slide-best-container">
       <div className="slide-best-left">
@@ -27,7 +42,23 @@ const SlideContent = ({ data, mode }) => {
           style={{
             backgroundImage: `url(${data.imageAddress})`,
           }}
+          onClick={() => handleSlideClick(data.id)}
         ></div>
+      </div>
+    </div>
+  ) : mode === 0 ? (
+    <div
+      className="slide-content"
+      style={{
+        backgroundImage: `url(${data.imageAddress})`,
+      }}
+      alt={data.name}
+      onClick={() => handleSlideClick(data.id)}
+    >
+      <div className="slide-book-info">
+        <div>{data.name}</div>
+        <div>{data.information}</div>
+        <div>{data.category}</div>
       </div>
     </div>
   ) : (
@@ -37,16 +68,31 @@ const SlideContent = ({ data, mode }) => {
         backgroundImage: `url(${data.imageAddress})`,
       }}
       alt={data.name}
+      onClick={() => handleSlideClick(data.id)}
     >
-      <div className="slide-book-info">
-        <div>{data.name}</div>
-        <div>{data.information}</div>
-        <div>{data.category}</div>
-      </div>
-      {/* 필요에 따라 더 많은 정보를 추가할 수 있습니다 */}
+      {data.isOwner ? (
+        <div
+          className="slide-book-info"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <img src={CrownImg} alt="crown" />
+          <div>{data.name}</div>
+          <img src={SettingImg} alt="setting" onClick={(e) => toProjectSetting(e, data.id)}/>
+        </div>
+      ) : (
+        <div className="slide-book-info" style={{ justifyContent: "center" }}>
+          <div>{data.name}</div>
+        </div>
+      )}
     </div>
   );
 };
+
+
 
 // mode === 0 : 다른 책 슬라이드, mode === 1 : 베스트 책 슬라이드, mode === 2
 export default function Slide({ mode, data }) {
@@ -54,10 +100,6 @@ export default function Slide({ mode, data }) {
   const nextRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleSlideClick = (id) => {
-    navigate("/detail", { state: { id } });
-    console.log("id:", id);
-  };
   return (
     <div
       className="slide-container"
@@ -103,7 +145,7 @@ export default function Slide({ mode, data }) {
         className="slide-mySwiper"
       >
         {data.map((item, index) => (
-          <SwiperSlide key={index} onClick={() => handleSlideClick(item.id)}>
+          <SwiperSlide key={index}>
             <SlideContent data={item} mode={mode} />
           </SwiperSlide>
         ))}

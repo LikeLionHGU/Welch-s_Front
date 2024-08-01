@@ -62,7 +62,9 @@ import "../styles/write.css";
 import { useRecoilState } from "recoil";
 import { historyState } from "../atom";
 
-export default function Write({ user }) {
+// user === 0 : 독자, 1: 참여자, 2: 관리자
+// mode === 0 : /update, 1: /approval
+export default function Write({ user, mode }) {
   const editorContainerRef = useRef(null);
   const editorMenuBarRef = useRef(null);
   const editorToolbarRef = useRef(null);
@@ -71,24 +73,26 @@ export default function Write({ user }) {
   const [history, setHistory] = useRecoilState(historyState);
 
   const toggleHistory = () => {
-    setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
+    setHistory((prev) => !prev); // 상태를 토글하여 열림/닫힘 상태 변경
   };
 
   useEffect(() => {
     setIsLayoutReady(true);
-
     return () => setIsLayoutReady(false);
   }, []);
 
-  // 기능 수정
+  const handleSetEditor = () => {
+    if (editorRef.current) {
+      const data = editorRef.current.getData();
+      console.log(data);
+    }
+  };
+
   const editorConfig = {
     toolbar: {
       items: [
         "undo",
         "redo",
-        "|",
-        // "heading",
-        // "style",
         "|",
         "fontSize",
         "fontFamily",
@@ -99,11 +103,9 @@ export default function Write({ user }) {
         "italic",
         "underline",
         "|",
-        // 'link',
         "insertTable",
         "highlight",
         "blockQuote",
-        // 'codeBlock',
         "|",
         "alignment",
         "|",
@@ -226,7 +228,6 @@ export default function Write({ user }) {
         },
       ],
     },
-    // 미리 적어지는 곳
     initialData: "",
     language: "ko",
     link: {
@@ -248,41 +249,13 @@ export default function Write({ user }) {
     placeholder: "자신만의 책갈피를 채워봐요!",
     style: {
       definitions: [
-        {
-          name: "Article category",
-          element: "h3",
-          classes: ["category"],
-        },
-        {
-          name: "Title",
-          element: "h2",
-          classes: ["document-title"],
-        },
-        {
-          name: "Subtitle",
-          element: "h3",
-          classes: ["document-subtitle"],
-        },
-        {
-          name: "Info box",
-          element: "p",
-          classes: ["info-box"],
-        },
-        {
-          name: "Side quote",
-          element: "blockquote",
-          classes: ["side-quote"],
-        },
-        {
-          name: "Marker",
-          element: "span",
-          classes: ["marker"],
-        },
-        {
-          name: "Spoiler",
-          element: "span",
-          classes: ["spoiler"],
-        },
+        { name: "Article category", element: "h3", classes: ["category"] },
+        { name: "Title", element: "h2", classes: ["document-title"] },
+        { name: "Subtitle", element: "h3", classes: ["document-subtitle"] },
+        { name: "Info box", element: "p", classes: ["info-box"] },
+        { name: "Side quote", element: "blockquote", classes: ["side-quote"] },
+        { name: "Marker", element: "span", classes: ["marker"] },
+        { name: "Spoiler", element: "span", classes: ["spoiler"] },
         {
           name: "Code (dark)",
           element: "pre",
@@ -313,47 +286,40 @@ export default function Write({ user }) {
         className="editor-container editor-container_document-editor editor-container_include-style"
         ref={editorContainerRef}
       >
-        {/* 수정 삽입 서식 도움말 */}
-        {/* <div
-            className="editor-container__menu-bar"
-            ref={editorMenuBarRef}
-          ></div> */}
         <div className="editor-container__toolbar" ref={editorToolbarRef}></div>
         <div className="editor-container__editor-wrapper">
           <div className="editor-container__editor">
             <div ref={editorRef}>
               <div id="editor-history-btn-container">
-                <div
-                  id="editor-history-btn"
-                  onClick={() => {
-                    toggleHistory();
-                  }}
-                >
-                  History
+                <div id="editor-history-btn" onClick={toggleHistory}>
+                  {mode === 0 ? <>History</> : <></>}
                 </div>
               </div>
               {isLayoutReady && (
                 <CKEditor
                   onReady={(editor) => {
-                    editorToolbarRef.current.appendChild(
-                      editor.ui.view.toolbar.element
-                    );
-                    editorMenuBarRef.current.appendChild(
-                      editor.ui.view.menuBarView.element
-                    );
+                    editorRef.current = editor;
+                    const toolbarElement = editor.ui.view.toolbar.element;
+                    const menuBarElement = editor.ui.view.menuBarView?.element;
+
+                    if (toolbarElement) {
+                      editorToolbarRef.current.appendChild(toolbarElement);
+                    }
+                    if (menuBarElement) {
+                      editorMenuBarRef.current.appendChild(menuBarElement);
+                    }
                   }}
                   onAfterDestroy={() => {
-                    Array.from(editorToolbarRef.current.children).forEach(
-                      (child) => child.remove()
-                    );
-                    Array.from(editorMenuBarRef.current.children).forEach(
-                      (child) => child.remove()
-                    );
+                    if (editorToolbarRef.current) {
+                      editorToolbarRef.current.innerHTML = "";
+                    }
+                    if (editorMenuBarRef.current) {
+                      editorMenuBarRef.current.innerHTML = "";
+                    }
                   }}
                   onChange={(event, editor) => {
                     const data = editor.getData();
-                    // 입력한 부분. 태그 포함
-                    console.log(data);
+                    console.log(data); // 이 줄에서 얻은 데이터를 필요에 따라 처리할 수 있습니다.
                   }}
                   editor={DecoupledEditor}
                   config={editorConfig}
@@ -362,13 +328,28 @@ export default function Write({ user }) {
             </div>
           </div>
         </div>
-        {user === 0 ? (
-          <></>
+        {mode === 0 ? (
+          <>
+            {/* 모든 사람들이 볼 수 있는 페이지 */}
+            {user !== 0 && (
+              <div className="write-btns">
+                <button onClick={handleSetEditor}>임시 저장</button>
+                <form>
+                  <button type="submit">발행 검사</button>
+                </form>
+              </div>
+            )}
+          </>
         ) : (
-          <div className="write-btns">
-            <button>임시 저장</button>
-            <button>발행 검사</button>
-          </div>
+          // 관리자의 수정 편집 페이지, 버전을 관리하는...
+          <>
+            <div className="write-btns">
+              <button>미승인</button>
+              <form>
+                <button type="submit">승인</button>
+              </form>
+            </div>
+          </>
         )}
       </div>
     </div>

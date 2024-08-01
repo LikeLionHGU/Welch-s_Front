@@ -1,10 +1,12 @@
 // 프로젝트 관리 페이지
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //import ModalContainer from "../../../components/ModalContainer";
 import ImgUpLoad from "../../../components/ImgUpLoad";
 import PeopleSlide from '../../../components/PeopleSlide'
 import ImgNone from "../../../imgs/img_none.svg";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "../../../styles/setting.scss"
 
@@ -27,12 +29,27 @@ export default function Setting() {
   //     <ModalContainer isOpen={modalIsOpen} closeModal={closeModal} />
   //   </>
   // );
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { id } = location.state || {};
+  console.log(id);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [project, setProject] = useState();
+  const [information, setInformation] = useState();
+  const [like, setLike] = useState();
+  const [likeCount, setLikeCount] = useState();
+  const [userList, setUserList] = useState([]);
+  const [bookmark, setBookmark] = useState([]);
+  
+
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
   const [selectedCategories, setSelectedCategories] = useState({});
-  const [visibility, setVisibility] = useState("공개");
-  const [people, setPeople] = useState(0);
+  const [visibility, setVisibility] = useState();
+  const [people, setPeople] = useState();
+
+
+
   const [image, setImage] = useState(`${ImgNone}`);
   const [galpi, setGalpi] = useState([
     {
@@ -87,14 +104,15 @@ export default function Setting() {
     setImage(file);
   };
 
-  const storedToken = localStorage.getItem("token");
-
-  if (storedToken == null) {
-    //navigate("/", { replace: true });
-    return;
-  }
+  
 
   const handleSubmit = async (event) => {
+    const storedToken = localStorage.getItem("token");
+
+    if (storedToken == null) {
+      //navigate("/", { replace: true });
+      return;
+    }
     event.preventDefault();
 
     // selectedCategories 객체의 값만 추출하여 문자열로 변환
@@ -154,6 +172,43 @@ export default function Setting() {
     }
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token == null) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    const fetchProject = () => {
+      axios
+        .get(`https://likelion.info/project/get/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setProject(response.data);
+          setUserList(response.data.userProjectList);
+          setLike(response.data.isLiked);
+          setLikeCount(response.data.likeCount);
+          setTitle(response.data.name);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          localStorage.removeItem("token");
+          navigate("/", { replace: true });
+        });
+    };
+
+    fetchProject();
+
+
+  }, []);
+
+  useEffect(() => {
+    console.log(project);
+  }, [project]);
+
   return (
     <div className="setting-container">
       <form onSubmit={handleSubmit}>
@@ -203,13 +258,21 @@ export default function Setting() {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
+        <div className="create-menu">
+          <div>책 정보 *</div>
+          <input
+            placeholder="책 정보를 입력해주세요."
+            value={information}
+            onChange={(e) => setInformation(e.target.value)}
+          />
+        </div>
 
         <div className="setting-menu">
           <div>갈피 목록</div>
           <div>
-            {galpi.map((it) => (
+            {bookmark.map((it) => (
               <di>
-                {it.index}갈피: {it.title}
+                {it.index}갈피: {it.name}
                 <di>
                   <button>
                     삭제하기

@@ -7,7 +7,7 @@ import EditImg from "../imgs/edit.svg";
 import ImgNone from "../imgs/img_none.svg";
 import Header from "../components/Header";
 import Slide from "../components/Slide";
-import axios from 'axios';
+import axios from "axios";
 
 import "../styles/mypage.scss";
 
@@ -17,6 +17,8 @@ export default function Mypage() {
   const [profile, setProFile] = useState(`${ImgNone}`);
   const [userInfo, setUserInfo] = useState([]);
   //const [bookData, setBookData] = useState({ progress: [], completed: [], favorite: [] });
+
+  
 
   const handleWallPaperUpload = (file) => {
     setWallPaper(file);
@@ -31,18 +33,18 @@ export default function Mypage() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     if (token == null) {
-      navigate('/', { replace: true });
+      navigate("/", { replace: true });
       return;
     }
 
     const fetchUserInfo = async () => {
       try {
-        const response = await axios.get('https://likelion.info/user/info', {
+        const response = await axios.get("https://likelion.info/user/info", {
           headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true
+          withCredentials: true,
         });
         setUserInfo(response.data);
         setWallPaper(response.data.wallpaper || `${ImgNone}`);
@@ -62,28 +64,20 @@ export default function Mypage() {
     fetchUserInfo();
   }, [navigate]);
 
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
-
+  // useEffect(() => {
+  //   console.log(userInfo);
+  // }, [userInfo]);
 
   return (
-    
     <div className="my-page">
       <Header mode={3} />
       <div className="my-page-container">
         <div className="wall-paper-section">
-          <img 
-            className="wall-pape-cover"
-            src={wallpaper}
-          />
+          <img className="wall-pape-cover" src={wallpaper} alt="img" />
           <div className="overlay-content">
             <h1>나의 프로필</h1>
             <div className="profile-section">
-              <img 
-                className="profile-cover"
-                src={profile}
-              />
+              <img className="profile-cover" src={profile} alt="img" />
             </div>
           </div>
         </div>
@@ -128,9 +122,8 @@ export default function Mypage() {
         <div className="my-book-lists">
           <div className="books-progress">
             <h3>진행 중인 책</h3>
-            
-            <Slide mode={2} 
-                  data={userInfo.progressProjectList || []}/>
+
+            <Slide mode={2} data={userInfo.progressProjectList || []} />
           </div>
           <div className="books-completed">
             <h3>완결된 책</h3>
