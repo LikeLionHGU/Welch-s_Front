@@ -7,7 +7,7 @@
   }
 }
 
-.main-write-container {
+.write-container {
   /* --ckeditor5-preview-height: 700px; */
   font-family: "Lato";
   /* width: fit-content; */
@@ -28,6 +28,8 @@
   /* width: fit-content; */
   width: 100%;
   border: 1px solid var(--ck-color-base-border);
+  /* 크기 */
+  height: 450px;
 }
 
 .editor-container__toolbar {

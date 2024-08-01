@@ -8,7 +8,7 @@ import "../../styles/update.css";
 
 // user === 0 : 독자, 1: 참여자, 2: 관리자
 export default function Update() {
-  const [user, setUser] = useState(2);
+  const [user, setUser] = useState(1);
   const [history, setHistory] = useRecoilState(historyState);
   return (
     <div id="update-main-container">

@@ -26,17 +26,14 @@ export default function Detail() {
   const [project, setProject] = useState(false);
   const [userList, setUserList] = useState([]);
   const [commentList, setCommentList] = useState([]);
-  
-  const AuthorList = ({ authors = []}) => {
+
+  const AuthorList = ({ authors = [] }) => {
     return (
       <div>
         {authors.map((author, index) => (
-          <div key={index}>
-            {author.name}
-          </div>
+          <div key={index}>{author.name}</div>
         ))}
       </div>
-      
     );
   };
 
@@ -58,6 +55,7 @@ export default function Detail() {
   function toUpdate() {
     navigate("/update");
   }
+
   const handleGoCommunity = (id) => {
     navigate("/board", { state: { id } });
   };
@@ -85,11 +83,8 @@ export default function Detail() {
           localStorage.removeItem("token");
           navigate("/", { replace: true });
         });
-        
     };
 
-    
-    
     fetchProject();
   }, []);
 
@@ -114,7 +109,14 @@ export default function Detail() {
           </div>
           <div className="detail-above-right">
             <div className="detail-above-right-bottom">
-              <div className="detail-mywrite">나도 글쓰기</div>
+              <div
+                className="detail-mywrite"
+                onClick={() => {
+                  toUpdate();
+                }}
+              >
+                나도 글쓰기
+              </div>
               <div
                 className="detail-goCommunity"
                 onClick={() => handleGoCommunity(id)}
@@ -137,7 +139,7 @@ export default function Detail() {
             <div>
               <div>{project.name}</div>
               <div>
-                <AuthorList authors = {userList} />
+                <AuthorList authors={userList} />
               </div>
               <div>책 정보</div>
               <div>{project.maximumNumber}명</div>
@@ -154,13 +156,7 @@ export default function Detail() {
             <div id="detail-galpi">
               <div>1갈피</div>
               <div>
-                <div
-                  onClick={() => {
-                    toUpdate();
-                  }}
-                >
-                  수정하기
-                </div>
+                <div>수정하기</div>
                 <div>설정</div>
               </div>
             </div>
