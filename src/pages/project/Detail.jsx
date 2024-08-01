@@ -54,6 +54,52 @@ export default function Detail() {
     </div>
   );
 
+  const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
+    
+    const request = {
+      contents: comment
+    };
+    
+
+    if (comment !== "") {
+      console.log(comment);
+      try {
+        const response = await axios.post(
+          `https://likelion.info/project/comment/add/${id}`,
+          request,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true
+          });
+          
+        
+  
+        if (response.status === 200) {
+          console.log("Post uploaded successfully");
+          // alert("게시물 업로드 성공");
+          navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        } else {
+          console.error("Error uploading post");
+        }
+      } catch (error) {
+        if (error.response) {
+          console.error("Error response from server:", error.response);
+        } else if (error.request) {
+          console.error("No response received:", error.request);
+        } else {
+          console.error("Error in setting up request:", error.message);
+        }
+        console.error("Error uploading post:", error);
+        alert(`Error uploading post: ${error.message}`);
+        localStorage.removeItem("token");
+        navigate("/", { replace: true });
+      }
+      setComment("");
+    }
+
+  };
+
   const handleSetCommentsLike = () => {
     setCommentsLike(!commentsLike);
   };
@@ -169,7 +215,7 @@ export default function Detail() {
           <div id="detail-contents">{project.information}</div>
         </div>
         <div id="detail-galpi-container">
-          <div>갈비 목록</div>
+          <div>갈피 목록</div>
           <div id="detail-galpi-list">
             <div id="detail-galpi">
               <div>1갈피</div>
@@ -194,7 +240,7 @@ export default function Detail() {
               alt="comment"
               disabled=""
               onClick={() => {
-                addComment();
+                handleSubmit();
               }}
             />
           </div>
