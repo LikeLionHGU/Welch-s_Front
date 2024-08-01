@@ -8,6 +8,7 @@ import MypageEdit from "./pages/MypageEdit";
 import Update from "./pages/project/Update";
 import Board from "./pages/Board";
 import Setting from "./pages/project/manager/Setting";
+import Approval from "./pages/project/manager/Approval";
 import { RecoilRoot } from "recoil";
 
 function App() {
@@ -24,10 +25,10 @@ function App() {
           <Route path="/update" element={<Update />} />
           <Route path="/board" element={<Board />} />
           <Route path="/mypage/manage" element={<Setting />} />
+          <Route path="/approval" element={<Approval />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
-
   );
 }
 
