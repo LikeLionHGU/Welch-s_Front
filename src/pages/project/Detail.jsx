@@ -23,7 +23,22 @@ export default function Detail() {
   const [commentsLike, setCommentsLike] = useState(false);
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
-  const [project, setProject] = useState();
+  const [project, setProject] = useState(false);
+  const [userList, setUserList] = useState([]);
+  const [commentList, setCommentList] = useState([]);
+  
+  const AuthorList = ({ authors = []}) => {
+    return (
+      <div>
+        {authors.map((author, index) => (
+          <div key={index}>
+            {author.name}
+          </div>
+        ))}
+      </div>
+      
+    );
+  };
 
   const handleSetCommentsLike = () => {
     setCommentsLike(!commentsLike);
@@ -63,22 +78,26 @@ export default function Detail() {
         })
         .then((response) => {
           setProject(response.data);
+          setUserList(project.userProjectList);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
           navigate("/", { replace: true });
         });
+        
     };
 
+    
+    
     fetchProject();
   }, []);
 
-  useEffect(() => {
-    console.log(project);
-  }, [project]);
+  // useEffect(() => {
+  //   console.log(project);
+  // }, [project]);
 
   // 클릭한 책의 id
-  console.log("id:", id);
+  // console.log("id", id);
 
   return (
     <div id="detail-main">
@@ -87,10 +106,10 @@ export default function Detail() {
         <div className="detail-above">
           <div className="detail-img-container">
             <div
-              style={{ backgroundImage: `url(${TestImg})` }}
+              style={{ backgroundImage: `url(${project.imageAddress})` }}
               className="detail-img-back"
             ></div>
-            <img src={TestImg} alt="img" id="detail-img-cover" />
+            <img src={project.imageAddress} alt="img" id="detail-img-cover" />
           </div>
           <div className="detail-above-right">
             <div className="detail-above-right-bottom">
@@ -115,16 +134,18 @@ export default function Detail() {
               </div>
             </div>
             <div>
-              <div>제목</div>
-              <div>저자</div>
+              <div>{project.name}</div>
+              <div>
+                <AuthorList authors = {userList} />
+              </div>
               <div>책 정보</div>
-              <div>정원</div>
+              <div>{project.maximumNumber}명</div>
             </div>
           </div>
         </div>
         <div id="detail-bookinfo">
           <div>책 소개</div>
-          <div id="detail-contents">콘텐츠들</div>
+          <div id="detail-contents">{project.information}</div>
         </div>
         <div id="detail-galpi-container">
           <div>갈비 목록</div>
