@@ -37,7 +37,7 @@ export default function Update() {
           )}
         </div>
         <div id="update-middle">
-          <Write user={user} />
+          <Write user={user} mode={0} />
         </div>
         <div id="update-right">
           <div

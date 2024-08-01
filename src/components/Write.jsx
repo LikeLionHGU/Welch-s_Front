@@ -62,7 +62,9 @@ import "../styles/write.css";
 import { useRecoilState } from "recoil";
 import { historyState } from "../atom";
 
-export default function Write({ user }) {
+// user === 0 : 독자, 1: 참여자, 2: 관리자
+// mode === 0 : /update, 1: /approval
+export default function Write({ user, mode }) {
   const editorContainerRef = useRef(null);
   const editorMenuBarRef = useRef(null);
   const editorToolbarRef = useRef(null);
@@ -290,7 +292,7 @@ export default function Write({ user }) {
             <div ref={editorRef}>
               <div id="editor-history-btn-container">
                 <div id="editor-history-btn" onClick={toggleHistory}>
-                  History
+                  {mode === 0 ? <>History</> : <></>}
                 </div>
               </div>
               {isLayoutReady && (
@@ -326,13 +328,28 @@ export default function Write({ user }) {
             </div>
           </div>
         </div>
-        {user !== 0 && (
-          <div className="write-btns">
-            <button onClick={handleSetEditor}>임시 저장</button>
-            <form>
-              <button type="submit">발행 검사</button>
-            </form>
-          </div>
+        {mode === 0 ? (
+          <>
+            {/* 모든 사람들이 볼 수 있는 페이지 */}
+            {user !== 0 && (
+              <div className="write-btns">
+                <button onClick={handleSetEditor}>임시 저장</button>
+                <form>
+                  <button type="submit">발행 검사</button>
+                </form>
+              </div>
+            )}
+          </>
+        ) : (
+          // 관리자의 수정 편집 페이지, 버전을 관리하는...
+          <>
+            <div className="write-btns">
+              <button>미승인</button>
+              <form>
+                <button type="submit">승인</button>
+              </form>
+            </div>
+          </>
         )}
       </div>
     </div>
