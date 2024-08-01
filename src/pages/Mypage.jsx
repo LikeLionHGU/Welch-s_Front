@@ -53,8 +53,9 @@ export default function Mypage() {
         //   favorite: response.data.favoriteBooks || [],
         // });
       } catch (error) {
-        console.error("Error fetching user info:", error);
-        navigate("/", { replace: true });
+        console.error('Error fetching user info:', error);
+        localStorage.removeItem("token");
+        navigate('/', { replace: true });
       }
     };
 

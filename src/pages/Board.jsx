@@ -72,6 +72,7 @@ export default function Board() {
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
+          localStorage.removeItem("token");
           navigate("/", { replace: true });
         });
     };
