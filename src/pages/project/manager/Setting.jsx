@@ -51,7 +51,12 @@ export default function Setting() {
 
 
   const [image, setImage] = useState(`${ImgNone}`);
-  
+  const [galpi, setGalpi] = useState([
+    {
+      index : 1,
+      title : "김동규 짱", 
+    }
+  ]);
   const [participatiedPeople, setparticipatiedPeople] = useState([{
     profileImg : "",
     name : "",
@@ -295,7 +300,7 @@ export default function Setting() {
             <div className="visibility-radio-item">
               <input
                 type="radio"
-                id="public"
+                id="private"
                 name="visibility"
                 value="비공개"
                 checked={visibility === "비공개"}

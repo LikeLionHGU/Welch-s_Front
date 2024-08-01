@@ -9,10 +9,12 @@
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@natalia.li/react-native-nested-list": "^0.2.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
+    "Babel": "^0.0.1",
     "ckeditor5": "^42.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -21,7 +23,7 @@
     "react-scripts": "5.0.1",
     "recoil": "^0.7.7",
     "sass": "^1.77.8",
-    "swiper": "^11.1.8",
+    "swiper": "^11.1.9",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -47,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.24.7"
   }
 }
