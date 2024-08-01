@@ -16,7 +16,7 @@ export default function Mypage() {
   const [wallpaper, setWallPaper] = useState(`${ImgNone}`);
   const [profile, setProFile] = useState(`${ImgNone}`);
   const [userInfo, setUserInfo] = useState([]);
-  const [bookData, setBookData] = useState({ progress: [], completed: [], favorite: [] });
+  //const [bookData, setBookData] = useState({ progress: [], completed: [], favorite: [] });
 
   const handleWallPaperUpload = (file) => {
     setWallPaper(file);
@@ -47,11 +47,11 @@ export default function Mypage() {
         setUserInfo(response.data);
         setWallPaper(response.data.wallpaper || `${ImgNone}`);
         setProFile(response.data.profile || `${ImgNone}`);
-        setBookData({
-          progress: response.data.progressBooks || [],
-          completed: response.data.completedBooks || [],
-          favorite: response.data.favoriteBooks || [],
-        });
+        // setBookData({
+        //   progress: response.data.progressBooks || [],
+        //   completed: response.data.completedBooks || [],
+        //   favorite: response.data.favoriteBooks || [],
+        // });
       } catch (error) {
         console.error('Error fetching user info:', error);
         navigate('/', { replace: true });
@@ -65,7 +65,9 @@ export default function Mypage() {
     console.log(userInfo);
   }, [userInfo]);
 
+
   return (
+    
     <div className="my-page">
       <Header mode={3} />
       <div className="my-page-container">
@@ -125,15 +127,17 @@ export default function Mypage() {
         <div className="my-book-lists">
           <div className="books-progress">
             <h3>진행 중인 책</h3>
-            <Slide mode={2} data={bookData.progress} />
+            
+            <Slide mode={2} 
+                  data={userInfo.progressProjectList || []}/>
           </div>
           <div className="books-completed">
             <h3>완결된 책</h3>
-            <Slide mode={2} data={bookData.completed} />
+            <Slide mode={2} data={userInfo.finishedProjectList || []} />
           </div>
           <div className="books-favorite">
             <h3>좋아하는 책</h3>
-            <Slide mode={2} data={bookData.favorite} />
+            <Slide mode={2} data={userInfo.likedProjectList || []} />
           </div>
         </div>
       </div>

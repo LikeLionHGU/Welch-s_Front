@@ -12,12 +12,12 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/detail.css";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
+//import { useNavigate } from "react-router-dom";
 
 // 프로젝트 상세 페이지
 export default function Detail() {
   const location = useLocation();
-  
+  //const navigate = useNavigate();
   const { id } = location.state || {};
   const [like, setLike] = useState(false);
   const [commentsLike, setCommentsLike] = useState(false);
