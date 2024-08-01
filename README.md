@@ -2,6 +2,7 @@
 
 ## library
 
+- CKEditor
 - swiper
 - axios
 - sass
