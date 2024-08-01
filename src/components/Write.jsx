@@ -365,7 +365,7 @@ export default function Write({ user }) {
         {user === 0 ? (
           <></>
         ) : (
-          <div>
+          <div className="write-btns">
             <button>임시 저장</button>
             <button>발행 검사</button>
           </div>
