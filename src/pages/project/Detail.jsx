@@ -80,6 +80,7 @@ export default function Detail() {
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
+          localStorage.removeItem("token");
           navigate("/", { replace: true });
         });
     };

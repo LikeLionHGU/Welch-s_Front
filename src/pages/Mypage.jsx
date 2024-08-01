@@ -54,6 +54,7 @@ export default function Mypage() {
         // });
       } catch (error) {
         console.error('Error fetching user info:', error);
+        localStorage.removeItem("token");
         navigate('/', { replace: true });
       }
     };

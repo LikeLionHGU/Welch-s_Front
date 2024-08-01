@@ -117,6 +117,7 @@ export default function Create() {
       }
       console.error("Error uploading post:", error);
       alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
       navigate("/", { replace: true });
     }
   };

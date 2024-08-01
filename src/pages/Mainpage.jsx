@@ -17,10 +17,10 @@ export default function Mainpage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    if (token == null) {
-      navigate("/", { replace: true });
-      return;
-    }
+    // if (token == null) {
+    //   navigate("/", { replace: true });
+    //   return;
+    // }
 
     const fetchBestProjects = () => {
       axios
@@ -56,9 +56,9 @@ export default function Mainpage() {
     fetchBestProjects();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(bestProjects);
-  // }, [bestProjects]);
+  useEffect(() => {
+    console.log(bestProjects);
+  }, [bestProjects]);
 
   // useEffect(() => {
   //   console.log(
