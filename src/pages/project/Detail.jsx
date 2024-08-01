@@ -26,9 +26,7 @@ export default function Detail() {
   const [userList, setUserList] = useState([]);
   const [commentList, setCommentList] = useState([]);
 
-  const [commentName, setcommentName] = useState("김동규");
-  const [commentDate, setCommentDate] = useState("2024.08.01");
-  const [commentText, setCommentText] = useState("재밌다.");
+  
   const [commentsLike, setCommentsLike] = useState(false);
 
   const AuthorList = ({ authors = [] }) => {
@@ -40,6 +38,21 @@ export default function Detail() {
       </div>
     );
   };
+
+  const Comment = ({ comment }) => (
+    <div id="detail-comments-container">
+      <div>{comment.user.name}</div>
+      <div>{comment.createdDate}</div>
+      <div>{comment.contents}</div>
+      <img
+        onClick={() => {
+          handleSetCommentsLike();
+        }}
+        src={commentsLike ? RedLikeImg : GrayLikeImg}
+        alt="like"
+      />
+    </div>
+  );
 
   const handleSetCommentsLike = () => {
     setCommentsLike(!commentsLike);
@@ -80,7 +93,8 @@ export default function Detail() {
         })
         .then((response) => {
           setProject(response.data);
-          setUserList(project.userProjectList);
+          setUserList(response.data.userProjectList);
+          setCommentList(response.data.commentList)
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -185,17 +199,10 @@ export default function Detail() {
             />
           </div>
           <div id="detail-comments-container">
-            <div>{commentName}</div>
-            <div>{commentDate}</div>
-            <div>{commentText}</div>
-            <div>
-              <img
-                onClick={() => {
-                  handleSetCommentsLike();
-                }}
-                src={commentsLike ? RedLikeImg : GrayLikeImg}
-                alt="like"
-              />
+            <div id="detail-comments-container">
+              {commentList.map((comment, index) => (
+                <Comment key={index} comment={comment} />
+              ))}
             </div>
           </div>
         </div>
