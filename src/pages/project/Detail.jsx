@@ -10,6 +10,7 @@ import CommentArrowImg from "../../imgs/commentArrow.svg";
 import "../../styles/detail.css";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // 프로젝트 상세 페이지
 export default function Detail() {
@@ -18,6 +19,7 @@ export default function Detail() {
   const [like, setLike] = useState(false);
   const [commentsLike, setCommentsLike] = useState(false);
   const [comment, setComment] = useState("");
+  const navigate = useNavigate();
 
   const handleSetCommentsLike = () => {
     setCommentsLike(!commentsLike);
@@ -33,6 +35,10 @@ export default function Detail() {
       setComment("");
     }
   };
+
+  function toUpdate() {
+    navigate("/update");
+  }
 
   // 클릭한 책의 id
   console.log("id:", id);
@@ -83,7 +89,13 @@ export default function Detail() {
             <div id="detail-galpi">
               <div>1갈피</div>
               <div>
-                <div>수정하기</div>
+                <div
+                  onClick={() => {
+                    toUpdate();
+                  }}
+                >
+                  수정하기
+                </div>
                 <div>설정</div>
               </div>
             </div>

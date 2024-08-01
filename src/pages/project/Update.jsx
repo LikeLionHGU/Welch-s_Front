@@ -2,12 +2,14 @@
 import { useState } from "react";
 import Header from "../../components/Header";
 import Write from "../../components/Write";
-
+import { useRecoilState } from "recoil";
+import { historyState } from "../../atom";
 import "../../styles/update.css";
 
 // user === 0 : 독자, 1: 참여자, 2: 관리자
 export default function Update() {
-  const [user, setUser] = useState(0);
+  const [user, setUser] = useState(2);
+  const [history, setHistory] = useRecoilState(historyState);
   return (
     <div id="update-main-container">
       <Header mode={3} />
@@ -35,11 +37,16 @@ export default function Update() {
           )}
         </div>
         <div id="update-middle">
-          <Write />
+          <Write user={user} />
         </div>
         <div id="update-right">
-          <div id="update-right-contents">
-            {user === 0 ? (
+          <div
+            id="update-right-contents"
+            style={history ? { background: "white" } : {}}
+          >
+            {history ? (
+              <></>
+            ) : user === 0 ? (
               <div>
                 <div>History</div>
                 <div>

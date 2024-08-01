@@ -1,6 +1,8 @@
 # Welch-s_Front
 
 ## library
-* swiper
-* axios
-* sass
+
+- swiper
+- axios
+- sass
+- recoil
