@@ -61,7 +61,7 @@ export default function Slide({ mode, data }) {
   return (
     <div
       className="slide-container"
-      style={mode === 1 ? { height: "400px" } : { height: "200px" }}
+      style={mode === 1 ? { height: "345px" } : { height: "200px" }}
     >
       {mode === 1 ? (
         // <div className="arrow"></div>

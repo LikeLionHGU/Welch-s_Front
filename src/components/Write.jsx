@@ -59,13 +59,20 @@ import translations from "ckeditor5/translations/ko.js";
 import "ckeditor5/ckeditor5.css";
 
 import "../styles/write.css";
+import { useRecoilState } from "recoil";
+import { historyState } from "../atom";
 
-export default function Write() {
+export default function Write({ user }) {
   const editorContainerRef = useRef(null);
   const editorMenuBarRef = useRef(null);
   const editorToolbarRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const [history, setHistory] = useRecoilState(historyState);
+
+  const toggleHistory = () => {
+    setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
+  };
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -316,7 +323,14 @@ export default function Write() {
           <div className="editor-container__editor">
             <div ref={editorRef}>
               <div id="editor-history-btn-container">
-                <div id="editor-history-btn">History</div>
+                <div
+                  id="editor-history-btn"
+                  onClick={() => {
+                    toggleHistory();
+                  }}
+                >
+                  History
+                </div>
               </div>
               {isLayoutReady && (
                 <CKEditor
@@ -348,10 +362,14 @@ export default function Write() {
             </div>
           </div>
         </div>
-        <div>
-          <button>임시 저장</button>
-          <button>발행 검사</button>
-        </div>
+        {user === 0 ? (
+          <></>
+        ) : (
+          <div>
+            <button>임시 저장</button>
+            <button>발행 검사</button>
+          </div>
+        )}
       </div>
     </div>
   );

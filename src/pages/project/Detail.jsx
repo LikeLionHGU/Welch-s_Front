@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/detail.css";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // 프로젝트 상세 페이지
 export default function Detail() {
@@ -21,6 +22,7 @@ export default function Detail() {
   const [like, setLike] = useState(false);
   const [commentsLike, setCommentsLike] = useState(false);
   const [comment, setComment] = useState("");
+  const navigate = useNavigate();
   const [project, setProject] = useState();
 
   const handleSetCommentsLike = () => {
@@ -38,6 +40,9 @@ export default function Detail() {
     }
   };
 
+  function toUpdate() {
+    navigate("/update");
+  }
   const handleGoCommunity = (id) => {
     navigate("/board", { state: { id } });
   };
@@ -127,7 +132,13 @@ export default function Detail() {
             <div id="detail-galpi">
               <div>1갈피</div>
               <div>
-                <div>수정하기</div>
+                <div
+                  onClick={() => {
+                    toUpdate();
+                  }}
+                >
+                  수정하기
+                </div>
                 <div>설정</div>
               </div>
             </div>

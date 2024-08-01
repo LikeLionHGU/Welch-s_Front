@@ -44,6 +44,7 @@ export default function Board() {
     }
   };
 
+
   useEffect(() => {
     // axios({
     //   method: "GET",
