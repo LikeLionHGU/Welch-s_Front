@@ -58,8 +58,8 @@ const BoardContents = ({ post, loggedInUser }) => {
             <div className="post-header">
                 <img src={BoardProfile} alt="avatar" className="avatar" />
                 <div className="user-info">
-                    <div className="username">{post.userId}</div>
-                    {loggedInUser === post.userId && (
+                    <div className="username">{post.writer.name}</div>
+                    {/* {loggedInUser === post.userId && (
                         <>
                             <FontAwesomeIcon icon={faEllipsisV} className="options-icon" onClick={handleOptionsToggle} />
                             {showOptions && (
@@ -69,12 +69,12 @@ const BoardContents = ({ post, loggedInUser }) => {
                                 </div>
                             )}
                         </>
-                    )}
+                    )} */}
                 </div>
             </div>
             <div className="post-content">
                 <h2 className="post-title">{post.title}</h2>
-                <p className="post-body">{post.body}</p>
+                <p className="post-body">{post.contents}</p>
             </div>
             <div className="post-footer">
                 <button className="like-button" onClick={handleLike}>
