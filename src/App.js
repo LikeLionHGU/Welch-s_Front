@@ -4,6 +4,7 @@ import Create from "./pages/Create";
 import List from "./pages/project/List";
 import Detail from "./pages/project/Detail";
 import Mypage from "./pages/Mypage";
+import MypageEdit from "./pages/MypageEdit";
 import Update from "./pages/project/Update";
 import Board from "./pages/Board";
 import { RecoilRoot } from "recoil";
@@ -18,11 +19,13 @@ function App() {
           <Route path="/list" element={<List />} />
           <Route path="/detail/" element={<Detail />} />
           <Route path="/mypage" element={<Mypage />} />
+            <Route path="/mypage/edit" element={<MypageEdit />} />
           <Route path="/update" element={<Update />} />
           <Route path="/board" element={<Board />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
+
   );
 }
 

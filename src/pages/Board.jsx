@@ -4,10 +4,17 @@ import BoardContents from "../components/BoardContents";
 import Header from "../components/Header";
 import BoardCreate from "../components/BoardCreate";
 import "../styles/board/board.scss";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Board() {
   const [modalOpen, setModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
+  const location = useLocation();
+  const { id } = location.state || {};
+  const navigate = useNavigate();
+
+  // console.log(id);
 
   const handleCreatePost = async (newPost) => {
     // 서버에 새 게시글을 등록하는 post 요청
@@ -37,12 +44,43 @@ export default function Board() {
     }
   };
 
+
   useEffect(() => {
-    axios({
-      method: "GET",
-      url: "https://jsonplaceholder.typicode.com/posts",
-    }).then((response) => setPosts(response.data));
+    // axios({
+    //   method: "GET",
+    //   url: "https://jsonplaceholder.typicode.com/posts",
+    // }).then((response) => setPosts(response.data));
+
+    const token = localStorage.getItem("token");
+
+    if (token == null) {
+      navigate("/", { replace: true });
+      return;
+    }
+    
+
+
+    const fetchCommunityList = () => {
+      axios
+        .get(`https://likelion.info/post/community/get/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setPosts(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          navigate("/", { replace: true });
+        });
+    };
+    fetchCommunityList();
+
   }, []);
+
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
 
   return (
     <div className="board-container">
