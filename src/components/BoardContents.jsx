@@ -22,6 +22,7 @@ const BoardContents = ({ post, loggedInUser }) => {
         axios.post(`/api/posts/${post.id}/likes`, { liked: !liked }, { withCredentials: true })
             .catch(error => {
                 console.error('Error updating like status:', error);
+                localStorage.removeItem("token");
             });
     };
 
@@ -46,6 +47,7 @@ const BoardContents = ({ post, loggedInUser }) => {
             })
             .catch(error => {
                 console.error('Error deleting post:', error);
+                localStorage.removeItem("token");
             });
     };
 

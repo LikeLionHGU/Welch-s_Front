@@ -75,6 +75,7 @@ const BoardCreate = ({ onClose, onSubmit, id }) => {
           }
           console.error("Error uploading post:", error);
           alert(`Error uploading post: ${error.message}`);
+          localStorage.removeItem("token");
           navigate("/", { replace: true });
         }
       };

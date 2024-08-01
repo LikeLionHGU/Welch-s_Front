@@ -19,17 +19,16 @@ export default function Detail() {
   const location = useLocation();
   //const navigate = useNavigate();
   const { id } = location.state || {};
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState();
+  const [likeCount, setLikeCount] = useState();
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
   const [project, setProject] = useState(false);
   const [userList, setUserList] = useState([]);
   const [commentList, setCommentList] = useState([]);
 
-  const [commentName, setcommentName] = useState("김동규");
-  const [commentDate, setCommentDate] = useState("2024.08.01");
-  const [commentText, setCommentText] = useState("재밌다.");
-  const [commentsLike, setCommentsLike] = useState(false);
+  
+  const [commentsLike, setCommentsLike] = useState();
 
   const AuthorList = ({ authors = [] }) => {
     return (
@@ -41,7 +40,146 @@ export default function Detail() {
     );
   };
 
-  const handleSetCommentsLike = () => {
+  const Comment = ({ comment }) => (
+    <div id="detail-comments-container">
+      <div>{comment.user.name}</div>
+      <div>{comment.createdDate}</div>
+      <div>{comment.contents}</div>
+      <img
+        onClick={() => {
+          handleSetCommentsLike(comment.id);
+        }}
+        src={comment.isLiked ? RedLikeImg : GrayLikeImg}
+        alt="like"
+      />
+    </div>
+  );
+
+  const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
+    
+    const request = {
+      contents: comment
+    };
+    
+
+    if (comment !== "") {
+      console.log(comment);
+      try {
+        const response = await axios.post(
+          `https://likelion.info/project/comment/add/${id}`,
+          request,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true
+          });
+          
+        
+  
+        if (response.status === 200) {
+          console.log("Post uploaded successfully");
+          // alert("게시물 업로드 성공");
+          navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        } else {
+          console.error("Error uploading post");
+        }
+      } catch (error) {
+        if (error.response) {
+          console.error("Error response from server:", error.response);
+        } else if (error.request) {
+          console.error("No response received:", error.request);
+        } else {
+          console.error("Error in setting up request:", error.message);
+        }
+        console.error("Error uploading post:", error);
+        alert(`Error uploading post: ${error.message}`);
+        localStorage.removeItem("token");
+        navigate("/", { replace: true });
+      }
+      setComment("");
+    }
+
+  };
+
+  const handleSetProjectLike = async () => {
+    const token = localStorage.getItem("token");
+    
+    try {
+      const response = await axios.post(
+        `https://likelion.info/project/like/switch/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
+        
+      
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        // alert("게시물 업로드 성공");
+        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
+  };
+
+
+  const handleSetCommentsLike = async (commentId) => {
+    const token = localStorage.getItem("token");
+    console.log(commentId);
+
+    try {
+      const response = await axios.post(
+        `https://likelion.info/project/comment/like/${commentId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
+        
+      
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        // alert("게시물 업로드 성공");
+        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
+    
+    
+
+
+
+
+
     setCommentsLike(!commentsLike);
   };
 
@@ -80,10 +218,14 @@ export default function Detail() {
         })
         .then((response) => {
           setProject(response.data);
-          setUserList(project.userProjectList);
+          setUserList(response.data.userProjectList);
+          setCommentList(response.data.commentList);
+          setLike(response.data.isLiked);
+          setLikeCount(response.data.likeCount);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
+          localStorage.removeItem("token");
           navigate("/", { replace: true });
         });
     };
@@ -131,12 +273,12 @@ export default function Detail() {
                 <img
                   src={like ? LikeImg : WhiteLikeImg}
                   onClick={() => {
-                    handleSetLike();
+                    handleSetProjectLike();
                   }}
                   alt="like"
                   style={{ width: "22px", height: "20px" }}
                 />
-                <div>123</div>
+                <div>{likeCount}</div>
               </div>
             </div>
             <div>
@@ -154,7 +296,7 @@ export default function Detail() {
           <div id="detail-contents">{project.information}</div>
         </div>
         <div id="detail-galpi-container">
-          <div>갈비 목록</div>
+          <div>갈피 목록</div>
           <div id="detail-galpi-list">
             <div id="detail-galpi">
               <div>1갈피</div>
@@ -179,22 +321,15 @@ export default function Detail() {
               alt="comment"
               disabled=""
               onClick={() => {
-                addComment();
+                handleSubmit();
               }}
             />
           </div>
           <div id="detail-comments-container">
-            <div>{commentName}</div>
-            <div>{commentDate}</div>
-            <div>{commentText}</div>
-            <div>
-              <img
-                onClick={() => {
-                  handleSetCommentsLike();
-                }}
-                src={commentsLike ? RedLikeImg : GrayLikeImg}
-                alt="like"
-              />
+            <div id="detail-comments-container">
+              {commentList.map((comment, index) => (
+                <Comment key={index} comment={comment} />
+              ))}
             </div>
           </div>
         </div>

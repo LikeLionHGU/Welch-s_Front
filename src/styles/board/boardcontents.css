@@ -1,0 +1,84 @@
+.board-post {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.board-post .post-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.board-post .post-header .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+.board-post .post-header .user-info {
+  flex-grow: 1;
+}
+.board-post .post-header .user-info .username {
+  font-weight: bold;
+}
+.board-post .post-header .user-info .options-icon {
+  float: right;
+  cursor: pointer;
+}
+.board-post .post-header .user-info .post-options {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+.board-post .post-header .user-info .post-options button {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+.board-post .post-header .user-info .post-options button:hover {
+  background: #f0f0f0;
+}
+.board-post .post-content {
+  margin-top: 16px;
+}
+.board-post .post-content .post-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.board-post .post-content .post-body {
+  font-size: 14px;
+  color: #333;
+}
+.board-post .post-footer {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+}
+.board-post .post-footer .like-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+.board-post .post-footer .like-button .heart-icon {
+  margin-right: 4px;
+}
+.board-post .post-footer .like-button .heart-icon.liked {
+  color: red;
+}
+.board-post .post-footer .like-button span {
+  font-size: 14px;
+}/*# sourceMappingURL=boardcontents.css.map */

@@ -53,6 +53,7 @@ export default function MypageEdit() {
             navigate("/mypage");
         } catch (error) {
             console.error('Error updating user info:', error);
+            localStorage.removeItem("token");
         }
     };
 
