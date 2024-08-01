@@ -27,7 +27,7 @@ export default function Detail() {
   const [commentList, setCommentList] = useState([]);
 
   
-  const [commentsLike, setCommentsLike] = useState(false);
+  const [commentsLike, setCommentsLike] = useState();
 
   const AuthorList = ({ authors = [] }) => {
     return (
@@ -46,9 +46,9 @@ export default function Detail() {
       <div>{comment.contents}</div>
       <img
         onClick={() => {
-          handleSetCommentsLike();
+          handleSetCommentsLike(comment.id);
         }}
-        src={commentsLike ? RedLikeImg : GrayLikeImg}
+        src={comment.isLiked ? RedLikeImg : GrayLikeImg}
         alt="like"
       />
     </div>
@@ -100,7 +100,49 @@ export default function Detail() {
 
   };
 
-  const handleSetCommentsLike = () => {
+
+  const handleSetCommentsLike = async (commentId) => {
+    const token = localStorage.getItem("token");
+    console.log(commentId);
+
+    try {
+      const response = await axios.post(
+        `https://likelion.info/project/comment/like/${commentId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
+        
+      
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        // alert("게시물 업로드 성공");
+        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
+    
+    
+
+
+
+
+
     setCommentsLike(!commentsLike);
   };
 
@@ -140,7 +182,7 @@ export default function Detail() {
         .then((response) => {
           setProject(response.data);
           setUserList(response.data.userProjectList);
-          setCommentList(response.data.commentList)
+          setCommentList(response.data.commentList);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
