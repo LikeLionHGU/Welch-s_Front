@@ -20,12 +20,16 @@ export default function Detail() {
   //const navigate = useNavigate();
   const { id } = location.state || {};
   const [like, setLike] = useState(false);
-  const [commentsLike, setCommentsLike] = useState(false);
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
   const [project, setProject] = useState(false);
   const [userList, setUserList] = useState([]);
   const [commentList, setCommentList] = useState([]);
+
+  const [commentName, setcommentName] = useState("김동규");
+  const [commentDate, setCommentDate] = useState("2024.08.01");
+  const [commentText, setCommentText] = useState("재밌다.");
+  const [commentsLike, setCommentsLike] = useState(false);
 
   const AuthorList = ({ authors = [] }) => {
     return (
@@ -181,9 +185,9 @@ export default function Detail() {
             />
           </div>
           <div id="detail-comments-container">
-            <div>닉네임</div>
-            <div>날짜</div>
-            <div>이번 작품 너무 재밌어요!</div>
+            <div>{commentName}</div>
+            <div>{commentDate}</div>
+            <div>{commentText}</div>
             <div>
               <img
                 onClick={() => {
