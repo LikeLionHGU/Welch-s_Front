@@ -56,7 +56,14 @@ const SlideContent = ({ data, mode }) => {
       alt={data.name}
     >
       {data.isOwner ? (
-        <div className="slide-book-info">
+        <div
+          className="slide-book-info"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <img src={CrownImg} alt="crown" />
           <div>{data.name}</div>
           <img src={SettingImg} alt="setting" />
