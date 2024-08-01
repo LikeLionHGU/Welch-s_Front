@@ -1,9 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
+import { useNavigate } from "react-router-dom";
+
 import NextArrowImg from "../imgs/nextArrow.svg";
 import PrevArrowImg from "../imgs/prevArrow.svg";
-import { useNavigate } from "react-router-dom";
+import SettingImg from "../imgs/setting.svg";
+import CrownImg from "../imgs/crown.svg";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -30,7 +33,7 @@ const SlideContent = ({ data, mode }) => {
         ></div>
       </div>
     </div>
-  ) : (
+  ) : mode === 0 ? (
     <div
       className="slide-content"
       style={{
@@ -43,7 +46,26 @@ const SlideContent = ({ data, mode }) => {
         <div>{data.information}</div>
         <div>{data.category}</div>
       </div>
-      {/* 필요에 따라 더 많은 정보를 추가할 수 있습니다 */}
+    </div>
+  ) : (
+    <div
+      className="slide-content"
+      style={{
+        backgroundImage: `url(${data.imageAddress})`,
+      }}
+      alt={data.name}
+    >
+      {data.isOwner ? (
+        <div className="slide-book-info">
+          <img src={CrownImg} alt="crown" />
+          <div>{data.name}</div>
+          <img src={SettingImg} alt="setting" />
+        </div>
+      ) : (
+        <div className="slide-book-info" style={{ justifyContent: "center" }}>
+          <div>{data.name}</div>
+        </div>
+      )}
     </div>
   );
 };
@@ -56,7 +78,7 @@ export default function Slide({ mode, data }) {
 
   const handleSlideClick = (id) => {
     navigate("/detail", { state: { id } });
-    console.log("id:", id);
+    console.log("id:", data);
   };
   return (
     <div
