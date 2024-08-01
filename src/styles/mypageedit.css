@@ -1,30 +1,21 @@
-.my-page {
+.my-page-edit {
   height: 100vh;
 }
 
-.my-page-container {
+.my-page-edit-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.wall-paper-section {
+.edit-wall-paper-section {
   width: 100%;
-  height: 400px;
-  overflow: hidden;
   padding: 0 !important;
   margin-bottom: 100px;
   position: relative;
 }
 
-.wall-pape-cover {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.overlay-content {
+.edit-overlay-content {
   position: absolute;
   top: 70%;
   text-align: center;
@@ -33,24 +24,16 @@
   padding: 0 9.17vw;
 }
 
-.profile-section {
+.edit-profile-section {
   top: 10px;
   width: 100px;
   height: 100px;
-  overflow: hidden;
-  z-index: 100;
+  z-index: 10;
   position: relative;
   margin-top: 20px;
 }
 
-.profile-cover {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.profile-details {
+.edit-profile-details {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -61,16 +44,16 @@
   padding: 0 9.17vw;
 }
 
-.profile-details-exp {
+.edit-profile-details-exp {
   flex: 1;
   text-align: left;
 }
 
-.profile-details-exp div {
+.edit-profile-details-exp div {
   margin-bottom: 10px;
 }
 
-.profile-details-edit {
+.profile-details-save {
   width: 40vw;
   display: flex;
   flex-direction: row;
@@ -79,14 +62,14 @@
   justify-content: space-between;
 }
 
-.profile-edit {
+.profile-save {
   border: none;
   outline: none;
   background-color: white;
   cursor: pointer;
 }
 
-.profile-details-count {
+.edit-profile-details-count {
   display: flex;
   width: 33vw;
   padding: 28px 36px;
@@ -97,24 +80,24 @@
   justify-content: space-between;
 }
 
-.profile-details-count div {
+.edit-profile-details-count div {
   text-align: center;
 }
 
-.books-progress,
-.books-completed,
-.books-favorite {
+.edit-books-progress,
+.edit-books-completed,
+.edit-books-favorite {
   width: 100%;
   margin-bottom: 100px;
   padding: 0 9.17vw;
 }
 
-.my-book-lists {
+.edit-my-book-lists {
   width: 100%;
 }
 
-.books-progress div,
-.books-completed div,
-.books-favorite div {
+.edit-books-progress div,
+.edit-books-completed div,
+.edit-books-favorite div {
   margin-bottom: 10px;
-}/*# sourceMappingURL=mypage.css.map */
+}/*# sourceMappingURL=mypageedit.css.map */

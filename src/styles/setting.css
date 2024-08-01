@@ -1,0 +1,28 @@
+.setting-container {
+  padding: 0 9.17vw;
+}
+
+.setting-menu {
+  margin-bottom: 80px;
+}
+
+.title {
+  margin-bottom: 107px;
+}
+
+.setting-categoryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.setting-radio-item {
+  display: flex;
+  align-items: center;
+  margin: 12px 0px;
+}
+
+.setting-peopleNum {
+  display: flex;
+  align-items: center;
+}/*# sourceMappingURL=setting.css.map */
