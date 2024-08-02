@@ -26,6 +26,7 @@ export default function Detail() {
   const [project, setProject] = useState(false);
   const [userList, setUserList] = useState([]);
   const [commentList, setCommentList] = useState([]);
+  const [bookmarkList, setBookmarkList] = useState([]);
 
   
   const [commentsLike, setCommentsLike] = useState();
@@ -36,6 +37,24 @@ export default function Detail() {
         {authors.map((author, index) => (
           <div key={index}>{author.name}</div>
         ))}
+      </div>
+    );
+  };
+
+  const BookmarkList = ({ bookmark = []}) => {
+    if (!bookmark || bookmark.length === 0) {
+      return null;
+    }
+    
+    return (
+      <div id="detail-galpi-list">
+        <div id="detail-galpi">
+          <div>{bookmark.name}</div>
+          <div>
+            <div>수정하기</div>
+            <div>설정</div>
+          </div>
+        </div>
       </div>
     );
   };
@@ -222,6 +241,7 @@ export default function Detail() {
           setCommentList(response.data.commentList);
           setLike(response.data.isLiked);
           setLikeCount(response.data.likeCount);
+          setBookmarkList(response.data.bookMarkList);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -233,9 +253,9 @@ export default function Detail() {
     fetchProject();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(project);
-  // }, [project]);
+  useEffect(() => {
+    console.log(project);
+  }, [project]);
 
   // 클릭한 책의 id
   // console.log("id", id);
@@ -297,15 +317,7 @@ export default function Detail() {
         </div>
         <div id="detail-galpi-container">
           <div>갈피 목록</div>
-          <div id="detail-galpi-list">
-            <div id="detail-galpi">
-              <div>1갈피</div>
-              <div>
-                <div>수정하기</div>
-                <div>설정</div>
-              </div>
-            </div>
-          </div>
+          <BookmarkList bookmark={bookmarkList} />
         </div>
         <div id="detail-comments-list">
           <div id="detail-write-comments">

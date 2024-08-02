@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
@@ -6,24 +6,52 @@ import { faHeart as regularHeart, faEllipsisV } from '@fortawesome/free-solid-sv
 import BoardProfile from '../imgs/board_profile.png';
 import Notification from './Notification'; // 삭제 모달 컴포넌트 임포트
 import '../styles/board/boardcontents.scss'; 
+import { useNavigate } from "react-router-dom";
 
 const BoardContents = ({ post, loggedInUser }) => {
     const [likeCount, setLikeCount] = useState(0);
     const [liked, setLiked] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
+    const navigate = useNavigate();
     const [showNotification, setShowNotification] = useState(false);
 
-    const handleLike = () => {
-        const newLikeCount = liked ? likeCount - 1 : likeCount + 1;
-        setLikeCount(newLikeCount);
-        setLiked(!liked);
+    const handleLike = async (communityPostId) => {
+        const token = localStorage.getItem("token");
+        
 
-        // 서버에 좋아요 상태 업데이트 요청
-        axios.post(`/api/posts/${post.id}/likes`, { liked: !liked }, { withCredentials: true })
-            .catch(error => {
-                console.error('Error updating like status:', error);
-                localStorage.removeItem("token");
-            });
+        try {
+            const response = await axios.post(
+              `https://likelion.info/community/post/like/switch/${communityPostId}`,
+              {},
+              {
+                headers: { Authorization: `Bearer ${token}` },
+                withCredentials: true
+              });
+              
+            
+      
+            if (response.status === 200) {
+              console.log("Post uploaded successfully");
+              // alert("게시물 업로드 성공");
+              
+            } else {
+              console.error("Error uploading post");
+            }
+          } catch (error) {
+            if (error.response) {
+              console.error("Error response from server:", error.response);
+            } else if (error.request) {
+              console.error("No response received:", error.request);
+            } else {
+              console.error("Error in setting up request:", error.message);
+            }
+            console.error("Error uploading post:", error);
+            alert(`Error uploading post: ${error.message}`);
+            localStorage.removeItem("token");
+            navigate("/", { replace: true });
+          }
+
+          window.location.reload();
     };
 
     const handleOptionsToggle = () => {
@@ -55,6 +83,12 @@ const BoardContents = ({ post, loggedInUser }) => {
         setShowNotification(false);
     };
 
+    useEffect(() => {
+        setLiked(post.isLike);
+        setLikeCount(post.likeCount);
+
+    }, []);
+
     return (
         <div className="board-post">
             <div className="post-header">
@@ -79,7 +113,7 @@ const BoardContents = ({ post, loggedInUser }) => {
                 <p className="post-body">{post.contents}</p>
             </div>
             <div className="post-footer">
-                <button className="like-button" onClick={handleLike}>
+                <button className="like-button" onClick={() => handleLike(post.id)}>
                     <FontAwesomeIcon icon={liked ? solidHeart : regularHeart} className={`heart-icon ${liked ? 'liked' : ''}`} />
                     <span>{likeCount}</span>
                 </button>
