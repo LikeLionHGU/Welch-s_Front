@@ -52,7 +52,7 @@ export default function Detail() {
           <div key={index} id="detail-galpi">
             <div>{item.name}</div>
             <div>
-              <div onClick={() => toWrite(id)}>수정하기</div>
+              <div onClick={() => toWrite(item.id)}>수정하기</div>
               <div>설정</div>
             </div>
           </div>
@@ -219,16 +219,20 @@ export default function Detail() {
     navigate("/update");
   }
 
-  const toWrite = (id) => {
+// 글 작성하는 페이지로 이동
+  const toWrite = (id) => { // 넘겨주는 id는 갈피의 id
     if(project.isOwner) { // owner인 경우
-      navigate("/write", { state: { id, user: 2, mode: 0 } });
+      navigate("/update", { state: { id: id, user: 2, mode: 0, bookmarkList: bookmarkList } });
     }
 
     if(project.isOwner === false && project.isParticipate === true) {
-      navigate("/write", { state: { id, user: 1, mode: 0 } }); // 참여자인 경우
+      navigate("/update", { state: { id, user: 1, mode: 0, bookmarkList } }); // 참여자인 경우
     }
-
-    navigate("/write", { state: { id, user: 0, mode: 0 } }); // 그냥 사람
+    
+    if(project.isOwner === false && project.isParticipate === false) {
+      navigate("/update", { state: { id, user: 0, mode: 0, bookmarkList } }); // 그냥 사람  
+    }
+    
   };
 
   const handleGoCommunity = (id) => {
