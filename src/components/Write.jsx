@@ -61,6 +61,7 @@ import "ckeditor5/ckeditor5.css";
 import "../styles/write.css";
 import { readOnlySelector, useRecoilState } from "recoil";
 import { historyState } from "../atom";
+import ModalContainer from "./ModalContainer";
 
 // user === 0 : 독자, 1: 참여자, 2: 관리자
 // mode === 0 : /update, 1: /approval (수정 가능), 2: /approval (수정 불가)
@@ -70,6 +71,8 @@ export default function Write({ user, mode }) {
   const editorToolbarRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [modalContents, setModalContents] = useState("");
   const [history, setHistory] = useRecoilState(historyState);
 
   const toggleHistory = () => {
@@ -81,17 +84,65 @@ export default function Write({ user, mode }) {
     return () => setIsLayoutReady(false);
   }, []);
 
-  const handleSetEditor = () => {
-    if (editorRef.current) {
-      const data = editorRef.current.getData();
-      console.log(data);
-    }
+  // const handleSetEditor = () => {
+  //   if (editorRef.current) {
+  //     const data = editorRef.current.getData();
+  //     console.log(data);
+  //   }
+  // };
+
+  const handleSetOpenModal = () => {
+    setOpenModal(!openModal);
+    console.log(openModal);
+  };
+
+  // 누르면 모달 꺼지고 페이지 이동
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleTextareaChange = (event) => {
+    setModalContents(event.target.value);
+    console.log(event.target.value);
+  };
+
+  const ModalContents = () => (
+    <div className="write-modal-contents-container">
+      <div>미승인 사유</div>
+      <textarea
+        id="write-modal-contents-box"
+        placeholder="수정해야 할 부분을 작성해 주세요."
+        value={modalContents}
+        onChange={handleTextareaChange}
+      ></textarea>
+      <div>
+        <button onClick={handleCloseModal}>작성하기</button>
+      </div>
+    </div>
+  );
+
+  const modalStyle = {
+    overlay: {
+      zIndex: "1000",
+      backgroundColor: " rgba(48, 48, 48, 0.4)",
+    },
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      minWidth: "700px", // 원하는 너비
+      height: "400px", // 원하는 높이
+      zIndex: "1001",
+    },
   };
 
   // 처음 입력되는 부분
   const initialData =
     user === 2 && mode === 2
-      ? "<h2>제목</h2><p>태그가</p><h1>아주 잘 되네요</h1><h3>수정도 안되게 했습니다</h3><p>눌러보든가 ㅋㅋ</p>"
+      ? "<h2>제목</h2><p>태그가</p><h1>아주 잘 되네요</h1><h3>수정도 안되게 했습니다</h3>"
       : "";
 
   const editorConfig = {
@@ -343,7 +394,7 @@ export default function Write({ user, mode }) {
             {/* 모든 사람들이 볼 수 있는 페이지 */}
             {user !== 0 && (
               <div className="write-btns">
-                <button onClick={handleSetEditor}>임시 저장</button>
+                <button>임시 저장</button>
                 <form>
                   <button type="submit">발행 검사</button>
                 </form>
@@ -352,14 +403,28 @@ export default function Write({ user, mode }) {
           </>
         ) : // 관리자의 수정 편집 페이지, 버전을 관리하는...
         mode === 2 && user === 2 ? (
-          <></>
+          <>
+            <ModalContainer
+              isOpen={openModal}
+              closeModal={handleSetOpenModal}
+              Contents={ModalContents}
+              style={modalStyle}
+            />
+            <div className="write-btns">
+              <button
+                onClick={() => {
+                  handleSetOpenModal();
+                }}
+              >
+                미승인
+              </button>
+              <form>
+                <button type="submit">승인</button>
+              </form>
+            </div>
+          </>
         ) : (
-          <div className="write-btns">
-            <button>미승인</button>
-            <form>
-              <button type="submit">승인</button>
-            </form>
-          </div>
+          <></>
         )}
       </div>
     </div>
