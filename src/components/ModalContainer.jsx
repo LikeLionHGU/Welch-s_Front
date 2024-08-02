@@ -1,13 +1,20 @@
 import React from "react";
 import Modal from "react-modal";
 
-export default function ModalContainer({ isOpen, closeModal }) {
+export default function ModalContainer({
+  isOpen,
+  closeModal,
+  Contents,
+  style,
+}) {
   return (
-    <div>
-      <Modal isOpen={isOpen} onRequestClose={closeModal} contentLabel="Modal">
-        <h2>Hello</h2>
-        {/* <button onClick={closeModal}>close</button> */}
-      </Modal>
-    </div>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={closeModal}
+      contentLabel="Modal"
+      style={style}
+    >
+      <Contents />
+    </Modal>
   );
 }
