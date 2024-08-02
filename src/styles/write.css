@@ -99,7 +99,7 @@
   .editor-container__editor
   .ck.ck-editor__editable {
   box-sizing: border-box;
-  min-width: 500px;
+  min-width: 400px;
   max-width: 1000px;
   min-height: 297mm;
   height: fit-content;

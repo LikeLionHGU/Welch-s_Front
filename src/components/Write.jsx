@@ -61,7 +61,7 @@ import translations from "ckeditor5/translations/ko.js";
 import "ckeditor5/ckeditor5.css";
 
 import "../styles/write.css";
-import { useRecoilState } from "recoil";
+import { readOnlySelector, useRecoilState } from "recoil";
 import { historyState } from "../atom";
 
 
@@ -131,6 +131,12 @@ export default function Write() {
       console.log(data);
     }
   };
+
+  // 처음 입력되는 부분
+  const initialData =
+    user === 2 && mode === 2
+      ? "<h2>제목</h2><p>태그가</p><h1>아주 잘 되네요</h1><h3>수정도 안되게 했습니다</h3><p>눌러보든가 ㅋㅋ</p>"
+      : "";
 
   const editorConfig = {
     toolbar: {
@@ -272,7 +278,8 @@ export default function Write() {
         },
       ],
     },
-    initialData: "",
+    // 미리 적어지는 곳
+    initialData: initialData,
     language: "ko",
     link: {
       addTargetToExternalLinks: true,
@@ -345,13 +352,16 @@ export default function Write() {
                     editorRef.current = editor;
                     const toolbarElement = editor.ui.view.toolbar.element;
                     const menuBarElement = editor.ui.view.menuBarView?.element;
+                    if (user === 2 && mode === 2) {
+                      editor.enableReadOnlyMode("feature-id");
+                    }
 
                     if (toolbarElement) {
                       editorToolbarRef.current.appendChild(toolbarElement);
                     }
-                    if (menuBarElement) {
-                      editorMenuBarRef.current.appendChild(menuBarElement);
-                    }
+                    // if (menuBarElement) {
+                    //   editorMenuBarRef.current.appendChild(menuBarElement);
+                    // }
                   }}
                   onAfterDestroy={() => {
                     if (editorToolbarRef.current) {
@@ -363,7 +373,7 @@ export default function Write() {
                   }}
                   onChange={(event, editor) => {
                     const data = editor.getData();
-                    console.log(data); // 이 줄에서 얻은 데이터를 필요에 따라 처리할 수 있습니다.
+                    console.log(data);
                   }}
                   editor={DecoupledEditor}
                   config={editorConfig}
@@ -384,16 +394,16 @@ export default function Write() {
               </div>
             )}
           </>
+        ) : // 관리자의 수정 편집 페이지, 버전을 관리하는...
+        mode === 2 && user === 2 ? (
+          <></>
         ) : (
-          // 관리자의 수정 편집 페이지, 버전을 관리하는...
-          <>
-            <div className="write-btns">
-              <button>미승인</button>
-              <form>
-                <button type="submit">승인</button>
-              </form>
-            </div>
-          </>
+          <div className="write-btns">
+            <button>미승인</button>
+            <form>
+              <button type="submit">승인</button>
+            </form>
+          </div>
         )}
       </div>
     </div>
