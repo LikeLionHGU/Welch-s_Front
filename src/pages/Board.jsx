@@ -89,6 +89,10 @@ export default function Board() {
       <Header mode={3} />
       <h2>게시판</h2>
       <button onClick={() => setModalOpen(true)}>글 작성하기</button>
+
+      <div>
+        
+      </div>
       {modalOpen && (
         <BoardCreate
           onClose={() => setModalOpen(false)}
