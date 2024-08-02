@@ -6,10 +6,10 @@ import "../../../styles/approval.css";
 export default function Approval() {
   return (
     <div className="approval-write">
-      {/* 참여자가 수정한 것 */}
-      <Write user={2} mode={2} />
       {/* 원본 */}
       <Write user={2} mode={1} />
+      {/* 참여자가 수정한 것 */}
+      <Write user={2} mode={2} />
     </div>
   );
 }
