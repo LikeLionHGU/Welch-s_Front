@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   DecoupledEditor,
   AccessibilityHelp,
@@ -62,15 +64,25 @@ import "../styles/write.css";
 import { useRecoilState } from "recoil";
 import { historyState } from "../atom";
 
+
 // user === 0 : 독자, 1: 참여자, 2: 관리자
-// mode === 0 : /update, 1: /approval
-export default function Write({ user, mode }) {
+// mode === 0 : /update, 1: /approval /// update는 글 쓰는 페이지 approval은 관리자가 승인하는 페이지
+export default function Write() {
+  const location = useLocation();
   const editorContainerRef = useRef(null);
   const editorMenuBarRef = useRef(null);
   const editorToolbarRef = useRef(null);
   const editorRef = useRef(null);
+  const navigate = useNavigate();
+
+  const { id, user, mode } = location.state || {};
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const [history, setHistory] = useRecoilState(historyState);
+
+
+
+  const [postList, setPostList] = useState([]); // 모든 버전(post를 다 가지고 옴)
+  const [post, setPost] = useState(); // 현재 선택한 버전의 post
 
   const toggleHistory = () => {
     setHistory((prev) => !prev); // 상태를 토글하여 열림/닫힘 상태 변경
@@ -80,6 +92,38 @@ export default function Write({ user, mode }) {
     setIsLayoutReady(true);
     return () => setIsLayoutReady(false);
   }, []);
+
+  useEffect(() => { // post를 가지고 와야함
+    const token = localStorage.getItem("token");
+
+    if (token == null) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    const fetchPostList = () => {
+      axios
+        .get(`https://likelion.info/post/get/all/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setPostList(response.data)
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          localStorage.removeItem("token");
+          navigate("/", { replace: true });
+        });
+    };
+
+    fetchPostList();
+
+  }, []);
+
+  useEffect(() => {
+    console.log(postList);
+  }, [postList]);
 
   const handleSetEditor = () => {
     if (editorRef.current) {
