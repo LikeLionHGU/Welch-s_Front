@@ -39,7 +39,7 @@ export default function Setting() {
   const [like, setLike] = useState();
   const [likeCount, setLikeCount] = useState();
   const [userList, setUserList] = useState([]);
-  const [bookmark, setBookmark] = useState([]);
+  const [bookmarkList, setBookmarkList] = useState([]);
   
 
   const [title, setTitle] = useState();
@@ -51,12 +51,7 @@ export default function Setting() {
 
 
   const [image, setImage] = useState(`${ImgNone}`);
-  const [galpi, setGalpi] = useState([
-    {
-      index : 1,
-      title : "김동규 짱", 
-    }
-  ]);
+  
   const [participatiedPeople, setparticipatiedPeople] = useState([{
     profileImg : "",
     name : "",
@@ -102,6 +97,10 @@ export default function Setting() {
 
   const handleImageUpload = (file) => {
     setImage(file);
+  };
+
+  const toBookmark = (id) => {
+    navigate("/galpi", { state: { id } });
   };
 
   
@@ -192,6 +191,7 @@ export default function Setting() {
           setLike(response.data.isLiked);
           setLikeCount(response.data.likeCount);
           setTitle(response.data.name);
+          setBookmarkList(response.data.bookMarkList);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -269,8 +269,9 @@ export default function Setting() {
 
         <div className="setting-menu">
           <div>갈피 목록</div>
+          <div onClick={() => toBookmark(project.id)}>갈피 추가하기</div>
           <div>
-            {bookmark.map((it) => (
+            {bookmarkList.map((it) => (
               <di>
                 {it.index}갈피: {it.name}
                 <di>
