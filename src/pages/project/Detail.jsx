@@ -48,13 +48,15 @@ export default function Detail() {
     
     return (
       <div id="detail-galpi-list">
-        <div id="detail-galpi">
-          <div>{bookmark.name}</div>
-          <div>
-            <div>수정하기</div>
-            <div>설정</div>
+        {bookmark.map((item, index) => (
+          <div key={index} id="detail-galpi">
+            <div>{item.name}</div>
+            <div>
+              <div>수정하기</div>
+              <div>설정</div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     );
   };
