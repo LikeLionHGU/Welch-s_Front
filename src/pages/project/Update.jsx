@@ -14,7 +14,7 @@ export default function Update() {
   const location = useLocation();
   const navigate = useNavigate();
   const [history, setHistory] = useRecoilState(historyState);
-  const { id, user, mode, bookmarkList } = location.state || {};
+  const { id, user, mode, bookmarkList } = location.state || {}; // id는 갈피의 id
 
   const [confirmedList, setConfirmedList] = useState([]); // 검토 완료
   const [waitPostList, setWaitPostList] = useState([]); // 검토 대기
@@ -36,6 +36,8 @@ export default function Update() {
       </div>
     );
   };
+
+  
 
   const PostList = () => {
     if(user === 2) { // 관리자 / 승인 여부 상관 X
@@ -181,7 +183,7 @@ export default function Update() {
           )}
         </div>
         <div id="update-middle">
-          <Write user={user} mode={0} />
+          <Write user={user} mode={0} id={id}/>
         </div>
         <div id="update-right">
           <div

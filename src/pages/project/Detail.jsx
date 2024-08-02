@@ -222,7 +222,7 @@ export default function Detail() {
 // 글 작성하는 페이지로 이동
   const toWrite = (id) => { // 넘겨주는 id는 갈피의 id
     if(project.isOwner) { // owner인 경우
-      navigate("/update", { state: { id: id, user: 2, mode: 0, bookmarkList: bookmarkList } });
+      navigate("/update", { state: { id: id, user: 2, mode: 0, bookmarkList: bookmarkList} });
     }
 
     if(project.isOwner === false && project.isParticipate === true) {
