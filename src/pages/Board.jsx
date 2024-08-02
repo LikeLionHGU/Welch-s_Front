@@ -15,8 +15,6 @@ export default function Board() {
   const navigate = useNavigate();
 
 
-  // console.log(id);
-
   const handleCreatePost = async (newPost) => {
     // 서버에 새 게시글을 등록하는 post 요청
     try {
@@ -58,7 +56,7 @@ export default function Board() {
       navigate("/", { replace: true });
       return;
     }
-    
+
 
 
     const fetchCommunityList = () => {
@@ -84,15 +82,17 @@ export default function Board() {
     console.log(posts);
   }, [posts]);
 
+
+
+  function toWrite() {
+    navigate();
+  }
+
   return (
     <div className="board-container">
       <Header mode={3} />
       <h2>게시판</h2>
       <button onClick={() => setModalOpen(true)}>글 작성하기</button>
-
-      <div>
-        
-      </div>
       {modalOpen && (
         <BoardCreate
           onClose={() => setModalOpen(false)}
@@ -100,9 +100,27 @@ export default function Board() {
           id={id}
         />
       )}
-      {posts.map((post, index) => (
-        <BoardContents key={index} post={post} loggedInUser={1} />
-      ))}
+
+      <div className="board-setting">
+        <div className="board-book">
+          <img
+            //src={image}
+            alt="img"
+            id="board-book-img"
+          />
+          <button>
+            책 쓰러가기
+          </button>
+        </div>
+
+        <div className="board-contents">
+          {posts.map((post, index) => (
+            <BoardContents key={index} post={post} loggedInUser={1} />
+          ))}
+        </div>
+      </div>
+
+
     </div>
   );
 }
