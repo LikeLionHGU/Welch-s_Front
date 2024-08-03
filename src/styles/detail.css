@@ -1,27 +1,34 @@
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
 #detail-main {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  /* padding: 0 9.17vw; */
+
 }
 
 .detail-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  width: 82%;
   min-width: 900px;
 
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .detail-img-container {
   position: relative;
-  width: 100%;
+  width: 50vw;
   height: 340px;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 
   margin-right: 20px;
 }
@@ -35,16 +42,20 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  opacity: 0.6;
+  opacity: 0.4;
   z-index: 0;
 }
 
 #detail-img-cover {
   position: relative;
   z-index: 1;
-  width: 350px;
-  height: 320px;
+  width: 11.11vw;
+  height: 220px;
   display: block;
+
+
+  border-radius: 4.63px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .detail-above {
@@ -58,16 +69,24 @@
   flex-direction: column-reverse;
 
   width: 100%;
-
+  
   border: 1px solid #5ca54b;
+  border-radius: 16px;
 }
 
 .detail-mywrite {
   flex: 3;
+  border-radius: 0px 0px 0px 16px;
   background-color: #5ca54b;
   color: white;
+
+
+  height: 62px;
+  width: 20.83em;
 }
+
 .detail-readbegin {
+  
   flex: 3;
 }
 
@@ -88,11 +107,23 @@
 
 .detail-mywrite,
 .detail-readbegin,
+.detail-goCommunity,
 .detail-like-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  font-family: 'pretendard';
+  font-size: 1.125em;
+  font-weight: 700;
+}
+
+.detail-like-container {
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 600;
+
 }
 
 .detail-like-container img {
@@ -101,12 +132,28 @@
 
 #detail-bookinfo {
   width: 100%;
+  margin-top: 80px;
+}
+
+.detail-title {
+  font-family:'Arita buri';
+  font-weight: 700;
+  font-size: 1.125em;
+
+  margin-bottom: 15px;
 }
 
 #detail-contents {
   background-color: #f4f4f4;
   width: 100%;
   padding: 15px;
+  margin-bottom: 80px;
+  border-radius: 8px;
+
+  font-family:'pretendard';
+  font-weight: 500;
+  font-size: 0.875em;
+
   /* padding이 width를 넘어가는 현상 수정 */
   box-sizing: border-box;
 }
@@ -128,22 +175,76 @@
 
 #detail-comments-container {
   width: 100%;
+  /* background-color: #F4F4F4 */
+
 }
+
+.detail-comments-name {
+  margin-top: 20px;
+  
+  font-family: 'pretendard';
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.detail-comments-date {
+  font-family: 'pretendard';
+  font-size: 0.8em;
+  font-weight: 500;
+
+  color: #BFBFBF;
+
+  margin-bottom: 8px;
+}
+
+.detail-comments-contents{
+  font-family: 'pretendard';
+  font-size: 0.9em;
+  font-weight: 500;
+
+  margin-bottom: 14px;
+}
+
+.detail-comments-bottom {
+  margin-top: 16px;
+  border-top: 1px solid #BFBFBF;
+}
+
+
 
 #detail-comments-list {
   width: 100%;
 }
 
+#comment-arrow-img{
+
+  height: 18px;
+  width: 22px;
+}
+
 #detail-write-comments {
   display: flex;
   background-color: #f4f4f4;
-  padding: 10px;
-  margin: 10px 0;
+
+  align-items: center;
+  justify-content: space-between;
+
+  height: 50px;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+
+  margin-bottom: 54px;
 }
 
 #detail-write-container {
   border: none;
   outline: none;
+  background-color: #f4f4f4;
 
   width: 100%;
+
 }
+
+
+
