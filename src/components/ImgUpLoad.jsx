@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ImgNone from "../imgs/img_none.svg";
 import "../styles/ImgUpLoad.css";
 
@@ -19,25 +19,25 @@ export default function ImgUpLoad({ onImageUpload }) {
     return new Promise((resolve) => {
       reader.onload = () => {
         setImageSrc(reader.result);
-        resolve(reader.result); // Base64 인코딩된 파일 반환
+        resolve(reader.result);
       };
     });
   };
 
+  // const handleClick = () => {
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.click();
+  //   }
+  // };
+
   const handleClick = () => {
     document.getElementById("fileInput").click();
   };
-
   return (
     <main className="img-container">
-      <div className="img-preview">
+      <div className="img-preview" onClick={handleClick}>
         {imageSrc && (
-          <img
-            className="img-image"
-            onClick={handleClick}
-            src={imageSrc}
-            alt="preview-img"
-          />
+          <img className="img-image" src={imageSrc} alt="preview-img" />
         )}
       </div>
 
