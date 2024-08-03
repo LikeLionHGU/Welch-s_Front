@@ -21,8 +21,9 @@ export default function Create() {
   const [bigCategory, setBigCategory] = useState("");
   const [category, setcategory] = useState("");
   const [visibility, setVisibility] = useState("공개");
-  const [people, setPeople] = useState(0);
-  const [image, setImage] = useState(`${ImgNone}`);
+  const [people, setPeople] = useState(1);
+  const [image, setImage] = useState();
+  const [imageSrc, setImageSrc] = useState(ImgNone);
 
   const navigate = useNavigate();
 
@@ -43,6 +44,7 @@ export default function Create() {
 
   const handleImageUpload = (file) => {
     setImage(file);
+    setImageSrc(URL.createObjectURL(file));
   };
 
   const storedToken = localStorage.getItem("token");
@@ -55,6 +57,27 @@ export default function Create() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (!title) {
+      alert("제목을 입력해 주세요!");
+      return;
+    }
+    console.log(image);
+    if (!category) {
+      alert("카테고리를 선택해 주세요!");
+      return;
+    }
+    if (!description) {
+      alert("책의 한 줄 소개를 입력해 주세요!");
+      return;
+    }
+    if (!description) {
+      alert("책의 한 줄 소개를 입력해 주세요!");
+      return;
+    }
+    if (!information) {
+      alert("책의 줄거리를 입력해 주세요!");
+      return;
+    }
     // category 객체의 값만 추출하여 문자열로 변환
     // const categoriesString = Object.values(category).join(", ");
 
@@ -71,7 +94,14 @@ export default function Create() {
     };
 
     const formData = new FormData();
-    formData.append("file", image);
+    formData.append(
+      "file",
+      image ||
+        new Blob([await fetch(ImgNone).then((res) => res.blob())], {
+          type: "image/svg+xml",
+        })
+    );
+
     formData.append(
       "post",
       new Blob([JSON.stringify(value)], {
