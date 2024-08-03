@@ -1,6 +1,7 @@
 import LogoImg from "../imgs/logo.svg";
 import SearchImg from "../imgs/search.svg";
 import ProfileImg from "../imgs/myprofile.svg";
+import GuideImg from "../imgs/guide.svg";
 import "../styles/header.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +71,7 @@ export default function Header({ mode }) {
   return (
     <div id="header">
       <div className="header-headerContainer">
-        <div>
+        <div className="header-haederLogo">
           <img
             src={LogoImg}
             alt="logo"
@@ -103,7 +104,24 @@ export default function Header({ mode }) {
               >
                 책 발간하기
               </button>
-              <div>
+
+              
+                <div className="header-guide">
+                  <img
+                    className="header-guide-img"
+                    src={GuideImg}
+                    alt="guide"
+                    onClick={() => {
+
+                    }}
+                  />
+                  <button
+                    id="goGuide"
+                  >
+                    가이드
+                  </button>
+                </div>
+                
                 <img
                   className="header-profile"
                   src={ProfileImg}
@@ -112,10 +130,11 @@ export default function Header({ mode }) {
                     toMyPage();
                   }}
                 />
-              </div>
+              
             </>
           ) : (
             <button
+              id="goLogin"
               onClick={() => {
                 window.location.href =
                   "https://likelion.info/login/oauth2/google";
