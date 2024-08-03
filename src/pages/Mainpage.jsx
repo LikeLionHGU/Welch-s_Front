@@ -11,7 +11,7 @@ export default function Mainpage() {
   const [bestProjects, setBestProjects] = useState([]);
   const [projects, setProjects] = useState([]);
 
-  const toList = (id) => {
+  const toList = (id) => { // 너 일단 보류
     navigate("/list", { state: { id } });
   };
 
