@@ -1,6 +1,4 @@
 import Header from "../../components/Header";
-
-import TestImg from "../../imgs/test5.png";
 import LikeImg from "../../imgs/like.svg";
 import WhiteLikeImg from "../../imgs/whiteLike.svg";
 import GrayLikeImg from "../../imgs/grayLike.svg";
