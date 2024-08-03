@@ -1,0 +1,38 @@
+.profile-page{
+    height: 100vh;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-wall-paper-section {
+    width: 100%;
+    height: 362px;
+    overflow: hidden;
+    padding: 0 !important; // 패딩을 확실하게 제거하기 위해 !important 사용
+    position: relative;
+}
+
+.profile-wall-pape-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-img-section {
+    top: 10px; // 필요한 위치에 맞게 조정
+    width: 100px;
+    height: 100px;
+    z-index: 10;
+    position: relative;
+    margin-top: 20px; // 여백 추가
+}
+
+.profile-img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

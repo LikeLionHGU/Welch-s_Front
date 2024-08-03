@@ -8,6 +8,8 @@
   flex-direction: column;
   align-items: center;
 
+  margin-bottom: 80px;
+
   /* padding: 0 9.17vw; */
 
 }
@@ -48,6 +50,7 @@
 
 #detail-img-cover {
   position: relative;
+  object-fit: cover;
   z-index: 1;
   width: 11.11vw;
   height: 220px;
@@ -128,6 +131,11 @@
 
 .detail-like-container img {
   cursor: pointer;
+}
+
+#about-the-writer{
+  width: 100%;
+  margin-top: 80px;
 }
 
 #detail-bookinfo {
