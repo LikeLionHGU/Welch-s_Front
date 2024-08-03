@@ -1,28 +1,33 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ImgNone from "../imgs/img_none.svg";
 import "../styles/profileUpLoad.scss"
 
 
-export default function ProfileUpload({ onProFileUpload }) {
+export default function ProfileUpload({ onProFileUpload, initialImage }) {
     const [profile, setProfile] = useState(ImgNone);
     const proFileInput = useRef(null);
 
-    const proFileChange = e => {
-        const file = e.target.files[0];
-        if (!file) {
-            setProfile(ImgNone);
-            return;
+    useEffect(() => {
+        if (initialImage) {
+          setProfile(initialImage);
         }
+      }, [initialImage]);
 
+
+
+
+      const encodeFileToBase64 = (fileBlob) => {
         const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === FileReader.DONE) {
-                setProfile(reader.result);
-                onProFileUpload(reader.result); // Base64 인코딩된 파일을 부모 컴포넌트로 전달
-            }
-        };
-        reader.readAsDataURL(file);
-    };
+    
+        reader.readAsDataURL(fileBlob);
+    
+        return new Promise((resolve) => {
+          reader.onload = () => {
+            setProfile(reader.result);
+            resolve(reader.result); // Base64 인코딩된 파일 반환
+          };
+        });
+      };
 
     return(
         <main className="profile-container">
@@ -39,7 +44,12 @@ export default function ProfileUpload({ onProFileUpload }) {
                 className="fileUploader"
                 type="file"
                 accept="image/*"
-                onChange={proFileChange}
+                onChange={(e) => {
+                    const file = e.target.files[0];
+                    encodeFileToBase64(file).then(() => {
+                        onProFileUpload(file); // 파일을 부모 컴포넌트로 전달
+                    });
+                  }}
                 ref={proFileInput}
                 name="profile_img"
                 style={{ display: "none" }}
