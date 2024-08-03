@@ -85,8 +85,8 @@ export default function Write({ user, mode, id, updatedId }) {
   var data = ""; // contents에 해당하는 부분
 
   const [postList, setPostList] = useState([]); // 모든 버전(post를 다 가지고 옴)
-  const [post, setPost] = useState(); // 현재 선택한 버전의 post
-  const [updatedPost, setUpdatedPost] = useState(); // 검토 신청이 들어온 post
+  const [post, setPost] = useState(""); // 현재 선택한 버전의 post
+  const [updatedPost, setUpdatedPost] = useState(""); // 검토 신청이 들어온 post
   // 처음 입력되는 부분
   const [initialData, setInitialData] = useState("");
   // const initialData = useRef("");
@@ -153,13 +153,9 @@ export default function Write({ user, mode, id, updatedId }) {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
           })
-          .then((response) => {
-            
-            setPost(response.data); // 가장 최신 승인 post를 post 안에 저장
-            // initialData = response.data.contents;
-            setInitialData(response.data.contents);
-
-            console.log("initial:", initialData);
+          .then((response1) => {
+            setPost(response1.data.contents); // 가장 최신 승인 post를 post 안에 저장
+            // setInitialData(response1.data.contents);
           })
           .catch((error) => {
             console.error("Error fetching posts:", error);
@@ -176,8 +172,9 @@ export default function Write({ user, mode, id, updatedId }) {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
           })
-          .then((response) => {
-            setUpdatedPost(response.data); // 검토 요청이 들어온 post를 updatedPost 안에 저장
+          .then((response2) => {
+            setUpdatedPost(response2.data.contents); // 검토 요청이 들어온 post를 updatedPost 안에 저장
+            // setInitialData(response2.data.contents);
           })
           .catch((error) => {
             console.error("Error fetching posts:", error);
@@ -186,15 +183,22 @@ export default function Write({ user, mode, id, updatedId }) {
           });
       };
 
-      setLoading(false);
-      if (mode === 1 && user === 2) {
+      if (mode === 2 && user === 2) {
         fetchUpdatedPost();
       }
-      if (mode === 2 && user === 2) {
+      if (mode === 1 && user === 2) {
         fetchDefaultPost();
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (post !== "" || updatedPost !== "") {
+      setLoading(false);
+    }
+    console.log("default!:", post);
+    console.log("update!:", updatedPost);
+  }, [post, updatedPost]);
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -214,7 +218,7 @@ export default function Write({ user, mode, id, updatedId }) {
   };
 
   if (loading && mode === 2) {
-    return <div>왜 안돼</div>;
+    return <div>Loading...</div>;
   }
 
   const modalStyle = {
@@ -387,7 +391,10 @@ export default function Write({ user, mode, id, updatedId }) {
       ],
     },
     // 미리 적어지는 곳
-    initialData: initialData,
+    initialData:
+      // (mode === 2 && user === 2 ? updatedPost : post)?.contents ||
+      // "둘 다 비었다.",
+      mode === 2 && user === 2 ? updatedPost : post,
     language: "ko",
     link: {
       addTargetToExternalLinks: true,
