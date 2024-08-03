@@ -83,6 +83,7 @@ export default function Mainpage() {
           <div className="main-section-subtitle">
             <div>함께 책 만들 작가 모집</div>
             <div
+              className="main-section-more"
               onClick={() => {
                 toList(1);
               }}
@@ -103,6 +104,7 @@ export default function Mainpage() {
           <div className="main-section-subtitle">
             <div>완결된 책</div>
             <div
+              className="main-section-more"
               onClick={() => {
                 toList(2);
               }}
@@ -123,6 +125,7 @@ export default function Mainpage() {
           <div className="main-section-subtitle">
             <div>진행 중인 책</div>
             <div
+              className="main-section-more"
               onClick={() => {
                 toList(3);
               }}
