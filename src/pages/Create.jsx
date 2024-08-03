@@ -18,28 +18,29 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [information, setInformation] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState({});
+  const [bigCategory, setBigCategory] = useState("");
+  const [category, setcategory] = useState("");
   const [visibility, setVisibility] = useState("공개");
   const [people, setPeople] = useState(0);
   const [image, setImage] = useState(`${ImgNone}`);
 
   const navigate = useNavigate();
 
-  const handleCategoryChange = (category, item) => {
-    setSelectedCategories((prevSelectedCategories) => {
-      const updatedCategories = {
-        ...prevSelectedCategories,
-        [category]: item,
-      };
-      console.log(updatedCategories);
-      return updatedCategories;
-    });
-  };
-
+  // const handleCategoryChange = (category, item) => {
+  //   setcategory((prevcategory) => {
+  //     const updatedCategories = {
+  //       ...prevcategory,
+  //       [category]: item,
+  //     };
+  //     console.log(updatedCategories);
+  //     return updatedCategories;
+  //   });
+  // };
+  console.log(category);
+  console.log(bigCategory);
   const handleVisibilityChange = (event) => {
     const newVisibility = event.target.value;
     setVisibility(newVisibility);
-    console.log(newVisibility);
   };
 
   const handlePeople = (upDown) => {
@@ -66,12 +67,13 @@ export default function Create() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // selectedCategories 객체의 값만 추출하여 문자열로 변환
-    const categoriesString = Object.values(selectedCategories).join(", ");
+    // category 객체의 값만 추출하여 문자열로 변환
+    // const categoriesString = Object.values(category).join(", ");
 
     const value = {
       name: title,
-      category: categoriesString,
+      category: category,
+      // bigCategory:bigCategory,
       description: description, // 한 줄 소개
       information: information, // 책 정보
       isPublic: visibility === "공개",
@@ -80,7 +82,6 @@ export default function Create() {
       isRecruit: true,
     };
 
-    console.log(value);
     const formData = new FormData();
     formData.append("file", image);
     formData.append(
@@ -151,8 +152,11 @@ export default function Create() {
                     <input
                       type="radio"
                       id={item}
-                      name={category}
-                      onChange={() => handleCategoryChange(category, item)}
+                      name="genre"
+                      onChange={() => {
+                        setcategory(item);
+                        setBigCategory(category);
+                      }}
                     />
                     <label htmlFor={item}>{item}</label>
                   </div>
