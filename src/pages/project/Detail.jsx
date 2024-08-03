@@ -194,12 +194,6 @@ export default function Detail() {
       localStorage.removeItem("token");
       navigate("/", { replace: true });
     }
-    
-    
-
-
-
-
 
     setCommentsLike(!commentsLike);
   };
