@@ -1,4 +1,5 @@
 import Header from "../../components/Header";
+import PeopleSlide from "../../components/PeopleSlide";
 
 import TestImg from "../../imgs/test5.png";
 import LikeImg from "../../imgs/like.svg";
@@ -324,6 +325,10 @@ export default function Detail() {
               <div>{project.maximumNumber}명</div>
             </div>
           </div>
+        </div>
+        <div id="about-the-writer">
+          <div className="detail-title">작가 소개</div>
+              {/* <PeopleSlide/> */}
         </div>
         <div id="detail-bookinfo">
           <div className="detail-title">책 소개</div>

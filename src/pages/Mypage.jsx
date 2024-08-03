@@ -76,20 +76,20 @@ export default function Mypage() {
           <img className="wall-pape-cover" src={wallpaper} alt="img" />
           <div className="overlay-content">
             <h1>나의 프로필</h1>
-            <div className="profile-section">
-              <img className="profile-cover" src={profile} alt="img" />
+            <div className="my-page-profile-section">
+              <img className="my-page-profile-cover" src={profile} alt="img" />
             </div>
           </div>
         </div>
 
-        <div className="profile-details">
-          <div className="profile-details-exp">
-            <div className="profile-details-edit">
+        <div className="my-page-profile-details">
+          <div className="my-page-profile-details-exp">
+            <div className="my-page-profile-details-edit">
               <div>{userInfo.name}</div>
               <button>
                 <div>
                   <img
-                    className="profile-edit"
+                    className="my-page-profile-edit"
                     src={EditImg}
                     alt="profile/edit"
                     onClick={() => {
@@ -103,16 +103,16 @@ export default function Mypage() {
             <div>이메일</div>
             <div>{userInfo.email}</div>
           </div>
-          <div className="profile-details-count">
-            <div className="books-progress-count">
+          <div className="my-page-profile-details-count">
+            <div className="my-page-books-progress-count">
               <div>진행 중인 책</div>
               <div>{userInfo.progressProjects}권</div>
             </div>
-            <div className="books-completed-count">
+            <div className="my-page-books-completed-count">
               <div>완결된 책</div>
               <div>{userInfo.finishedProjects}권</div>
             </div>
-            <div className="books-subscribe-count">
+            <div className="my-page-books-subscribe-count">
               <div>구독자</div>
               <div>{userInfo.subscribeUserCounts}명</div>
             </div>
@@ -122,7 +122,6 @@ export default function Mypage() {
         <div className="my-book-lists">
           <div className="books-progress">
             <h3>진행 중인 책</h3>
-
             <Slide mode={2} data={userInfo.progressProjectList || []} />
           </div>
           <div className="books-completed">
