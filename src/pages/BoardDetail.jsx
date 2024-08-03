@@ -31,7 +31,7 @@ export default function BoardDetail() {
 
         try {
             const response = await axios.post(
-                `https://likelion.info/post/community/like/${id}`,
+                `https://likelion.info/post/community/comment/like/${id}`,
                 {},
                 {
                     headers: { Authorization: `Bearer ${token}` },
@@ -50,12 +50,12 @@ export default function BoardDetail() {
         }
     };
 
-    const handleSetCommentsLike = async () => {
+    const handleSetCommentsLike = async (commentId) => {
         const token = localStorage.getItem("token");
 
         try {
             const response = await axios.post(
-                `https://likelion.info/community/comment/add`,
+                `https://likelion.info/community/comment/like/switch/${commentId}`,
                 {},
                 {
                     headers: { Authorization: `Bearer ${token}` },
@@ -85,6 +85,7 @@ export default function BoardDetail() {
                 src={comment.isLike ? RedLikeImg : GrayLikeImg}
                 alt="like"
             />
+            <div>{comment.likeCount}</div>
         </div>
     );
 
