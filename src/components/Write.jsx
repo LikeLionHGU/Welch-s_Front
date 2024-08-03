@@ -65,10 +65,10 @@ import { useRecoilState } from "recoil";
 import { historyState } from "../atom";
 import ModalContainer from "./ModalContainer";
 
-
 // user === 0 : 독자, 1: 참여자, 2: 관리자
 // mode === 0 : /update, 1: /approval
-export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 받아옴
+export default function Write({ user, mode, id }) {
+  // user, mode, 갈피 id를 받아옴
   const editorContainerRef = useRef(null);
   const editorMenuBarRef = useRef(null);
   const editorToolbarRef = useRef(null);
@@ -82,8 +82,6 @@ export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 
   var data = "";
   console.log(id);
 
-
-
   const [postList, setPostList] = useState([]); // 모든 버전(post를 다 가지고 옴)
   const [post, setPost] = useState(); // 현재 선택한 버전의 post
 
@@ -91,14 +89,12 @@ export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 
     setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
   };
 
-
   const addPost = async () => {
-    
     const token = localStorage.getItem("token");
     const value = {
       contents: data,
-      bookMarkId: id
-    }
+      bookMarkId: id,
+    };
 
     try {
       const response = await axios.post(
@@ -106,10 +102,9 @@ export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 
         value,
         {
           headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true
-        });
-        
-      
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         console.log("Post uploaded successfully");
@@ -132,7 +127,6 @@ export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 
       navigate("/", { replace: true });
     }
   };
-
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -167,10 +161,11 @@ export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 
       height: "400px", // 원하는 높이
       zIndex: "1001",
     },
+  };
 
-  useEffect(() => {
-    console.log(postList);
-  }, [postList]);
+  // useEffect(() => {
+  //   console.log(postList);
+  // }, [postList]);
 
   const handleSetEditor = () => {
     if (editorRef.current) {
@@ -379,8 +374,7 @@ export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 
   };
 
   return (
-    
-      <div className="write-container">
+    <div className="write-container">
       <div
         className="editor-container editor-container_document-editor editor-container_include-style"
         ref={editorContainerRef}
@@ -433,9 +427,8 @@ export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 
             {/* 모든 사람들이 볼 수 있는 페이지 */}
             {user !== 0 && (
               <div className="write-btns">
-
                 <button onClick={handleSetEditor}>임시 저장</button>
-                
+
                 <button onClick={addPost}>발행 검사</button>
               </div>
             )}
@@ -465,6 +458,5 @@ export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 
         )}
       </div>
     </div>
-    
   );
 }
