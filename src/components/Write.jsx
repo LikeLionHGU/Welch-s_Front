@@ -163,11 +163,10 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
             withCredentials: true,
           })
           .then((response) => {
+            
             setPost(response.data); // 가장 최신 승인 post를 post 안에 저장
             initialData = response.data.contents;
             setPossible(false);
-            
-            console.log(initialData);
           })
           .catch((error) => {
             console.error("Error fetching posts:", error);
