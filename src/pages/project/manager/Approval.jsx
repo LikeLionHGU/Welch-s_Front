@@ -16,17 +16,10 @@ export default function Approval() {
 
   return (
     <div className="approval-write">
-<<<<<<< HEAD
-      {/* 참여자가 수정한 것 */}
-      <Write user={2} mode={2} id={id} updatedId={updatedId}/>
-      {/* 원본 */}
-      <Write user={2} mode={1} id={id} updatedId={updatedId}/>
-=======
       {/* 원본 */}
       <Write user={2} mode={1} />
       {/* 참여자가 수정한 것 */}
       <Write user={2} mode={2} />
->>>>>>> main
     </div>
   );
 }
