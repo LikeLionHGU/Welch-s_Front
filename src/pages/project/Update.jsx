@@ -19,13 +19,12 @@ export default function Update() {
   const [confirmedList, setConfirmedList] = useState([]); // 검토 완료
   const [waitPostList, setWaitPostList] = useState([]); // 검토 대기
   const [approvedPostList, setApprovedPostList] = useState([]); // 승인 되어있는 항목
-  
-  
-  const BookmarkList = ({ bookmark = []}) => {
+
+  const BookmarkList = ({ bookmark = [] }) => {
     if (!bookmark || bookmark.length === 0) {
       return null;
     }
-    
+
     return (
       <div id="detail-galpi-list">
         {bookmark.map((item, index) => (
@@ -37,15 +36,14 @@ export default function Update() {
     );
   };
 
-  
-
   const PostList = () => {
-    if(user === 2) { // 관리자 / 승인 여부 상관 X
+    if (user === 2) {
+      // 관리자 / 승인 여부 상관 X
       return (
         <div>
           <div>검토 대기 기록</div>
           <br></br>
-            {waitPostList.map((item, index) => (
+          {waitPostList.map((item, index) => (
             <div key={index}>
               <div>{item.updatedDate}</div>
               <div>{item.user.name}</div>
@@ -63,7 +61,8 @@ export default function Update() {
           ))}
         </div>
       );
-    } else if(user === 1) { // 참여자 / 승인 여부 상관 X
+    } else if (user === 1) {
+      // 참여자 / 승인 여부 상관 X
       return (
         <div>
           <div>모든 버전</div>
@@ -75,8 +74,8 @@ export default function Update() {
           ))}
         </div>
       );
-
-    } else { // 독자 / 승인된 post만 보여줌
+    } else {
+      // 독자 / 승인된 post만 보여줌
       return (
         <div>
           <div>모든 버전</div>
@@ -89,8 +88,8 @@ export default function Update() {
         </div>
       );
     }
-  }
-  
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -107,7 +106,6 @@ export default function Update() {
         })
         .then((response) => {
           setWaitPostList(response.data);
-          
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -124,7 +122,6 @@ export default function Update() {
         })
         .then((response) => {
           setConfirmedList(response.data);
-          
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -141,7 +138,6 @@ export default function Update() {
         })
         .then((response) => {
           setApprovedPostList(response.data);
-          
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -153,19 +149,17 @@ export default function Update() {
     fetchApprovedPosts();
     fetchConfirmedPosts();
     fetchWaitPosts();
-
   }, []);
 
   useEffect(() => {
     console.log(confirmedList);
   }, [confirmedList]);
 
+  const toApprove = (updatedId) => {
+    // 넘겨주는 id는 갈피의 id
 
-  const toApprove = (updatedId) => { // 넘겨주는 id는 갈피의 id
-    
-    navigate("/approval", { state: { id: id, updatedId: updatedId} });
+    navigate("/approval", { state: { id: id, updatedId: updatedId } });
   };
-
 
   return (
     <div id="update-main-container">
@@ -194,7 +188,7 @@ export default function Update() {
           )}
         </div>
         <div id="update-middle">
-          <Write user={user} mode={0} id={id} isLoading={false}/>
+          <Write user={user} mode={0} id={id} />
         </div>
         <div id="update-right">
           <div
@@ -234,7 +228,7 @@ export default function Update() {
               <div>
                 <div>History</div>
                 <div>
-                  <PostList/>
+                  <PostList />
                 </div>
               </div>
             )}

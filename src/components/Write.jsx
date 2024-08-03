@@ -68,10 +68,10 @@ import ModalContainer from "./ModalContainer";
 // Update에서는 useEffect 사용할 필요 X
 // useEffect 내부에서 updateId에 내용을 확인하고, null이 아닐 경우에만 사용
 
-
 // user === 0 : 독자, 1: 참여자, 2: 관리자
 // mode === 0 : /update, 1: /approval
-export default function Write({ user, mode, id, updatedId, isLoading }) { // user, mode, 갈피 id를 받아옴
+export default function Write({ user, mode, id, updatedId }) {
+  // user, mode, 갈피 id를 받아옴
   const editorContainerRef = useRef(null);
   const editorMenuBarRef = useRef(null);
   const editorToolbarRef = useRef(null);
@@ -83,25 +83,15 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
   const [openModal, setOpenModal] = useState(false);
   const [history, setHistory] = useRecoilState(historyState);
   var data = ""; // contents에 해당하는 부분
-  
-
-
 
   const [postList, setPostList] = useState([]); // 모든 버전(post를 다 가지고 옴)
   const [post, setPost] = useState(); // 현재 선택한 버전의 post
   const [updatedPost, setUpdatedPost] = useState(); // 검토 신청이 들어온 post
   // 처음 입력되는 부분
-  // const [initialData, setInitialData] = useState();
-  var initialData = "";
+  const [initialData, setInitialData] = useState("");
+  // const initialData = useRef("");
 
-  const [possible, setPossible] = useState(isLoading); // 로딩 상태 추가
-
-  
-
-  
-
-
-
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   const toggleHistory = () => {
     setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
@@ -147,16 +137,17 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
   };
 
   useEffect(() => {
-    if(updatedId != null) { // updated id가 null이 아닌 경우에만 호출하게 됨
+    if (updatedId != null) {
+      // updated id가 null이 아닌 경우에만 호출하게 됨
       const token = localStorage.getItem("token");
-      
 
       if (token == null) {
         navigate("/", { replace: true });
         return;
       }
 
-      const fetchDefaultPost = () => { // 갈피의 가장 최신 승인 post 가져오기
+      const fetchDefaultPost = () => {
+        // 갈피의 가장 최신 승인 post 가져오기
         axios
           .get(`https://likelion.info/bookmark/get/default/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -165,20 +156,23 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
           .then((response) => {
             
             setPost(response.data); // 가장 최신 승인 post를 post 안에 저장
-            initialData = response.data.contents;
-            setPossible(false);
+            // initialData = response.data.contents;
+            setInitialData(response.data.contents);
+
+            console.log("initial:", initialData);
           })
           .catch((error) => {
             console.error("Error fetching posts:", error);
             localStorage.removeItem("token");
             navigate("/", { replace: true });
-          }
-        );
+          });
       };
 
-      const fetchUpdatedPost = () => { // 검토 요청이 들어온 post 객체 가져오기
+      const fetchUpdatedPost = () => {
+        // 검토 요청이 들어온 post 객체 가져오기
         axios
-          .get(`https://likelion.info/post/get/${updatedId}`, { // 수정된 post id 사용
+          .get(`https://likelion.info/post/get/${updatedId}`, {
+            // 수정된 post id 사용
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
           })
@@ -189,17 +183,18 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
             console.error("Error fetching posts:", error);
             localStorage.removeItem("token");
             navigate("/", { replace: true });
-          }
-        );
+          });
       };
-      
-      fetchUpdatedPost();
-      fetchDefaultPost();
-      
-      
-    } 
-  }, []);
 
+      setLoading(false);
+      if (mode === 1 && user === 2) {
+        fetchUpdatedPost();
+      }
+      if (mode === 2 && user === 2) {
+        fetchDefaultPost();
+      }
+    }
+  }, []);
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -217,6 +212,10 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
     setOpenModal(!openModal);
     console.log(openModal);
   };
+
+  if (loading && mode === 2) {
+    return <div>왜 안돼</div>;
+  }
 
   const modalStyle = {
     overlay: {
@@ -246,8 +245,6 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
       console.log(data);
     }
   };
-
-  
 
   const editorConfig = {
     toolbar: {
@@ -441,12 +438,8 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
     },
     translations: [translations],
   };
-
-  if(possible) {
-    return <div>왜 안돼</div>;
-  } return (
-    
-      <div className="write-container">
+  return (
+    <div className="write-container">
       <div
         className="editor-container editor-container_document-editor editor-container_include-style"
         ref={editorContainerRef}
@@ -489,6 +482,7 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
                   }}
                   editor={DecoupledEditor}
                   config={editorConfig}
+                  // data={mode === 2 && user === 2 ? initialData : {}}
                 />
               )}
             </div>
@@ -507,6 +501,8 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
           </>
         ) : // 관리자의 수정 편집 페이지, 버전을 관리하는...
         mode === 2 && user === 2 ? (
+          <></>
+        ) : (
           <>
             <ModalContainer
               isOpen={openModal}
@@ -525,12 +521,8 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
               <button type="submit">승인</button>
             </div>
           </>
-        ) : (
-          <></>
         )}
       </div>
     </div>
   );
-  
-  
 }
