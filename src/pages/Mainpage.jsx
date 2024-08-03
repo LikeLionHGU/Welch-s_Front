@@ -78,8 +78,8 @@ export default function Mainpage() {
             <Slide mode={1} data={bestProjects} />
           </div>
         </div>
-        <div className="main-section">
-          <div className="main-section-above">
+        <div className="main-sub-section">
+          <div className="main-section-subtitle">
             <div>함께 책 만들 작가 모집</div>
             <div
               onClick={() => {
@@ -98,8 +98,8 @@ export default function Mainpage() {
             />
           </div>
         </div>
-        <div className="main-section">
-          <div className="main-section-above">
+        <div className="main-sub-section">
+          <div className="main-section-subtitle">
             <div>완결된 책</div>
             <div
               onClick={() => {
@@ -118,8 +118,8 @@ export default function Mainpage() {
             />
           </div>
         </div>
-        <div className="main-section">
-          <div className="main-section-above">
+        <div className="main-sub-section">
+          <div className="main-section-subtitle">
             <div>진행 중인 책</div>
             <div
               onClick={() => {

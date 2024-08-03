@@ -1,3 +1,7 @@
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+
+
 #header {
   display: flex;
   flex-direction: column;
@@ -9,6 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  
   padding: 0 9.17vw;
   margin-top: 28px;
   margin-bottom: 30px;
@@ -114,7 +119,8 @@
 
 #upper-category button {
   background-color: #5ca54b;
-  font-family: Arita-buri-SemiBold;
+  font-family: 'Arita buri';
+  font-weight: 600;
   font-size: 1rem;
   color: white;
 }

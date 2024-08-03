@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function Board() {
   const [modalOpen, setModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [project, setProject] = useState([]);
   const location = useLocation();
   const { id } = location.state || {};
   const navigate = useNavigate();
@@ -74,6 +75,24 @@ export default function Board() {
           navigate("/", { replace: true });
         });
     };
+
+    const fetchProject = () => {
+      axios
+        .get(`https://likelion.info/project/get/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setProject(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          localStorage.removeItem("token");
+          navigate("/", { replace: true });
+        });
+    };
+
+    fetchProject();
     fetchCommunityList();
 
   }, []);
@@ -104,7 +123,7 @@ export default function Board() {
       <div className="board-setting">
         <div className="board-book">
           <img
-            //src={image}
+            src={project.imageAddress}
             alt="img"
             id="board-book-img"
           />
