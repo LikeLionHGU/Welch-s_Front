@@ -1,6 +1,5 @@
 import Header from "../../components/Header";
 import PeopleSlide from "../../components/PeopleSlide";
-
 import TestImg from "../../imgs/test5.png";
 import LikeImg from "../../imgs/like.svg";
 import WhiteLikeImg from "../../imgs/whiteLike.svg";
