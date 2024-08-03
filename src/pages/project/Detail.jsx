@@ -40,11 +40,11 @@ export default function Detail() {
     );
   };
 
-  const BookmarkList = ({ bookmark = []}) => {
+  const BookmarkList = ({ bookmark = [] }) => {
     if (!bookmark || bookmark.length === 0) {
       return null;
     }
-    
+
     return (
       <div id="detail-galpi-list">
         {bookmark.map((item, index) => (
@@ -98,6 +98,7 @@ export default function Detail() {
           console.log("Post uploaded successfully");
           // alert("게시물 업로드 성공");
           navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+          setComment("");
         } else {
           console.error("Error uploading post");
         }
@@ -114,7 +115,6 @@ export default function Detail() {
         localStorage.removeItem("token");
         navigate("/", { replace: true });
       }
-      setComment("");
     }
   };
 
@@ -206,20 +206,23 @@ export default function Detail() {
     navigate("/update");
   }
 
-// 글 작성하는 페이지로 이동
-  const toWrite = (id) => { // 넘겨주는 id는 갈피의 id
-    if(project.isOwner) { // owner인 경우
-      navigate("/update", { state: { id: id, user: 2, mode: 0, bookmarkList: bookmarkList} });
+  // 글 작성하는 페이지로 이동
+  const toWrite = (id) => {
+    // 넘겨주는 id는 갈피의 id
+    if (project.isOwner) {
+      // owner인 경우
+      navigate("/update", {
+        state: { id: id, user: 2, mode: 0, bookmarkList: bookmarkList },
+      });
     }
 
-    if(project.isOwner === false && project.isParticipate === true) {
+    if (project.isOwner === false && project.isParticipate === true) {
       navigate("/update", { state: { id, user: 1, mode: 0, bookmarkList } }); // 참여자인 경우
     }
-    
-    if(project.isOwner === false && project.isParticipate === false) {
-      navigate("/update", { state: { id, user: 0, mode: 0, bookmarkList } }); // 그냥 사람  
+
+    if (project.isOwner === false && project.isParticipate === false) {
+      navigate("/update", { state: { id, user: 0, mode: 0, bookmarkList } }); // 그냥 사람
     }
-    
   };
 
   const handleGoCommunity = (id) => {
@@ -331,7 +334,7 @@ export default function Detail() {
               id="detail-write-container"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              onKeyDown={(e) => (e.key === "Enter" ? addComment() : null)}
+              onKeyDown={(e) => (e.key === "Enter" ? handleSubmit() : null)}
             />
             <img
               src={CommentArrowImg}
