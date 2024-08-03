@@ -26,7 +26,7 @@ export default function BoardDetail() {
   const [post, setPost] = useState("");
     
 
-  const handleSetProjectLike = async () => {
+  const handleSetPostLike = async () => {
       const token = localStorage.getItem("token");
 
         try {
@@ -50,12 +50,12 @@ export default function BoardDetail() {
         }
     };
 
-    const handleSetCommentsLike = async (commentId) => {
+    const handleSetCommentsLike = async () => {
         const token = localStorage.getItem("token");
 
         try {
             const response = await axios.post(
-                `https://likelion.info/project/comment/like/${commentId}`,
+                `https://likelion.info/community/comment/add`,
                 {},
                 {
                     headers: { Authorization: `Bearer ${token}` },
@@ -82,31 +82,23 @@ export default function BoardDetail() {
                 onClick={() => {
                     handleSetCommentsLike(comment.id);
                 }}
-                src={comment.isLiked ? RedLikeImg : GrayLikeImg}
+                src={comment.isLike ? RedLikeImg : GrayLikeImg}
                 alt="like"
             />
         </div>
     );
 
-    const addComment = () => {
-        if (comment !== "") {
-            console.log(comment);
-            setComment("");
-        }
-    };
-
     const handleSubmit = async () => {
-        const token = localStorage.getItem("token");
-
-        const request = {
-            contents: comment
-        };
-
         if (comment !== "") {
+            const token = localStorage.getItem("token");
+
             try {
                 const response = await axios.post(
-                    `https://likelion.info/project/comment/add/${id}`,
-                    request,
+                    `https://likelion.info/community/comment/add`,
+                    {
+                        contents: comment,
+                        postId: id
+                    },
                     {
                         headers: { Authorization: `Bearer ${token}` },
                         withCredentials: true
@@ -114,42 +106,15 @@ export default function BoardDetail() {
                 );
 
                 if (response.status === 200) {
-                    setComment("");
-                    // Fetch comments again to include the new comment
-                    fetchProject();
+                    setCommentsLike(!commentsLike);
                 } else {
-                    console.error("Error adding comment");
+                    console.error("Error toggling comment like");
                 }
             } catch (error) {
-                console.error("Error adding comment:", error);
+                console.error("Error toggling comment like:", error);
             }
+            setComment("");
         }
-    };
-
-    const fetchProject = () => {
-        const token = localStorage.getItem("token");
-        
-        if (!token) {
-            navigate("/", { replace: true });
-            return;
-        }
-
-        axios
-            .get(`https://likelion.info/project/get/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-                withCredentials: true,
-            })
-            .then((response) => {
-                setProject(response.data);
-                setCommentList(response.data.commentList);
-                setLike(response.data.isLiked);
-                setLikeCount(response.data.likeCount);
-            })
-            .catch((error) => {
-                console.error("Error fetching project:", error);
-                localStorage.removeItem("token");
-                navigate("/", { replace: true });
-            });
     };
 
     useEffect(() => {
@@ -170,6 +135,7 @@ export default function BoardDetail() {
                 .then((response) => {
                     console.log(response.data);
                     setPost(response.data);
+                    setCommentList(response.data.commentList);
                     // console.log(post);
                 })
                 .catch((error) => {
@@ -179,7 +145,6 @@ export default function BoardDetail() {
                 });
         };
         fetchPost();
-        fetchProject();
     }, []);
 
     
@@ -212,7 +177,7 @@ export default function BoardDetail() {
                     <img
                         sec={post.isLike ? RedLikeImg : GrayLikeImg}
                         onClick={() => {
-                            handleSetProjectLike();
+                            handleSetPostLike();
                         }}
                         alt='like'
                         style={{ width: "22px", height: "20px" }}
@@ -227,7 +192,7 @@ export default function BoardDetail() {
                             id="board-detail-write-container"
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
-                            onKeyDown={(e) => (e.key === "Enter" ? addComment() : null)}
+                            onKeyDown={(e) => (e.key === "Enter" ? handleSubmit() : null)}
                         />
                         <img
                             src={CommentArrowImg}
