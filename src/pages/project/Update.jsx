@@ -44,13 +44,17 @@ export default function Update() {
       return (
         <div>
           <div>검토 대기 기록</div>
+          <br></br>
             {waitPostList.map((item, index) => (
             <div key={index}>
               <div>{item.updatedDate}</div>
               <div>{item.user.name}</div>
+              <div onClick={() => toApprove(item.id)}>검토하러 가기</div>
+              <br></br>
             </div>
           ))}
           <div>모든 버전</div>
+          <br></br>
           {confirmedList.map((item, index) => (
             <div key={index}>
               <div>{item.updatedDate}</div>
@@ -156,6 +160,13 @@ export default function Update() {
     console.log(confirmedList);
   }, [confirmedList]);
 
+
+  const toApprove = (updatedId) => { // 넘겨주는 id는 갈피의 id
+    
+    navigate("/approval", { state: { id: id, updatedId: updatedId} });
+  };
+
+
   return (
     <div id="update-main-container">
       <Header mode={3} />
@@ -183,7 +194,7 @@ export default function Update() {
           )}
         </div>
         <div id="update-middle">
-          <Write user={user} mode={0} id={id}/>
+          <Write user={user} mode={0} id={id} isLoading={false}/>
         </div>
         <div id="update-right">
           <div
