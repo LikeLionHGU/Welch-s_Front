@@ -1,7 +1,7 @@
 #header {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  
   width: 100%;
 }
 
@@ -9,7 +9,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 40px;
+  padding: 0 9.17vw;
+  margin-top: 28px;
+  margin-bottom: 30px;
+}
+
+.header-haederLogo {
+  size: 4.7vw 42px;
 }
 
 .header-searchContainer {
@@ -17,13 +23,14 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 10px;
+  padding: 22px 15px;
   margin-left: 100px;
-  border: 1px solid black;
+  border: 1.5px solid black;
   border-radius: 50px;
-  width: 400px;
+  width: 38vw;
   height: 40px;
 }
+
 
 .header-headerRight {
   display: flex;
@@ -31,9 +38,39 @@
 }
 
 #goWrite {
+  font-weight: bold;
+  font-size: 1em;
   border: none;
   background-color: white;
-  margin-right: 76px;
+  margin-right: 44px;
+
+  cursor: pointer;
+}
+
+.header-guide {
+  display: flex;
+  margin-right: 20px;
+  
+}
+
+.header-guide-img{
+  margin-right: 5px;
+}
+
+#goGuide {
+  font-size: 0.875em;
+  border: none;
+  background-color: white;
+  
+
+  cursor: pointer;
+}
+
+#goLogin {
+  font-size: 0.875em;
+  border: none;
+  background-color: white;
+  
 
   cursor: pointer;
 }
@@ -41,7 +78,11 @@
 .header-searchBox {
   border: none;
   outline: none;
-  width: 80%;
+  width: 70%;
+}
+
+.header-searchBox::placeholder{
+  font-size: 1em;
 }
 
 #header img {
@@ -73,5 +114,7 @@
 
 #upper-category button {
   background-color: #5ca54b;
+  font-family: Arita-buri-SemiBold;
+  font-size: 1rem;
   color: white;
 }
