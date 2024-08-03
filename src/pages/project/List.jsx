@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Header from "../../components/Header";
 import "../../styles/list.css";
+import { useLocation } from "react-router-dom";
 
 import Test1 from "../../imgs/test1.png";
 import Test2 from "../../imgs/test2.png";
@@ -33,7 +34,12 @@ const imageData = [
 ];
 
 export default function List() {
+  const location = useLocation();
   const [dropdown, setDropdown] = useState("");
+  // 카테고리를 받아옴
+  const { category } = location.state || {};
+
+  console.log(category);
 
   const handleSelectChange = (event) => {
     setDropdown(event.target.value);
@@ -44,9 +50,9 @@ export default function List() {
       <div className="list-grid-container">
         <div className="list-dropdown-container">
           <select value={dropdown} onChange={handleSelectChange}>
-            <option value="option1">모집 중</option>
-            <option value="option2">완결</option>
-            <option value="option3">연재중</option>
+            <option value="모집중">모집 중</option>
+            <option value="완결">완결</option>
+            <option value="연재중">연재중</option>
           </select>
         </div>
         <div className="list-container">
