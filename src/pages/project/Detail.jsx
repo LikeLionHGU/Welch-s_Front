@@ -275,7 +275,9 @@ export default function Detail() {
         <div className="detail-above">
           <div className="detail-img-container">
             <div
-              style={{ backgroundImage: `url(${project.imageAddress})` }}
+              style={{ backgroundImage: `url(${project.imageAddress})`,
+              borderRadius: '16px'
+            }}
               className="detail-img-back"
             ></div>
             <img src={project.imageAddress} alt="img" id="detail-img-cover" />
@@ -320,11 +322,11 @@ export default function Detail() {
           </div>
         </div>
         <div id="detail-bookinfo">
-          <div>책 소개</div>
+          <div className="detail-title">책 소개</div>
           <div id="detail-contents">{project.information}</div>
         </div>
         <div id="detail-galpi-container">
-          <div>갈피 목록</div>
+          <div className="detail-title">갈피 목록</div>
           <BookmarkList bookmark={bookmarkList} />
         </div>
         <div id="detail-comments-list">

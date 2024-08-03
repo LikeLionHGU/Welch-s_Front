@@ -1,27 +1,34 @@
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
 #detail-main {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  /* padding: 0 9.17vw; */
+
 }
 
 .detail-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  width: 82%;
   min-width: 900px;
 
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .detail-img-container {
   position: relative;
-  width: 100%;
+  width: 50vw;
   height: 340px;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 
   margin-right: 20px;
 }
@@ -35,16 +42,20 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  opacity: 0.6;
+  opacity: 0.4;
   z-index: 0;
 }
 
 #detail-img-cover {
   position: relative;
   z-index: 1;
-  width: 350px;
-  height: 320px;
+  width: 11.11vw;
+  height: 220px;
   display: block;
+
+
+  border-radius: 4.63px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .detail-above {
@@ -58,16 +69,35 @@
   flex-direction: column-reverse;
 
   width: 100%;
-
+  
   border: 1px solid #5ca54b;
+  border-radius: 16px;
 }
 
 .detail-mywrite {
   flex: 3;
+  border-radius: 0px 0px 0px 16px;
   background-color: #5ca54b;
   color: white;
+
+
+  height: 62px;
+  width: 20.83em;
+  font-family: 'pretendard';
+  font-size: 1.125em;
+  font-weight: 700;
 }
+
+.detail-goCommunity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .detail-readbegin {
+  
   flex: 3;
 }
 
@@ -101,6 +131,15 @@
 
 #detail-bookinfo {
   width: 100%;
+  margin-top: 80px;
+}
+
+.detail-title {
+  font-family:'Arita buri';
+  font-weight: 700;
+  font-size: 1.125em;
+
+  margin-bottom: 15px;
 }
 
 #detail-contents {
