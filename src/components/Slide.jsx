@@ -34,13 +34,19 @@ const SlideContent = ({ data, mode }) => {
     <div className="slide-best-container">
       <div className="slide-best-left">
         <div className="slide-best-category">{data.category}</div>
-        <div>{data.information}</div>
+        <div className="slide-best-information">{data.information}</div>
       </div>
       <div className="slide-best-img-container">
         <div
           className="slide-best-img"
           style={{
-            backgroundImage: `url(${data.imageAddress})`,
+            backgroundImage: `linear-gradient(
+              to bottom,
+              rgba(255, 255, 255, 0) 64%,
+              rgba(255, 255, 255, 1)
+            ), 
+            url(${data.imageAddress})`,
+            boxShadow: '0px 2.36px 4.72px 0px rgba(0, 0, 0, 20%)',
           }}
           onClick={() => handleSlideClick(data.id)}
         ></div>
@@ -57,7 +63,7 @@ const SlideContent = ({ data, mode }) => {
     >
       <div className="slide-book-info">
         <div>{data.name}</div>
-        <div>{data.information}</div>
+        <div>{data.description}</div>
         <div>{data.category}</div>
       </div>
     </div>
