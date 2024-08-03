@@ -1,3 +1,6 @@
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+
 .main-page {
   display: flex;
   flex-direction: column;
@@ -16,13 +19,37 @@
 
 .main-section {
   width: 100%;
-  max-width: 90%;
+  /* max-width: 90%; */
 }
 
 .main-section-above {
+  font-family:'Arita buri';
+  font-weight: 700;
+  font-size: 1.375em;
+
   display: flex;
   justify-content: space-between;
-  padding: 0 35px;
+  padding: 90px 9.17vw 28px 9.17vw;
+}
+
+
+.main-sub-section {
+  width: 100%;
+  padding: 0px 9.17vw;
+}
+
+
+
+.main-section-subtitle {
+  font-family:'Arita buri';
+  font-weight: 700;
+  font-size: 1.375em;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 120px 0px 20px 0px;
+
 }
 
 #best-book {
@@ -31,7 +58,7 @@
 }
 
 #best-above {
-  padding-left: 85px;
+  /* padding-left: 85px; */
 }
 
 .main-slide-container {
