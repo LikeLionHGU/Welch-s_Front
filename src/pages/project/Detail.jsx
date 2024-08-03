@@ -60,11 +60,13 @@ export default function Detail() {
     );
   };
 
+
+
   const Comment = ({ comment }) => (
     <div id="detail-comments-container">
-      <div>{comment.user.name}</div>
-      <div>{comment.createdDate}</div>
-      <div>{comment.contents}</div>
+      <div className="detail-comments-name">{comment.user.name}</div>
+      <div className="detail-comments-date">{comment.createdDate}</div>
+      <div className="detail-comments-contents">{comment.contents}</div>
       <img
         onClick={() => {
           handleSetCommentsLike(comment.id);
@@ -72,7 +74,9 @@ export default function Detail() {
         src={comment.isLiked ? RedLikeImg : GrayLikeImg}
         alt="like"
       />
+      <div className="detail-comments-bottom"></div>
     </div>
+    
   );
 
   const handleSubmit = async () => {
@@ -275,7 +279,9 @@ export default function Detail() {
         <div className="detail-above">
           <div className="detail-img-container">
             <div
-              style={{ backgroundImage: `url(${project.imageAddress})` }}
+              style={{ backgroundImage: `url(${project.imageAddress})`,
+              borderRadius: '16px'
+            }}
               className="detail-img-back"
             ></div>
             <img src={project.imageAddress} alt="img" id="detail-img-cover" />
@@ -320,11 +326,11 @@ export default function Detail() {
           </div>
         </div>
         <div id="detail-bookinfo">
-          <div>책 소개</div>
+          <div className="detail-title">책 소개</div>
           <div id="detail-contents">{project.information}</div>
         </div>
         <div id="detail-galpi-container">
-          <div>갈피 목록</div>
+          <div className="detail-title">갈피 목록</div>
           <BookmarkList bookmark={bookmarkList} />
         </div>
         <div id="detail-comments-list">
@@ -337,6 +343,7 @@ export default function Detail() {
               onKeyDown={(e) => (e.key === "Enter" ? handleSubmit() : null)}
             />
             <img
+              id="comment-arrow-img"
               src={CommentArrowImg}
               alt="comment"
               disabled=""
