@@ -59,7 +59,7 @@ import translations from "ckeditor5/translations/ko.js";
 import "ckeditor5/ckeditor5.css";
 
 import "../styles/write.css";
-import { readOnlySelector, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { historyState } from "../atom";
 import ModalContainer from "./ModalContainer";
 
@@ -72,11 +72,10 @@ export default function Write({ user, mode }) {
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [modalContents, setModalContents] = useState("");
   const [history, setHistory] = useRecoilState(historyState);
 
   const toggleHistory = () => {
-    setHistory((prev) => !prev); // 상태를 토글하여 열림/닫힘 상태 변경
+    setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
   };
 
   useEffect(() => {
@@ -95,31 +94,6 @@ export default function Write({ user, mode }) {
     setOpenModal(!openModal);
     console.log(openModal);
   };
-
-  // 누르면 모달 꺼지고 페이지 이동
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
-  const handleTextareaChange = (event) => {
-    setModalContents(event.target.value);
-    console.log(event.target.value);
-  };
-
-  const ModalContents = () => (
-    <div className="write-modal-contents-container">
-      <div>미승인 사유</div>
-      <textarea
-        id="write-modal-contents-box"
-        placeholder="수정해야 할 부분을 작성해 주세요."
-        value={modalContents}
-        onChange={handleTextareaChange}
-      ></textarea>
-      <div>
-        <button onClick={handleCloseModal}>작성하기</button>
-      </div>
-    </div>
-  );
 
   const modalStyle = {
     overlay: {
@@ -358,7 +332,6 @@ export default function Write({ user, mode }) {
                   onReady={(editor) => {
                     editorRef.current = editor;
                     const toolbarElement = editor.ui.view.toolbar.element;
-                    const menuBarElement = editor.ui.view.menuBarView?.element;
                     if (user === 2 && mode === 2) {
                       editor.enableReadOnlyMode("feature-id");
                     }
@@ -395,9 +368,7 @@ export default function Write({ user, mode }) {
             {user !== 0 && (
               <div className="write-btns">
                 <button>임시 저장</button>
-                <form>
-                  <button type="submit">발행 검사</button>
-                </form>
+                <button type="submit">발행 검사</button>
               </div>
             )}
           </>
@@ -407,8 +378,8 @@ export default function Write({ user, mode }) {
             <ModalContainer
               isOpen={openModal}
               closeModal={handleSetOpenModal}
-              Contents={ModalContents}
               style={modalStyle}
+              mode={0}
             />
             <div className="write-btns">
               <button
@@ -418,9 +389,7 @@ export default function Write({ user, mode }) {
               >
                 미승인
               </button>
-              <form>
-                <button type="submit">승인</button>
-              </form>
+              <button type="submit">승인</button>
             </div>
           </>
         ) : (

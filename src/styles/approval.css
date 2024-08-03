@@ -5,15 +5,3 @@
 
   display: flex;
 }
-.write-modal-contents-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-
-  flex-direction: column;
-}
-#write-modal-contents-box {
-  border: none;
-  outline: none;
-  resize: none;
-}
