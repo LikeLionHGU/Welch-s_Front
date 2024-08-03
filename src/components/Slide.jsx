@@ -46,7 +46,7 @@ const SlideContent = ({ data, mode }) => {
               rgba(255, 255, 255, 1)
             ), 
             url(${data.imageAddress})`,
-            boxShadow: '0px 2.36px 4.72px 0px rgba(0, 0, 0, 20%)',
+            boxshadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
           }}
           onClick={() => handleSlideClick(data.id)}
         ></div>
@@ -57,14 +57,15 @@ const SlideContent = ({ data, mode }) => {
       className="slide-content"
       style={{
         backgroundImage: `url(${data.imageAddress})`,
+        boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 20%)',
       }}
       alt={data.name}
       onClick={() => handleSlideClick(data.id)}
     >
       <div className="slide-book-info">
-        <div>{data.name}</div>
-        <div>{data.description}</div>
-        <div>{data.category}</div>
+        <div className="slide-content-name">{data.name}</div>
+        <div className="slide-content-description">{data.description}</div>
+        <div className="slide-content-category">{data.category}</div>
       </div>
     </div>
   ) : (
@@ -109,13 +110,19 @@ export default function Slide({ mode, data }) {
   return (
     <div
       className="slide-container"
-      style={mode === 1 ? { height: "345px" } : { height: "200px" }}
+      style={
+        mode === 1 
+        ? { height: "345px" } 
+        : mode === 2 
+        ? { height: "380px", backgroundColor: 'rgba(0, 0, 0, 0)', zIndex : 10} // 100% 투명도
+        : { height: "380px" }
+      }
     >
       {mode === 1 ? (
         // <div className="arrow"></div>
         <></>
       ) : (
-        <button className="slide-arrow" ref={prevRef}>
+        <button className="slide-arrow-prev" ref={prevRef}>
           <img src={PrevArrowImg} alt="prevarrow" />
         </button>
       )}
@@ -123,7 +130,7 @@ export default function Slide({ mode, data }) {
         // 한번에 보이는 슬라이드
         slidesPerView={mode === 1 ? 2.7 : mode === 2 ? 6.3 : 4}
         // 슬라이드 사이 거리
-        spaceBetween={15}
+        spaceBetween={26}
         // 중간으로
         // centeredSlides={true}
         // 무한
@@ -160,7 +167,7 @@ export default function Slide({ mode, data }) {
         // <div className="arrow"></div>
         <></>
       ) : (
-        <button className="slide-arrow" ref={nextRef}>
+        <button className="slide-arrow-next" ref={nextRef}>
           <img src={NextArrowImg} alt="nextarrow" />
         </button>
       )}

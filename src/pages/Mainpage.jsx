@@ -4,15 +4,16 @@ import { useNavigate } from "react-router-dom";
 import "../styles/mainpage.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 export default function Mainpage() {
   const navigate = useNavigate();
   const [bestProjects, setBestProjects] = useState([]);
   const [projects, setProjects] = useState([]);
 
-  function toList() {
-    navigate("/list");
-  }
+  const toList = (id) => { // 너 일단 보류
+    navigate("/list", { state: { id } });
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -60,11 +61,17 @@ export default function Mainpage() {
     console.log(bestProjects);
   }, [bestProjects]);
 
-  // useEffect(() => {
-  //   console.log(
-  //     projects.filter((project) => project.isRecruit && project.isPublic)
-  //   );
-  // }, [projects]);
+  useEffect(() => {
+    console.log(
+      projects.filter((project) => project.isRecruit && project.isPublic)
+    );
+  }, [projects]);
+
+  const handleCategoryClick = (category, isRecruit, isFinished) => {
+    
+    navigate("/list", { state: { category: null, bigCategory: category, isFinished: isFinished, isRecruit: isRecruit} });
+    
+  };
 
   return (
     <div className="main-page">
@@ -82,8 +89,9 @@ export default function Mainpage() {
           <div className="main-section-subtitle">
             <div>함께 책 만들 작가 모집</div>
             <div
+              className="main-section-more"
               onClick={() => {
-                toList();
+                handleCategoryClick("소설", true, false);
               }}
             >
               더보기
@@ -102,8 +110,9 @@ export default function Mainpage() {
           <div className="main-section-subtitle">
             <div>완결된 책</div>
             <div
+              className="main-section-more"
               onClick={() => {
-                toList();
+                handleCategoryClick("소설", false, true);
               }}
             >
               더보기
@@ -122,8 +131,9 @@ export default function Mainpage() {
           <div className="main-section-subtitle">
             <div>진행 중인 책</div>
             <div
+              className="main-section-more"
               onClick={() => {
-                toList();
+                handleCategoryClick("소설", false, false);
               }}
             >
               더보기

@@ -18,6 +18,7 @@ export default function Header({ mode }) {
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const query = useQuery();
   const navigate = useNavigate();
+  
 
   const categories = {
     소설: ["전체", "공포", "로맨스", "미스터리/추리", "역사", "판타지", "SF"],
@@ -28,15 +29,27 @@ export default function Header({ mode }) {
     기타: ["기타"],
   };
 
+  // const checkStatus = (status) => {
+  //   if(status === "모집 중") {
+  //     setIsRecruit(true);
+  //   } else if(status === "연재 중") {
+  //     setIsFinished(false);
+  //   } else { // 완결
+  //     setIsFinished(true);
+  //   }
+  // };
+
   const handleCategoryClick = (category) => {
     if (mode === 0) {
       // 카테고리를 넘겨야 함
       setSelectedCategory(category);
-      navigate("list", { state: { category } });
+      navigate("/list", { state: { category: null, bigCategory: category, isFinished: false, isRecruit: true} });
     } else if (mode === 1) {
       setSelectedCategory(category);
     }
   };
+
+  
 
   useEffect(() => {
     const token = query.get("token");
@@ -154,6 +167,7 @@ export default function Header({ mode }) {
               <button
                 key={category}
                 onClick={() => {
+                  
                   handleCategoryClick(category);
                 }}
               >
