@@ -4,15 +4,16 @@ import { useNavigate } from "react-router-dom";
 import "../styles/mainpage.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 export default function Mainpage() {
   const navigate = useNavigate();
   const [bestProjects, setBestProjects] = useState([]);
   const [projects, setProjects] = useState([]);
 
-  function toList() {
-    navigate("/list");
-  }
+  const toList = (id) => {
+    navigate("/list", { state: { id } });
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -83,7 +84,7 @@ export default function Mainpage() {
             <div>함께 책 만들 작가 모집</div>
             <div
               onClick={() => {
-                toList();
+                toList(1);
               }}
             >
               더보기
@@ -103,7 +104,7 @@ export default function Mainpage() {
             <div>완결된 책</div>
             <div
               onClick={() => {
-                toList();
+                toList(2);
               }}
             >
               더보기
@@ -123,7 +124,7 @@ export default function Mainpage() {
             <div>진행 중인 책</div>
             <div
               onClick={() => {
-                toList();
+                toList(3);
               }}
             >
               더보기

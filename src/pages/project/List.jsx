@@ -7,6 +7,7 @@ import Test1 from "../../imgs/test1.png";
 import Test2 from "../../imgs/test2.png";
 import Test3 from "../../imgs/test3.png";
 import Test4 from "../../imgs/test4.png";
+import { useLocation } from "react-router-dom";
 
 const imageData = [
   {
@@ -33,7 +34,9 @@ const imageData = [
 ];
 
 export default function List() {
+  const location = useLocation();
   const [dropdown, setDropdown] = useState("");
+  const { id } = location.state || {};
 
   const handleSelectChange = (event) => {
     setDropdown(event.target.value);
