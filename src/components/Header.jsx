@@ -70,8 +70,6 @@ export default function Header({ mode }) {
     navigate("/mypage");
   }
 
-  
-
   if (isLoading) {
     return <div></div>; // 로딩 중일 때 표시할 내용
   }

@@ -26,18 +26,6 @@ export default function Create() {
 
   const navigate = useNavigate();
 
-  // const handleCategoryChange = (category, item) => {
-  //   setcategory((prevcategory) => {
-  //     const updatedCategories = {
-  //       ...prevcategory,
-  //       [category]: item,
-  //     };
-  //     console.log(updatedCategories);
-  //     return updatedCategories;
-  //   });
-  // };
-  console.log(category);
-  console.log(bigCategory);
   const handleVisibilityChange = (event) => {
     const newVisibility = event.target.value;
     setVisibility(newVisibility);
@@ -73,7 +61,7 @@ export default function Create() {
     const value = {
       name: title,
       category: category,
-      // bigCategory:bigCategory,
+      bigCategory: bigCategory,
       description: description, // 한 줄 소개
       information: information, // 책 정보
       isPublic: visibility === "공개",
