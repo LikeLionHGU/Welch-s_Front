@@ -67,6 +67,12 @@ export default function Mainpage() {
     );
   }, [projects]);
 
+  const handleCategoryClick = (category, isRecruit, isFinished) => {
+    
+    navigate("/list", { state: { category: null, bigCategory: category, isFinished: isFinished, isRecruit: isRecruit} });
+    
+  };
+
   return (
     <div className="main-page">
       <Header mode={0} />
@@ -85,7 +91,7 @@ export default function Mainpage() {
             <div
               className="main-section-more"
               onClick={() => {
-                toList(1);
+                handleCategoryClick("소설", true, false);
               }}
             >
               더보기
@@ -106,7 +112,7 @@ export default function Mainpage() {
             <div
               className="main-section-more"
               onClick={() => {
-                toList(2);
+                handleCategoryClick("소설", false, true);
               }}
             >
               더보기
@@ -127,7 +133,7 @@ export default function Mainpage() {
             <div
               className="main-section-more"
               onClick={() => {
-                toList(3);
+                handleCategoryClick("소설", false, false);
               }}
             >
               더보기

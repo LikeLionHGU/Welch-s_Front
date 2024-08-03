@@ -35,27 +35,28 @@ export default function List() {
   const navigate = useNavigate();
   const location = useLocation();
   const [dropdown, setDropdown] = useState("");
-  const { category, bigCategory, status } = location.state || {}; // id는 모집중, 완결, 연재중 여부
-  const [projectList, setProjectList] = useState = ([]);
+  const { category, bigCategory, isFinished, isRecruit } = location.state || {}; // id는 모집중, 완결, 연재중 여부
+  console.log(isFinished, isRecruit);
+  
+  const [projectList, setProjectList] = useState([]);
 
 
 
-  const [isFinished, setIsFinished] = useState(false);
-  const [isRecruit, setIsRecruit] = useState(false);
+  
 
   const handleSelectChange = (event) => {
     setDropdown(event.target.value);
   };
 
-  const checkStatus = () => {
-    if(status === "모집 중") {
-      setIsRecruit(true);
-    } else if(status === "연재 중") {
-      setIsFinished(false);
-    } else { // 완결
-      setIsFinished(true);
-    }
-  };
+  // const checkStatus = () => {
+  //   if(status === "모집 중") {
+  //     setIsRecruit(true);
+  //   } else if(status === "연재 중") {
+  //     setIsFinished(false);
+  //   } else { // 완결
+  //     setIsFinished(true);
+  //   }
+  // };
 
 
   const fetchProjectWithCategoryAndFinish = () => { // 대분류 사용하지 않고 검색
@@ -68,7 +69,7 @@ export default function List() {
 
 
     axios
-      .get(`https://likelion.info/project/get/category/${category}/${isFinished}`, {
+      .get(`https://likelion.info/project/get/category/finish/${category}/${isFinished}`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       })
@@ -92,7 +93,7 @@ export default function List() {
 
 
     axios
-      .get(`https://likelion.info/project/get/category/${category}/${isRecruit}`, {
+      .get(`https://likelion.info/project/get/category/recruit/${category}/${isRecruit}`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       })
@@ -114,11 +115,13 @@ export default function List() {
         return;
       }
     axios
-      .get(`https://likelion.info/project/get/${bigCategory}/${isFinished}`, {
+      .get(`https://likelion.info/project/get/category/big/finish/${bigCategory}/${isFinished}`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       })
       .then((response) => {
+
+        
         setProjectList(response.data);
       })
       .catch((error) => {
@@ -136,7 +139,7 @@ export default function List() {
         return;
       }
     axios
-      .get(`https://likelion.info/project/get/${bigCategory}/${isRecruit}`, {
+      .get(`https://likelion.info/project/get/category/big/recruit/${bigCategory}/${isRecruit}`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       })
@@ -151,8 +154,8 @@ export default function List() {
   };
 
   useEffect(() => {
-    checkStatus(); // status 먼저 확인해야함
-
+    // checkStatus(); // status 먼저 확인해야함
+    // console.log(status);
     if(isRecruit) { // 모집 중
       if(category === null) { // 대분류 모집
         fetchProjectWithBigCategoryAndRecruit(); // 대분류 + 모집중
@@ -167,6 +170,10 @@ export default function List() {
       }
     }
   }, []);
+
+  useEffect(() => {
+    console.log(projectList);
+  }, [projectList]);
 
 
 
