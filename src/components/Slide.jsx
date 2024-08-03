@@ -110,7 +110,13 @@ export default function Slide({ mode, data }) {
   return (
     <div
       className="slide-container"
-      style={mode === 1 ? { height: "345px" } : { height: "380px" }}
+      style={
+        mode === 1 
+        ? { height: "345px" } 
+        : mode === 2 
+        ? { height: "380px", backgroundColor: 'rgba(0, 0, 0, 0)', zIndex : 10} // 100% 투명도
+        : { height: "380px" }
+      }
     >
       {mode === 1 ? (
         // <div className="arrow"></div>
