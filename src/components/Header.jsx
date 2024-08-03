@@ -29,7 +29,13 @@ export default function Header({ mode }) {
   };
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
+    if (mode === 0) {
+      // 카테고리를 넘겨야 함
+      setSelectedCategory(category);
+      navigate("list", { state: { category } });
+    } else if (mode === 1) {
+      setSelectedCategory(category);
+    }
   };
 
   useEffect(() => {
@@ -62,6 +68,10 @@ export default function Header({ mode }) {
 
   function toMyPage() {
     navigate("/mypage");
+  }
+
+  function toList() {
+    navigate("/list");
   }
 
   if (isLoading) {
@@ -105,32 +115,24 @@ export default function Header({ mode }) {
                 책 발간하기
               </button>
 
-              
-                <div className="header-guide">
-                  <img
-                    className="header-guide-img"
-                    src={GuideImg}
-                    alt="guide"
-                    onClick={() => {
-
-                    }}
-                  />
-                  <button
-                    id="goGuide"
-                  >
-                    가이드
-                  </button>
-                </div>
-                
+              <div className="header-guide">
                 <img
-                  className="header-profile"
-                  src={ProfileImg}
-                  alt="profile"
-                  onClick={() => {
-                    toMyPage();
-                  }}
+                  className="header-guide-img"
+                  src={GuideImg}
+                  alt="guide"
+                  onClick={() => {}}
                 />
-              
+                <button id="goGuide">가이드</button>
+              </div>
+
+              <img
+                className="header-profile"
+                src={ProfileImg}
+                alt="profile"
+                onClick={() => {
+                  toMyPage();
+                }}
+              />
             </>
           ) : (
             <button
@@ -155,7 +157,9 @@ export default function Header({ mode }) {
             {Object.keys(categories).map((category) => (
               <button
                 key={category}
-                onClick={() => handleCategoryClick(category)}
+                onClick={() => {
+                  handleCategoryClick(category);
+                }}
               >
                 {category}
               </button>
