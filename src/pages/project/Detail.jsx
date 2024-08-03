@@ -26,6 +26,7 @@ export default function Detail() {
   const [project, setProject] = useState(false);
   const [userList, setUserList] = useState([]);
   const [commentList, setCommentList] = useState([]);
+  const [bookmarkList, setBookmarkList] = useState([]);
 
   const [commentsLike, setCommentsLike] = useState();
 
@@ -34,6 +35,26 @@ export default function Detail() {
       <div>
         {authors.map((author, index) => (
           <div key={index}>{author.name}</div>
+        ))}
+      </div>
+    );
+  };
+
+  const BookmarkList = ({ bookmark = []}) => {
+    if (!bookmark || bookmark.length === 0) {
+      return null;
+    }
+    
+    return (
+      <div id="detail-galpi-list">
+        {bookmark.map((item, index) => (
+          <div key={index} id="detail-galpi">
+            <div>{item.name}</div>
+            <div>
+              <div onClick={() => toWrite(item.id)}>수정하기</div>
+              <div>설정</div>
+            </div>
+          </div>
         ))}
       </div>
     );
@@ -185,6 +206,22 @@ export default function Detail() {
     navigate("/update");
   }
 
+// 글 작성하는 페이지로 이동
+  const toWrite = (id) => { // 넘겨주는 id는 갈피의 id
+    if(project.isOwner) { // owner인 경우
+      navigate("/update", { state: { id: id, user: 2, mode: 0, bookmarkList: bookmarkList} });
+    }
+
+    if(project.isOwner === false && project.isParticipate === true) {
+      navigate("/update", { state: { id, user: 1, mode: 0, bookmarkList } }); // 참여자인 경우
+    }
+    
+    if(project.isOwner === false && project.isParticipate === false) {
+      navigate("/update", { state: { id, user: 0, mode: 0, bookmarkList } }); // 그냥 사람  
+    }
+    
+  };
+
   const handleGoCommunity = (id) => {
     navigate("/board", { state: { id } });
   };
@@ -209,6 +246,7 @@ export default function Detail() {
           setCommentList(response.data.commentList);
           setLike(response.data.isLiked);
           setLikeCount(response.data.likeCount);
+          setBookmarkList(response.data.bookMarkList);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -220,9 +258,9 @@ export default function Detail() {
     fetchProject();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(project);
-  // }, [project]);
+  useEffect(() => {
+    console.log(project);
+  }, [project]);
 
   // 클릭한 책의 id
   // console.log("id", id);
@@ -284,15 +322,7 @@ export default function Detail() {
         </div>
         <div id="detail-galpi-container">
           <div>갈피 목록</div>
-          <div id="detail-galpi-list">
-            <div id="detail-galpi">
-              <div>1갈피</div>
-              <div>
-                <div>수정하기</div>
-                <div>설정</div>
-              </div>
-            </div>
-          </div>
+          <BookmarkList bookmark={bookmarkList} />
         </div>
         <div id="detail-comments-list">
           <div id="detail-write-comments">

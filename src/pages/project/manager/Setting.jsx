@@ -34,38 +34,37 @@ export default function Setting() {
   const { id } = location.state || {};
   console.log(id);
 
-  const [project, setProject] = useState();
-  const [information, setInformation] = useState();
+  const [project, setProject] = useState([]);
   const [like, setLike] = useState();
   const [likeCount, setLikeCount] = useState();
   const [userList, setUserList] = useState([]);
-  const [bookmark, setBookmark] = useState([]);
+  const [bookmarkList, setBookmarkList] = useState([]);
   
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
+  const [information, setInformation] = useState();
   const [selectedCategories, setSelectedCategories] = useState({});
   const [visibility, setVisibility] = useState();
   const [people, setPeople] = useState();
 
 
-
   const [image, setImage] = useState(`${ImgNone}`);
-  const [galpi, setGalpi] = useState([
-    {
-      index : 1,
-      title : "김동규 짱", 
-    }
-  ]);
+  
   const [participatiedPeople, setparticipatiedPeople] = useState([{
-    profileImg : "",
-    name : "",
+    profileImg: "",
+    name: "",
   }]);
   const [appliedPeople, setappliedProple] = useState([{
-    profileImg : "",
-    name : "",
+    profileImg: "",
+    name: "",
   }]);
   const [progress, setProgress] = useState("진행 중");
+
+    // Initial category selection
+    useEffect(() => {
+      setSelectedCategories({ 소설: project.category});
+    }, []);
 
   const handleCategoryChange = (category, item) => {
     setSelectedCategories((prevSelectedCategories) => {
@@ -104,6 +103,10 @@ export default function Setting() {
     setImage(file);
   };
 
+  const toBookmark = (id) => {
+    navigate("/galpi", { state: { id } });
+  };
+
   
 
   const handleSubmit = async (event) => {
@@ -121,7 +124,8 @@ export default function Setting() {
     const value = {
       name: title,
       category: categoriesString,
-      information: description,
+      information: information,
+      description: description,
       isPublic: visibility === "공개",
       maximumNumber: people,
       isFinished: false,
@@ -191,7 +195,9 @@ export default function Setting() {
           setUserList(response.data.userProjectList);
           setLike(response.data.isLiked);
           setLikeCount(response.data.likeCount);
+
           setTitle(response.data.name);
+          setBookmarkList(response.data.bookMarkList);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -209,6 +215,9 @@ export default function Setting() {
     console.log(project);
   }, [project]);
 
+
+
+
   return (
     <div className="setting-container">
       <form onSubmit={handleSubmit}>
@@ -225,22 +234,24 @@ export default function Setting() {
 
         <div className="setting-menu">
           <div>책 표지 이미지</div>
-          <ImgUpLoad onImageUpload={handleImageUpload} />
+          <ImgUpLoad onImageUpload={handleImageUpload} initialImage={project.imageAddress} />
         </div>
 
         <div className="setting-menu">
           <div>책 장르 *</div>
           <div className="setting-categoryContainer">
-          {Object.keys(categories).map((category) => (
-              <div key={category} className="setting-category">
-                <div>{category}</div>
-                {categories[category].map((item) => (
+            {Object.keys(categories).map((categoriesString) => (
+              <div key={categoriesString} className="setting-category">
+                <div>{categoriesString}</div>
+                {categories[categoriesString].map((item) => (
                   <div key={item} className="setting-radio-item">
                     <input
                       type="radio"
                       id={item}
-                      name={category}
-                      onChange={() => handleCategoryChange(category, item)}
+                      value={item}
+                      name={categoriesString}
+                      onChange={() => handleCategoryChange(categoriesString, item)}
+                      checked={selectedCategories[categoriesString] === item}
                     />
                     <label htmlFor={item}>{item}</label>
                   </div>
@@ -248,13 +259,14 @@ export default function Setting() {
               </div>
             ))}
           </div>
+
         </div>
 
         <div className="setting-menu">
           <div>책 소개 *</div>
           <input
             placeholder=""
-            value={description}
+            value={project.description || ""}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
@@ -262,15 +274,16 @@ export default function Setting() {
           <div>책 정보 *</div>
           <input
             placeholder="책 정보를 입력해주세요."
-            value={information}
+            value={project.information || ""}
             onChange={(e) => setInformation(e.target.value)}
           />
         </div>
 
         <div className="setting-menu">
           <div>갈피 목록</div>
+          <div onClick={() => toBookmark(project.id)}>갈피 추가하기</div>
           <div>
-            {bookmark.map((it) => (
+            {bookmarkList.map((it) => (
               <di>
                 {it.index}갈피: {it.name}
                 <di>
@@ -292,7 +305,7 @@ export default function Setting() {
                 id="public"
                 name="visibility"
                 value="공개"
-                checked={visibility === "공개"}
+                checked={project.isPublic === true}
                 onChange={handleVisibilityChange}
               />
               <label htmlFor="public">공개</label>
@@ -303,7 +316,7 @@ export default function Setting() {
                 id="private"
                 name="visibility"
                 value="비공개"
-                checked={visibility === "비공개"}
+                checked={project.isPublic === false}
                 onChange={handleVisibilityChange}
               />
               <label htmlFor="private">비공개</label>
@@ -315,19 +328,19 @@ export default function Setting() {
           <div>작가 정원 *</div>
           <div className="setting-peopleNum">
             <div onClick={() => handlePeople(-1)}>-</div>
-            <div>{people}</div>
+            <div>{project.maximumNumber}</div>
             <div onClick={() => handlePeople(+1)}>+</div>
           </div>
         </div>
 
         <div className="setting-menu">
           <div>책 제작 명단</div>
-          <div><PeopleSlide mode={1} data={participatiedPeople}/></div>
+          <div><PeopleSlide mode={1} data={participatiedPeople} /></div>
         </div>
 
         <div className="setting-menu">
           <div>신청한 작가 명단</div>
-          <div><PeopleSlide mode={1} data={appliedPeople}/></div>
+          <div><PeopleSlide mode={1} data={appliedPeople} /></div>
         </div>
 
         <div className="setting-menu">

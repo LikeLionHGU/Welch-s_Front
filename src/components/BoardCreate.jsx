@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import '../styles/board/boardcreate.scss'; // CSS 파일을 생성하여 필요한 스타일을 정의하세요
+import '../styles/board/boardcreate.scss'; 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -126,7 +126,7 @@ const BoardCreate = ({ onClose, onSubmit, id }) => {
                             onChange={handleImageChange}
                         />
                     </div>
-                    <div className="create-form-fixed">
+                    {/* <div className="create-form-fixed">
                         <label>
                             <input
                                 type="checkbox"
@@ -135,7 +135,7 @@ const BoardCreate = ({ onClose, onSubmit, id }) => {
                             />
                             상단 고정
                         </label>
-                    </div>
+                    </div> */}
                     <div className="create-form-actions">
                         <button type="submit">등록하기</button>
                     </div>

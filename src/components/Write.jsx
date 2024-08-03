@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   DecoupledEditor,
   AccessibilityHelp,
@@ -63,20 +65,74 @@ import { useRecoilState } from "recoil";
 import { historyState } from "../atom";
 import ModalContainer from "./ModalContainer";
 
+
 // user === 0 : 독자, 1: 참여자, 2: 관리자
-// mode === 0 : /update, 1: /approval (수정 가능), 2: /approval (수정 불가)
-export default function Write({ user, mode }) {
+// mode === 0 : /update, 1: /approval
+export default function Write({ user, mode, id }) { // user, mode, 갈피 id를 받아옴
   const editorContainerRef = useRef(null);
   const editorMenuBarRef = useRef(null);
   const editorToolbarRef = useRef(null);
   const editorRef = useRef(null);
+  const navigate = useNavigate();
+
+  // const { id, user, mode } = location.state || {};
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [history, setHistory] = useRecoilState(historyState);
+  var data = "";
+  console.log(id);
+
+
+
+  const [postList, setPostList] = useState([]); // 모든 버전(post를 다 가지고 옴)
+  const [post, setPost] = useState(); // 현재 선택한 버전의 post
 
   const toggleHistory = () => {
     setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
   };
+
+
+  const addPost = async () => {
+    
+    const token = localStorage.getItem("token");
+    const value = {
+      contents: data,
+      bookMarkId: id
+    }
+
+    try {
+      const response = await axios.post(
+        `https://likelion.info/post/upload`,
+        value,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
+        
+      
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        alert("게시물 업로드 성공");
+        // window.location.reload();
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
+  };
+
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -111,6 +167,16 @@ export default function Write({ user, mode }) {
       height: "400px", // 원하는 높이
       zIndex: "1001",
     },
+
+  useEffect(() => {
+    console.log(postList);
+  }, [postList]);
+
+  const handleSetEditor = () => {
+    if (editorRef.current) {
+      const data = editorRef.current.getData();
+      console.log(data);
+    }
   };
 
   // 처음 입력되는 부분
@@ -313,7 +379,8 @@ export default function Write({ user, mode }) {
   };
 
   return (
-    <div className="write-container">
+    
+      <div className="write-container">
       <div
         className="editor-container editor-container_document-editor editor-container_include-style"
         ref={editorContainerRef}
@@ -352,8 +419,7 @@ export default function Write({ user, mode }) {
                     }
                   }}
                   onChange={(event, editor) => {
-                    const data = editor.getData();
-                    console.log(data);
+                    data = editor.getData();
                   }}
                   editor={DecoupledEditor}
                   config={editorConfig}
@@ -367,8 +433,10 @@ export default function Write({ user, mode }) {
             {/* 모든 사람들이 볼 수 있는 페이지 */}
             {user !== 0 && (
               <div className="write-btns">
-                <button>임시 저장</button>
-                <button type="submit">발행 검사</button>
+
+                <button onClick={handleSetEditor}>임시 저장</button>
+                
+                <button onClick={addPost}>발행 검사</button>
               </div>
             )}
           </>
@@ -397,5 +465,6 @@ export default function Write({ user, mode }) {
         )}
       </div>
     </div>
+    
   );
 }

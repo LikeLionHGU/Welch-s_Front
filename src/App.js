@@ -11,6 +11,7 @@ import Setting from "./pages/project/manager/Setting";
 import Galpi from "./pages/project/manager/Galpi";
 import Approval from "./pages/project/manager/Approval";
 import { RecoilRoot } from "recoil";
+import BoardDetail from "./pages/BoardDetail";
 
 function App() {
   return (
@@ -25,10 +26,10 @@ function App() {
           <Route path="/mypage/edit" element={<MypageEdit />} />
           <Route path="/update" element={<Update />} />
           <Route path="/board" element={<Board />} />
-          <Route path="/setting" element={<Setting />} />
           <Route path="/galpi" element={<Galpi />} />
           <Route path="/mypage/manage" element={<Setting />} />
           <Route path="/approval" element={<Approval />} />
+          <Route path="/boardDetail/" element={<BoardDetail/>} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>

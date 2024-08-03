@@ -4,7 +4,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export default function Galpi() {
+export default function GalpiUpdate() {
   const navigate = useNavigate();
   const location = useLocation();
   const [galpimanange, setGalpiManange] = useState([{
@@ -12,10 +12,9 @@ export default function Galpi() {
     name: "",
   }]);
 
-  const [collaborate, setCollaborate] = useState(true);
-  const [concurrentWork, setConcurrentWork] = useState(true);
+  const [collaborate, setCollaborate] = useState("가능");
+  const [concurrentWork, setConcurrentWork] = useState("가능");
   const { id } = location.state || {}; // 프로젝트 아이디
-  const [name, setName] = useState("");
 
   const [galpilist, setGalpilist] = useState([
     {
@@ -34,36 +33,50 @@ export default function Galpi() {
     }
   ]);
 
+  const handleCollaborateChange = (event) => {
+    const newCollaborate = event.target.value;
+    setCollaborate(newCollaborate);
+    console.log(newCollaborate);
+  }
+
+  const handleConcurrentWorkChange = (event) => {
+    const newConcurrentWork = event.target.value;
+    setConcurrentWork(newConcurrentWork);
+    console.log(newConcurrentWork);
+  }
 
   const handleSubmit = async (event) => {
     const token = localStorage.getItem("token");
     event.preventDefault();
     // 서버로 데이터 전송 등의 로직 추가
 
-    const value = {
-      name: name,
-      isSameTime: concurrentWork,
-      isShared: collaborate,
-      projectId: id,
-    }; // 이 안에 request body 넣기
+    // const value = {
+    //   name: title,
+    //   category: categoriesString,
+    //   description: description, // 한 줄 소개
+    //   information: information, // 책 정보
+    //   isPublic: visibility === "공개",
+    //   maximumNumber: people,
+    //   isFinished: false,
+    //   isRecruit: true,
+    // }; // 이 안에 request body 넣기
 
     try {
       const response = await axios.post(
-        `https://likelion.info/bookmark/add`, // project id
-        value,
+        `https://likelion.info/bookmark/add/${id}`, // project id
+        {},
         {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
+            withCredentials: true
           },
-          withCredentials: true
         }
       );
 
       if (response.status === 200) {
         console.log("Post uploaded successfully");
         // alert("게시물 업로드 성공");
-        window.location.reload();
-        
+        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
       } else {
         console.error("Error uploading post");
       }
@@ -148,26 +161,14 @@ export default function Galpi() {
     });
   };
 
-  const handleCollaborateChange = (value) => {
-    
-    setCollaborate(value);
-    
-  }
-
-  const handleConcurrentWorkChange = (value) => {
-    
-    setConcurrentWork(value);
-    
-  }
-
   
 
 
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  // }, []);
+  }, []);
 
 
 
@@ -184,14 +185,6 @@ export default function Galpi() {
             </div>
           </div>
         </div>
-        <div>
-        <div>갈피 이름</div>
-          <input
-            placeholder="갈피 이름을 입력해주세요."
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
 
         <div className='galpi-menu'>
           <div>갈피 관리자</div>
@@ -207,8 +200,8 @@ export default function Galpi() {
                 id="collaborate-possible"
                 name="collaborate"
                 value="가능"
-                checked={collaborate === true}
-                onChange={() =>handleCollaborateChange(true)}
+                checked={collaborate === "가능"}
+                onChange={handleCollaborateChange}
               />
               <label htmlFor='collaborate-possible'>가능</label>
             </div>
@@ -218,8 +211,8 @@ export default function Galpi() {
                 id="collaborate-impossible"
                 name="collaborate"
                 value="불가능"
-                checked={collaborate === false}
-                onChange={() =>handleCollaborateChange(false)}
+                checked={collaborate === "불가능"}
+                onChange={handleCollaborateChange}
               />
               <label htmlFor='collaborate-impossible'>불가능</label>
             </div>
@@ -235,8 +228,8 @@ export default function Galpi() {
                 id="concurrentWork-possible"
                 name="concurrentWork"
                 value="가능"
-                checked={concurrentWork === true}
-                onChange={() =>handleConcurrentWorkChange(true)}
+                checked={concurrentWork === "가능"}
+                onChange={handleConcurrentWorkChange}
               />
               <label htmlFor='concurrentWork-possible'>가능</label>
             </div>
@@ -246,8 +239,8 @@ export default function Galpi() {
                 id="concurrentWork-impossible"
                 name="concurrentWork"
                 value="불가능"
-                checked={concurrentWork === false}
-                onChange={() => handleConcurrentWorkChange(false)}
+                checked={concurrentWork === "불가능"}
+                onChange={handleConcurrentWorkChange}
               />
               <label htmlFor='concurrentWork-impossible'>불가능</label>
             </div>
