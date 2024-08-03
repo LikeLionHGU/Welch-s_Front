@@ -156,7 +156,6 @@ export default function Write({ user, mode, id, updatedId }) {
           .then((response1) => {
             setPost(response1.data.contents); // 가장 최신 승인 post를 post 안에 저장
             // setInitialData(response1.data.contents);
-            console.log("default:", response1);
           })
           .catch((error) => {
             console.error("Error fetching posts:", error);
@@ -176,7 +175,6 @@ export default function Write({ user, mode, id, updatedId }) {
           .then((response2) => {
             setUpdatedPost(response2.data.contents); // 검토 요청이 들어온 post를 updatedPost 안에 저장
             // setInitialData(response2.data.contents);
-            console.log("update:", response2);
           })
           .catch((error) => {
             console.error("Error fetching posts:", error);
@@ -187,16 +185,20 @@ export default function Write({ user, mode, id, updatedId }) {
 
       if (mode === 2 && user === 2) {
         fetchUpdatedPost();
-        console.log("default2:", post);
       }
       if (mode === 1 && user === 2) {
         fetchDefaultPost();
       }
-      if (post !== "" || updatedPost !== "") {
-        setLoading(false);
-      }
     }
   }, []);
+
+  useEffect(() => {
+    if (post !== "" || updatedPost !== "") {
+      setLoading(false);
+    }
+    console.log("default!:", post);
+    console.log("update!:", updatedPost);
+  }, [post, updatedPost]);
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -214,8 +216,9 @@ export default function Write({ user, mode, id, updatedId }) {
     setOpenModal(!openModal);
     console.log(openModal);
   };
+
   if (loading && mode === 2) {
-    return <div>왜 안돼</div>;
+    return <div>Loading...</div>;
   }
 
   const modalStyle = {
@@ -389,7 +392,9 @@ export default function Write({ user, mode, id, updatedId }) {
     },
     // 미리 적어지는 곳
     initialData:
-      (mode === 2 && user === 2 ? updatedPost : post)?.contents || "",
+      // (mode === 2 && user === 2 ? updatedPost : post)?.contents ||
+      // "둘 다 비었다.",
+      mode === 2 && user === 2 ? updatedPost : post,
     language: "ko",
     link: {
       addTargetToExternalLinks: true,
