@@ -61,9 +61,9 @@ import translations from "ckeditor5/translations/ko.js";
 import "ckeditor5/ckeditor5.css";
 
 import "../styles/write.css";
-import { readOnlySelector, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { historyState } from "../atom";
-
+import ModalContainer from "./ModalContainer";
 // write 컴포넌트 호출 시, useEffect로 Approval에서는 내용을 가지고 와야함
 // Update에서는 useEffect 사용할 필요 X
 // useEffect 내부에서 updateId에 내용을 확인하고, null이 아닐 경우에만 사용
@@ -80,6 +80,7 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
 
   // const { id, user, mode } = location.state || {};
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [history, setHistory] = useRecoilState(historyState);
   var data = ""; // contents에 해당하는 부분
   
@@ -103,17 +104,15 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
 
 
   const toggleHistory = () => {
-    setHistory((prev) => !prev); // 상태를 토글하여 열림/닫힘 상태 변경
+    setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
   };
 
-
   const addPost = async () => {
-    
     const token = localStorage.getItem("token");
     const value = {
       contents: data,
-      bookMarkId: id
-    }
+      bookMarkId: id,
+    };
 
     try {
       const response = await axios.post(
@@ -121,10 +120,9 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
         value,
         {
           headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true
-        });
-        
-      
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         console.log("Post uploaded successfully");
@@ -209,15 +207,39 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
     return () => setIsLayoutReady(false);
   }, []);
 
+  // const handleSetEditor = () => {
+  //   if (editorRef.current) {
+  //     const data = editorRef.current.getData();
+  //     console.log(data);
+  //   }
+  // };
+
+  const handleSetOpenModal = () => {
+    setOpenModal(!openModal);
+    console.log(openModal);
+  };
+
+  const modalStyle = {
+    overlay: {
+      zIndex: "1000",
+      backgroundColor: " rgba(48, 48, 48, 0.4)",
+    },
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      minWidth: "700px", // 원하는 너비
+      height: "400px", // 원하는 높이
+      zIndex: "1001",
+    },
+  };
 
   // useEffect(() => {
   //   console.log(postList);
   // }, [postList]);
-  // useEffect(() => {
-  //   console.log(post);
-  //   console.log(updatedPost);
-  // }, []);
-  
 
   const handleSetEditor = () => {
     if (editorRef.current) {
@@ -444,7 +466,6 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
                   onReady={(editor) => {
                     editorRef.current = editor;
                     const toolbarElement = editor.ui.view.toolbar.element;
-                    const menuBarElement = editor.ui.view.menuBarView?.element;
                     if (user === 2 && mode === 2) {
                       editor.enableReadOnlyMode("feature-id");
                     }
@@ -480,26 +501,36 @@ export default function Write({ user, mode, id, updatedId, isLoading }) { // use
             {user !== 0 && (
               <div className="write-btns">
                 <button onClick={handleSetEditor}>임시 저장</button>
-                
+
                 <button onClick={addPost}>발행 검사</button>
-                
               </div>
             )}
           </>
         ) : // 관리자의 수정 편집 페이지, 버전을 관리하는...
         mode === 2 && user === 2 ? (
-          <></>
-        ) : ( // 여기 안에 들어가는 내용이 참여자가 올린 내용
-          <div className="write-btns">
-            <button>미승인</button>
-            <form>
+          <>
+            <ModalContainer
+              isOpen={openModal}
+              closeModal={handleSetOpenModal}
+              style={modalStyle}
+              mode={0}
+            />
+            <div className="write-btns">
+              <button
+                onClick={() => {
+                  handleSetOpenModal();
+                }}
+              >
+                미승인
+              </button>
               <button type="submit">승인</button>
-            </form>
-          </div>
+            </div>
+          </>
+        ) : (
+          <></>
         )}
       </div>
     </div>
-    
   );
   
   

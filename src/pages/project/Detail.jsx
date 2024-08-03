@@ -28,7 +28,6 @@ export default function Detail() {
   const [commentList, setCommentList] = useState([]);
   const [bookmarkList, setBookmarkList] = useState([]);
 
-  
   const [commentsLike, setCommentsLike] = useState();
 
   const AuthorList = ({ authors = [] }) => {
@@ -78,11 +77,10 @@ export default function Detail() {
 
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
-    
+
     const request = {
-      contents: comment
+      contents: comment,
     };
-    
 
     if (comment !== "") {
       console.log(comment);
@@ -92,11 +90,10 @@ export default function Detail() {
           request,
           {
             headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true
-          });
-          
-        
-  
+            withCredentials: true,
+          }
+        );
+
         if (response.status === 200) {
           console.log("Post uploaded successfully");
           // alert("게시물 업로드 성공");
@@ -119,22 +116,20 @@ export default function Detail() {
       }
       setComment("");
     }
-
   };
 
   const handleSetProjectLike = async () => {
     const token = localStorage.getItem("token");
-    
+
     try {
       const response = await axios.post(
         `https://likelion.info/project/like/switch/${id}`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true
-        });
-        
-      
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         console.log("Post uploaded successfully");
@@ -158,7 +153,6 @@ export default function Detail() {
     }
   };
 
-
   const handleSetCommentsLike = async (commentId) => {
     const token = localStorage.getItem("token");
     console.log(commentId);
@@ -169,10 +163,9 @@ export default function Detail() {
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true
-        });
-        
-      
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         console.log("Post uploaded successfully");
