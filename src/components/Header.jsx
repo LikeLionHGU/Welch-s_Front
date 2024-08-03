@@ -146,31 +146,32 @@ export default function Header({ mode }) {
         </div>
       </div>
       {/* 프로젝트 이외에 경우에는 카테고리를 안보여줘도 됨 */}
-      {mode === 3 ? (
+      {/* detail 페이지도 */}
+      {mode === 3 || mode === 2 ? (
         <></>
       ) : (
-      <div className="header-categoryContainer">
-        <div className="header-category" id="upper-category">
-          {Object.keys(categories).map((category) => (
-            <button
-              key={category}
-              onClick={() => handleCategoryClick(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-        {/* 프로젝트 전체 페이지일 경우 보여줌 */}
-        {mode === 1 ? (
-          <div className="header-category">
-            {categories[selectedCategory].map((option, index) => (
-              <button key={index}>{option}</button>
+        <div className="header-categoryContainer">
+          <div className="header-category" id="upper-category">
+            {Object.keys(categories).map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryClick(category)}
+              >
+                {category}
+              </button>
             ))}
           </div>
-        ) : (
-          <></>
-        )}
-      </div>
+          {/* 프로젝트 전체 페이지일 경우 보여줌 */}
+          {mode === 1 ? (
+            <div className="header-category">
+              {categories[selectedCategory].map((option, index) => (
+                <button key={index}>{option}</button>
+              ))}
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
       )}
     </div>
   );
