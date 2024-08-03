@@ -8,20 +8,26 @@ import GrayLikeImg from "../imgs/grayLike.svg";
 import RedLikeImg from "../imgs/redLike.svg";
 import axios from 'axios';
 
-export default function BoardDetail() {
-    const location = useLocation();
-    const { id } = location.state || {};
-    const [project, setProject] = useState({});
-    const [likeCount, setLikeCount] = useState(0);
-    const [like, setLike] = useState(false);
-    const [comment, setComment] = useState("");
-    const [commentsLike, setCommentsLike] = useState();
-    const [commentList, setCommentList] = useState([]);
-    const modalBackground = useRef();
-    const navigate = useNavigate();
 
-    const handleSetProjectLike = async () => {
-        const token = localStorage.getItem("token");
+export default function BoardDetail() {
+  const location = useLocation();
+  const { id } = location.state || {};
+  const [project, setProject] = useState({});
+  const [likeCount, setLikeCount] = useState(0);
+  const [like, setLike] = useState(false);
+  const [comment, setComment] = useState("");
+  const [commentsLike, setCommentsLike] = useState();
+  const [commentList, setCommentList] = useState([]);
+  const modalBackground = useRef();
+  const navigate = useNavigate();
+  
+
+
+  const [post, setPost] = useState("");
+    
+
+  const handleSetProjectLike = async () => {
+      const token = localStorage.getItem("token");
 
         try {
             const response = await axios.post(
@@ -122,7 +128,7 @@ export default function BoardDetail() {
 
     const fetchProject = () => {
         const token = localStorage.getItem("token");
-
+        
         if (!token) {
             navigate("/", { replace: true });
             return;
@@ -147,33 +153,64 @@ export default function BoardDetail() {
     };
 
     useEffect(() => {
+        
+        const fetchPost = () => {
+            const token = localStorage.getItem("token");
+            console.log("?!");
+            if (!token) {
+                navigate("/", { replace: true });
+                return;
+            }
+    
+            axios
+                .get(`https://likelion.info/post/community/get/one/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                    withCredentials: true,
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    setPost(response.data);
+                    // console.log(post);
+                })
+                .catch((error) => {
+                    console.error("Error fetching project:", error);
+                    localStorage.removeItem("token");
+                    navigate("/", { replace: true });
+                });
+        };
+        fetchPost();
         fetchProject();
-    }, [id]);
+    }, []);
+
+    
 
     return (
         <div className='board-detail-container' ref={modalBackground} onClick={e => {
-            if (e.target === modalBackground.current) {
+            if (e.target === modalBackground.current && modalBackground.current) {
                 navigate(-1);
             }
         }}>
             <div className='board-detail-content'>
                 <div className='board-detail-date'>
-                    2024년 8월 2일
+                    {post.createdDate}
                 </div>
                 <div className='board-detail-title'>
-                    {project.title}
+                    {post.title}
                 </div>
                 <div className='board-detail-content'>
-                    content
+                    {post.contents}
                 </div>
-                <div className='board-detail-img'>
-                    img
+                <div>
+                    <img
+                    src={post.imageAddress}
+                    alt="img"
+                    />
                 </div>
 
 
                 <div className='board-detail-like-container'>
                     <img
-                        sec={like ? RedLikeImg : GrayLikeImg}
+                        sec={post.isLike ? RedLikeImg : GrayLikeImg}
                         onClick={() => {
                             handleSetProjectLike();
                         }}
@@ -181,7 +218,7 @@ export default function BoardDetail() {
                         style={{ width: "22px", height: "20px" }}
                     />
                 </div>
-                <div>{likeCount}</div>
+                <div>{post.likeCount}</div>
 
                 <div id="board-detail-comments-list">
                     <div id="detail-write-comments">

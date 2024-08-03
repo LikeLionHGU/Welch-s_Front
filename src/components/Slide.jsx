@@ -57,7 +57,7 @@ const SlideContent = ({ data, mode }) => {
     >
       <div className="slide-book-info">
         <div>{data.name}</div>
-        <div>{data.information}</div>
+        <div>{data.description}</div>
         <div>{data.category}</div>
       </div>
     </div>

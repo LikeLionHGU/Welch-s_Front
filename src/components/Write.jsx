@@ -154,6 +154,7 @@ export default function Write({ user, mode, id, updatedId }) {
             withCredentials: true,
           })
           .then((response) => {
+            
             setPost(response.data); // 가장 최신 승인 post를 post 안에 저장
             // initialData = response.data.contents;
             setInitialData(response.data.contents);
