@@ -63,7 +63,7 @@ const SlideContent = ({ data, mode }) => {
     >
       <div className="slide-book-info">
         <div>{data.name}</div>
-        <div>{data.description}</div>
+        <div>{data.ownerName} 등 {data.people}명</div>
         <div>{data.category}</div>
       </div>
     </div>

@@ -60,11 +60,11 @@ export default function Mainpage() {
     console.log(bestProjects);
   }, [bestProjects]);
 
-  // useEffect(() => {
-  //   console.log(
-  //     projects.filter((project) => project.isRecruit && project.isPublic)
-  //   );
-  // }, [projects]);
+  useEffect(() => {
+    console.log(
+      projects.filter((project) => project.isRecruit && project.isPublic)
+    );
+  }, [projects]);
 
   return (
     <div className="main-page">
