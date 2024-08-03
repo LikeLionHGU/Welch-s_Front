@@ -83,18 +83,7 @@
 
   height: 62px;
   width: 20.83em;
-  font-family: 'pretendard';
-  font-size: 1.125em;
-  font-weight: 700;
 }
-
-.detail-goCommunity {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 
 .detail-readbegin {
   
@@ -118,11 +107,23 @@
 
 .detail-mywrite,
 .detail-readbegin,
+.detail-goCommunity,
 .detail-like-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  font-family: 'pretendard';
+  font-size: 1.125em;
+  font-weight: 700;
+}
+
+.detail-like-container {
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 600;
+
 }
 
 .detail-like-container img {
@@ -146,6 +147,13 @@
   background-color: #f4f4f4;
   width: 100%;
   padding: 15px;
+  margin-bottom: 80px;
+  border-radius: 8px;
+
+  font-family:'pretendard';
+  font-weight: 500;
+  font-size: 0.875em;
+
   /* padding이 width를 넘어가는 현상 수정 */
   box-sizing: border-box;
 }
@@ -167,22 +175,76 @@
 
 #detail-comments-container {
   width: 100%;
+  /* background-color: #F4F4F4 */
+
 }
+
+.detail-comments-name {
+  margin-top: 20px;
+  
+  font-family: 'pretendard';
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.detail-comments-date {
+  font-family: 'pretendard';
+  font-size: 0.8em;
+  font-weight: 500;
+
+  color: #BFBFBF;
+
+  margin-bottom: 8px;
+}
+
+.detail-comments-contents{
+  font-family: 'pretendard';
+  font-size: 0.9em;
+  font-weight: 500;
+
+  margin-bottom: 14px;
+}
+
+.detail-comments-bottom {
+  margin-top: 16px;
+  border-top: 1px solid #BFBFBF;
+}
+
+
 
 #detail-comments-list {
   width: 100%;
 }
 
+#comment-arrow-img{
+
+  height: 18px;
+  width: 22px;
+}
+
 #detail-write-comments {
   display: flex;
   background-color: #f4f4f4;
-  padding: 10px;
-  margin: 10px 0;
+
+  align-items: center;
+  justify-content: space-between;
+
+  height: 50px;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+
+  margin-bottom: 54px;
 }
 
 #detail-write-container {
   border: none;
   outline: none;
+  background-color: #f4f4f4;
 
   width: 100%;
+
 }
+
+
+

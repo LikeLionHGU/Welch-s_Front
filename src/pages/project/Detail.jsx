@@ -60,11 +60,13 @@ export default function Detail() {
     );
   };
 
+
+
   const Comment = ({ comment }) => (
     <div id="detail-comments-container">
-      <div>{comment.user.name}</div>
-      <div>{comment.createdDate}</div>
-      <div>{comment.contents}</div>
+      <div className="detail-comments-name">{comment.user.name}</div>
+      <div className="detail-comments-date">{comment.createdDate}</div>
+      <div className="detail-comments-contents">{comment.contents}</div>
       <img
         onClick={() => {
           handleSetCommentsLike(comment.id);
@@ -72,7 +74,9 @@ export default function Detail() {
         src={comment.isLiked ? RedLikeImg : GrayLikeImg}
         alt="like"
       />
+      <div className="detail-comments-bottom"></div>
     </div>
+    
   );
 
   const handleSubmit = async () => {
@@ -339,6 +343,7 @@ export default function Detail() {
               onKeyDown={(e) => (e.key === "Enter" ? handleSubmit() : null)}
             />
             <img
+              id="comment-arrow-img"
               src={CommentArrowImg}
               alt="comment"
               disabled=""
