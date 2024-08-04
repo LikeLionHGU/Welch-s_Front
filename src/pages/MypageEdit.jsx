@@ -24,11 +24,8 @@ export default function MypageEdit() {
 
 
     const handleProFileUpload = (file) => {
-        
         setProFile(file);  
     };
-
-    
 
     const handleSave = async () => {
         // event.preventDefault();
@@ -44,57 +41,58 @@ export default function MypageEdit() {
         formData.append("back", wallpaper);
         formData.append("profile", profile);
         formData.append(
-        "post",
-        new Blob([JSON.stringify(value)], {
-            type: "application/json",
-        })
+            "post",
+            new Blob([JSON.stringify(value)], {
+                type: "application/json",
+            })
         );
 
 
 
         try {
             const response = await axios.patch(
-              "https://likelion.info/user/update",
-              formData,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  "Content-Type": "multipart/form-data",
-                },
-              }
+                "https://likelion.info/user/update",
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
             );
-      
+
             if (response.status === 200) {
-              console.log("Post uploaded successfully");
-              // alert("게시물 업로드 성공");
-              navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+                console.log("Post uploaded successfully");
+                // alert("게시물 업로드 성공");
+                navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
             } else {
-              console.error("Error uploading post");
+                console.error("Error uploading post");
             }
-          } catch (error) {
+        } catch (error) {
             if (error.response) {
-              console.error("Error response from server:", error.response);
+                console.error("Error response from server:", error.response);
             } else if (error.request) {
-              console.error("No response received:", error.request);
+                console.error("No response received:", error.request);
             } else {
-              console.error("Error in setting up request:", error.message);
+                console.error("Error in setting up request:", error.message);
             }
             console.error("Error uploading post:", error);
             alert(`Error uploading post: ${error.message}`);
             localStorage.removeItem("token");
             navigate("/", { replace: true });
-          }
+        }
     };
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-    
+
         if (token == null) {
-          navigate("/", { replace: true });
-          return;
+            navigate("/", { replace: true });
+            return;
         }
-    
+
         const fetchUserInfo = async () => {
+
           try {
             const response = await axios.get("https://likelion.info/user/info", {
               headers: { Authorization: `Bearer ${token}` },
@@ -111,9 +109,9 @@ export default function MypageEdit() {
             navigate('/', { replace: true });
           }
         };
-    
+
         fetchUserInfo();
-      }, []);
+    }, []);
 
     // useEffect(() => {
     //     console.log(userInfo);
@@ -128,13 +126,17 @@ export default function MypageEdit() {
             <Header mode={3} />
             <div className="my-page-edit-container">
                 <div className="edit-wall-paper-section">
-                    <WallPaperUpLoad onWallPaperUpload={handleWallPaperUpload} initialImage={wallpaper} />
-                    <div className="edit-overlay-content">
-                        <h1>나의 프로필</h1>
+                    <WallPaperUpLoad 
+                        className="edit-wall-paper"
+                        onWallPaperUpload={handleWallPaperUpload} 
+                        initialImage={wallpaper} 
+                    />
+                </div>
+                <div className="edit-overlay-content">
+                        <h1 className="edit-profile-title">나의 프로필</h1>
                         <div className="edit-profile-section">
-                            <ProfileUpload onProFileUpload={handleProFileUpload} initialImage={profile}/>
+                            <ProfileUpload onProFileUpload={handleProFileUpload} initialImage={profile} />
                         </div>
-                    </div>
                 </div>
 
                 <div className="edit-profile-details">
@@ -201,19 +203,19 @@ export default function MypageEdit() {
 
                 <div className="edit-my-book-lists">
 
-                <div className="books-progress">
-                    <h3>진행 중인 책</h3>
+                    <div className="books-progress">
+                        <h3>진행 중인 책</h3>
 
-                    <Slide mode={2} data={userInfo.progressProjectList || []} />
-                </div>
-                <div className="books-completed">
-                    <h3>완결된 책</h3>
-                    <Slide mode={2} data={userInfo.finishedProjectList || []} />
-                </div>
-                <div className="books-favorite">
-                    <h3>좋아하는 책</h3>
-                    <Slide mode={2} data={userInfo.likedProjectList || []} />
-                </div>
+                        <Slide mode={2} data={userInfo.progressProjectList || []} />
+                    </div>
+                    <div className="books-completed">
+                        <h3>완결된 책</h3>
+                        <Slide mode={2} data={userInfo.finishedProjectList || []} />
+                    </div>
+                    <div className="books-favorite">
+                        <h3>좋아하는 책</h3>
+                        <Slide mode={2} data={userInfo.likedProjectList || []} />
+                    </div>
 
                 </div>
             </div>
