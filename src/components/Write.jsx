@@ -90,7 +90,7 @@ export default function Write({ user, mode, id, updatedId }) {
   // const [initialData, setInitialData] = useState("");
   // const initialData = useRef("");
   const [tempPost, setTempPost] = useState("");
-  const [defatulPost, setDefaultPost] = useState("");
+  const [defaultPost, setDefaultPost] = useState("");
 
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
@@ -108,6 +108,48 @@ export default function Write({ user, mode, id, updatedId }) {
     try {
       const response = await axios.post(
         `https://likelion.info/post/temp/upload`,
+        value,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        alert("게시물 업로드 성공");
+        // window.location.reload();
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
+  };
+
+  const approvePost = async (isAllowed, rejectedReason) => {
+    const token = localStorage.getItem("token");
+    console.log(tempPost.id, " 123123123 ")
+    const value = {
+      contents: data,
+      id: tempPost.id,
+      rejectedReason: rejectedReason,
+      isAllowed: isAllowed
+    };
+
+    try {
+      const response = await axios.patch(
+        `https://likelion.info/post/confirm`,
         value,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -193,7 +235,7 @@ export default function Write({ user, mode, id, updatedId }) {
             withCredentials: true,
           })
           .then((response1) => {
-            setDefaultPost(response1.data.contents); // 가장 최신 승인 post를 post 안에 저장
+            setDefaultPost(response1.data); // 가장 최신 승인 post를 post 안에 저장
             // setInitialData(response1.data.contents);
           })
           .catch((error) => {
@@ -269,9 +311,9 @@ export default function Write({ user, mode, id, updatedId }) {
 
   useEffect(() => {
     console.log("@@@@");
-    console.log("default -> ", defatulPost);
+    console.log("default -> ", defaultPost);
 
-  }, [defatulPost]);
+  }, [defaultPost]);
 
   useEffect(() => {
     if (post !== "" || updatedPost !== "") {
@@ -331,6 +373,14 @@ export default function Write({ user, mode, id, updatedId }) {
       addTemporaryPost();
     }
   };
+
+  const handleApprove = (isAllowed, rejectedReason) => {
+    if (editorRef.current) {
+      const data = editorRef.current.getData();
+      console.log(data);
+      approvePost(isAllowed, rejectedReason);
+    }
+  }
 
   const editorConfig = {
     toolbar: {
@@ -609,6 +659,8 @@ export default function Write({ user, mode, id, updatedId }) {
               closeModal={handleSetOpenModal}
               style={modalStyle}
               mode={0}
+              contents={data}
+              id={defaultPost.id}
             />
             <div className="write-btns">
               <button
@@ -623,7 +675,7 @@ export default function Write({ user, mode, id, updatedId }) {
                 className="write-green-btn"
                 type="submit"
                 onClick={() => {
-                  handleSetEditor();
+                  handleApprove(true, "");
                 }}
               >
                 승인
