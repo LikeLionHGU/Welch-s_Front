@@ -84,8 +84,43 @@ const BoardContents = ({ post, loggedInUser }) => {
         navigate("/boardDetail", { state: { id: post.id } });
     };
 
+    const deletePost = async (postId) => {
+        const token = localStorage.getItem("token");
+
+        try {
+        const response = await axios.delete(
+            `https://likelion.info/post/community/delete/${postId}`,
+            {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+            }
+        );
+
+        if (response.status === 200) {
+            console.log("Post uploaded successfully");
+            // alert("게시물 업로드 성공");
+            navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+            
+        } else {
+            console.error("Error uploading post");
+        }
+        } catch (error) {
+            if (error.response) {
+                console.error("Error response from server:", error.response);
+            } else if (error.request) {
+                console.error("No response received:", error.request);
+            } else {
+                console.error("Error in setting up request:", error.message);
+            }
+            console.error("Error uploading post:", error);
+            alert(`Error uploading post: ${error.message}`);
+            localStorage.removeItem("token");
+            navigate("/", { replace: true });
+        }
+    }
+
     return (
-        <div className="board-post" onClick={handlePostClick}>
+        <div className="board-post">
             <div className="post-header">
                 <img src={BoardProfile} alt="avatar" className="avatar" />
                 <div className="user-info">
@@ -93,8 +128,9 @@ const BoardContents = ({ post, loggedInUser }) => {
                 </div>
             </div>
             <div className="post-content">
-                <h2 className="post-title">{post.title}</h2>
+                <h2 className="post-title" onClick={handlePostClick} >{post.title}</h2>
                 <p className="post-body">{post.contents}</p>
+                {post.writer.id === localStorage.getItem("id") ? <div onClick={()=> deletePost(post.id)}>삭제하기</div> : <></>}
             </div>
             <div className="post-footer">
                 <button className="like-button" onClick={(e) => { e.stopPropagation(); handleLike(post.id); }}>

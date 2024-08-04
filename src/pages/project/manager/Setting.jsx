@@ -177,6 +177,76 @@ export default function Setting() {
     }
   };
 
+  const deleteBookmark = async (bookmarkId) => {
+    const token = localStorage.getItem("token");
+
+        try {
+        const response = await axios.delete(
+            `https://likelion.info/bookmark/delete/${bookmarkId}`,
+            {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+            }
+        );
+
+        if (response.status === 200) {
+            console.log("Post uploaded successfully");
+            // alert("게시물 업로드 성공");
+            navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+            
+        } else {
+            console.error("Error uploading post");
+        }
+        } catch (error) {
+            if (error.response) {
+                console.error("Error response from server:", error.response);
+            } else if (error.request) {
+                console.error("No response received:", error.request);
+            } else {
+                console.error("Error in setting up request:", error.message);
+            }
+            console.error("Error uploading post:", error);
+            alert(`Error uploading post: ${error.message}`);
+            localStorage.removeItem("token");
+            navigate("/", { replace: true });
+        }
+  };
+
+  const deleteProject = async (projectId) => {
+    const token = localStorage.getItem("token");
+
+        try {
+        const response = await axios.delete(
+            `https://likelion.info/project/delete/${projectId}`,
+            {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+            }
+        );
+
+        if (response.status === 200) {
+            console.log("Post uploaded successfully");
+            // alert("게시물 업로드 성공");
+            navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+            
+        } else {
+            console.error("Error uploading post");
+        }
+        } catch (error) {
+            if (error.response) {
+                console.error("Error response from server:", error.response);
+            } else if (error.request) {
+                console.error("No response received:", error.request);
+            } else {
+                console.error("Error in setting up request:", error.message);
+            }
+            console.error("Error uploading post:", error);
+            alert(`Error uploading post: ${error.message}`);
+            localStorage.removeItem("token");
+            navigate("/", { replace: true });
+        }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -306,7 +376,7 @@ export default function Setting() {
               <di>
                 {it.index}갈피: {it.name}
                 <di>
-                  <button>
+                  <button onClick={() => deleteBookmark(it.id)}>
                     삭제하기
                   </button>
                 </di>
@@ -397,7 +467,7 @@ export default function Setting() {
           </div>
         </div>
 
-        <button>책 발간 취소</button>
+        <button onClick={() => deleteProject(project.id)}>책 발간 취소</button>
         <button type="submit">저장하기</button>
       </form>
     </div>
