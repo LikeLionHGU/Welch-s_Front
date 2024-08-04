@@ -59,7 +59,7 @@ export default function Header({ mode }) {
 
   const handleSmallCategoryClick = (Category) => {
     setCategory(Category);
-    console.log(Category);
+    // console.log(Category);
   };
 
   useEffect(() => {

@@ -83,11 +83,11 @@ export default function Write({ user, mode, id, updatedId }) {
   const [history, setHistory] = useRecoilState(historyState);
   var data = ""; // contents에 해당하는 부분
 
-  const [postList, setPostList] = useState([]); // 모든 버전(post를 다 가지고 옴)
+  // const [postList, setPostList] = useState([]); // 모든 버전(post를 다 가지고 옴)
   const [post, setPost] = useState(""); // 현재 선택한 버전의 post
   const [updatedPost, setUpdatedPost] = useState(""); // 검토 신청이 들어온 post
   // 처음 입력되는 부분
-  const [initialData, setInitialData] = useState("");
+  // const [initialData, setInitialData] = useState("");
   // const initialData = useRef("");
 
   const [loading, setLoading] = useState(true); // 로딩 상태 추가

@@ -3,36 +3,11 @@ import Header from "../../components/Header";
 import "../../styles/list.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { categoryState, bigCategoryState } from "../../atom";
 
-const ProjectList = ({ project = [] }) => {
-  if (!project || project.length === 0) {
-    return <p>No projects found</p>;
-  }
-
-  return (
-    <div className="list-container">
-      {project.map((item, index) => (
-        <div key={index} className="list-card">
-          <div
-            className="list-img"
-            style={{ backgroundImage: `url(${item.imageAddress})` }}
-          >
-            <div className="list-img-inner">
-              <div>{item.category}</div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
 export default function List() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [dropdown, setDropdown] = useState("option1");
   // const { category, bigCategory } = location.state || {};
   const [projectList, setProjectList] = useState([]);
@@ -41,6 +16,36 @@ export default function List() {
 
   const handleSelectChange = (event) => {
     setDropdown(event.target.value);
+  };
+
+  const handleListClick = (id) => {
+    navigate("/detail", { state: { id } });
+  };
+
+  const ProjectList = ({ project = [] }) => {
+    if (!project || project.length === 0) {
+      return <p>No projects found</p>;
+    }
+
+    return (
+      <div className="list-container">
+        {project.map((item, index) => (
+          <div key={index} className="list-card">
+            <div
+              className="list-img"
+              style={{ backgroundImage: `url(${item.imageAddress})` }}
+              onClick={() => {
+                handleListClick(item.id);
+              }}
+            >
+              <div className="list-img-inner">
+                <div>{item.category}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   const fetchProjects = () => {
@@ -98,7 +103,7 @@ export default function List() {
       .catch((error) => {
         console.error("Error fetching projects:", error);
         localStorage.removeItem("token");
-        navigate("/", { replace: true });
+        // navigate("/", { replace: true });
       });
   };
 
@@ -108,7 +113,7 @@ export default function List() {
   }, [dropdown, category, bigCategory]);
 
   useEffect(() => {
-    // console.log(projectList);
+    console.log(projectList);
   }, [projectList]);
 
   return (
