@@ -6,6 +6,7 @@
   align-items: center;
 
   height: 100%;
+  margin-bottom: 100px;
 }
 
 .list-grid-container {
@@ -19,7 +20,17 @@
   display: flex;
   flex-direction: row-reverse;
 
-  margin-bottom: 30px;
+  margin: 25px 0;
+}
+
+.list-dropdown-selector {
+  /* color: #5ca54b; */
+  border: 1px solid #5ca54b;
+  border-color: #5ca54b;
+  border-radius: 8px;
+  padding: 3px;
+
+  font-size: 14px;
 }
 
 .list-container {
@@ -39,7 +50,7 @@
   background-size: cover;
   background-position: center;
   border-radius: 8px;
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.3);
 
   display: flex;
   flex-direction: column;
