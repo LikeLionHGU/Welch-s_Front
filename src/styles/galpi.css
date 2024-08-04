@@ -1,0 +1,102 @@
+@import url("https://webfontbox.github.io/Arita/font.css");
+@import url("https://webfontbox.github.io/Arita/font.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+.galpi-setting-container {
+  padding: 0 9.17vw;
+  margin-top: 62px;
+}
+
+.galpi-menu {
+  margin-bottom: 114px;
+}
+
+.list-button-container {
+  border: 1px solid #5CA54B;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: "Pretendard", sans-serif;
+}
+
+.list-button-parent {
+  padding: 10px;
+  border-bottom: 1px solid #5CA54B;
+  cursor: pointer;
+}
+
+.list-button-child {
+  padding: 10px;
+  border-bottom: 1px solid #5CA54B;
+  cursor: pointer;
+}
+
+.list-button-child:last-child {
+  border-bottom: none;
+}
+
+.galpi-title {
+  font-family: "Arita buri";
+  font-weight: 700;
+  font-size: 1.625em;
+  margin-bottom: 100px;
+}
+
+.galpi-sub-title {
+  font-family: "Arita buri";
+  font-weight: 700;
+  font-size: 1.125em;
+  margin-bottom: 12px;
+}
+
+.galpi-title-input {
+  width: 40vw;
+  border: none;
+  outline: none;
+  background-color: #F4F4F4;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+.galpi-manage-plus {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.galpi-plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #5CA54B;
+  color: white;
+  width: 1.25vw;
+  height: 1.25vw;
+  border-radius: 50px;
+  font-family: "pretendard";
+  font-size: 1.25em;
+  font-weight: 300;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.galpi-manage {
+  font-family: "pretendard";
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.radio {
+  margin-right: 8px;
+}
+
+.collaborate-radio-item,
+.concurrentWork-radio-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+}/*# sourceMappingURL=galpi.css.map */

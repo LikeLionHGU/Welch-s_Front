@@ -372,6 +372,7 @@ export default function Setting() {
           <div>
             <div className="visibility-radio-item">
               <input
+                className="radio"
                 type="radio"
                 id="progress"
                 name="progress"
@@ -383,6 +384,7 @@ export default function Setting() {
             </div>
             <div className="visibility-radio-item">
               <input
+                className="radio"
                 type="radio"
                 id="finished"
                 name="progress"
