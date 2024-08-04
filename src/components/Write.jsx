@@ -500,9 +500,21 @@ export default function Write({ user, mode, id, updatedId }) {
             {/* 모든 사람들이 볼 수 있는 페이지 */}
             {user !== 0 && (
               <div className="write-btns">
-                <button onClick={handleSetEditor}>임시 저장</button>
+                <button
+                  onClick={handleSetEditor}
+                  className="write-white-btn"
+                  style={{ padding: "10px 15px" }}
+                >
+                  임시 저장
+                </button>
 
-                <button onClick={addPost}>발행 검사</button>
+                <button
+                  onClick={addPost}
+                  className="write-green-btn"
+                  style={{ padding: "10px 16px" }}
+                >
+                  발행 검사
+                </button>
               </div>
             )}
           </>
@@ -517,6 +529,7 @@ export default function Write({ user, mode, id, updatedId }) {
             />
             <div className="write-btns">
               <button
+                className="write-white-btn"
                 onClick={() => {
                   handleSetOpenModal();
                 }}
@@ -524,6 +537,7 @@ export default function Write({ user, mode, id, updatedId }) {
                 미승인
               </button>
               <button
+                className="write-green-btn"
                 type="submit"
                 onClick={() => {
                   handleSetEditor();

@@ -246,6 +246,7 @@
 .write-btns {
   display: flex;
   justify-content: flex-end;
+  margin-top: 20px;
 }
 
 .write-modal-contents-container {
@@ -259,4 +260,25 @@
   border: none;
   outline: none;
   resize: none;
+}
+
+.write-white-btn {
+  border: 1px solid #5ca54b;
+  padding: 10px 20px;
+  background-color: white;
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  margin-right: 10px;
+}
+
+.write-green-btn {
+  border: 1px solid #5ca54b;
+  padding: 10px 27px;
+  background-color: #5ca54b;
+  color: white;
+  border-radius: 8px;
+
+  font-size: 15px;
 }

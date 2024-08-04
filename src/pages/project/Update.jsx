@@ -303,7 +303,7 @@ export default function Update() {
                 <BookmarkList bookmark={bookmarkList} />
               </div>
             </div>
-          ) : user === 2 ? (
+          ) : user === 1 ? (
             <div id="update-left-contents">
               <div id="update-left-no-approval">미승인 사유</div>
               <div>
