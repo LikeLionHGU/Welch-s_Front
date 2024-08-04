@@ -8,6 +8,7 @@ import RedLikeImg from "../../imgs/redLike.svg";
 import CommentArrowImg from "../../imgs/commentArrow.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import PeopleSlide from "../../components/PeopleSlide";
 
 import "../../styles/detail.css";
 import { useState, useEffect } from "react";
