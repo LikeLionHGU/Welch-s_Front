@@ -8,6 +8,7 @@ import RedLikeImg from "../../imgs/redLike.svg";
 import CommentArrowImg from "../../imgs/commentArrow.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import PeopleSlide from "../../components/PeopleSlide";
 
 import "../../styles/detail.css";
 import { useState, useEffect } from "react";
@@ -29,6 +30,7 @@ export default function Detail() {
   const [bookmarkList, setBookmarkList] = useState([]);
 
   const [commentsLike, setCommentsLike] = useState();
+  
 
   const handleCommentClick = (id) => {
     const user = localStorage.getItem("id");
@@ -213,8 +215,44 @@ export default function Detail() {
     }
   };
 
-  function toUpdate() {
-    navigate("/update");
+  const toParticipate = async () => { // 참여 요청 api
+    const token = localStorage.getItem("token");
+    
+
+    try {
+      const response = await axios.post(
+        `https://likelion.info/project/application/request/${project.id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        // alert("게시물 업로드 성공");
+        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
+
+
+
+
   }
 
   // 글 작성하는 페이지로 이동
@@ -299,7 +337,7 @@ export default function Detail() {
               <div
                 className="detail-mywrite"
                 onClick={() => {
-                  toUpdate();
+                  toParticipate();
                 }}
               >
                 나도 글쓰기
