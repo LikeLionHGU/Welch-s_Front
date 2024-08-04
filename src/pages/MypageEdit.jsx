@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import WallPaperUpLoad from "../components/WallPaperUpLoad";
 import ProfileUpload from "../components/ProfileUpLoad";
-import EditImg from "../imgs/edit.svg";
+import SaveImg from "../imgs/save.svg";
 import ImgNone from "../imgs/img_none.svg";
 import Header from "../components/Header";
 import Slide from "../components/Slide";
@@ -97,74 +97,93 @@ export default function MypageEdit() {
             <Header mode={3} />
             <div className="my-page-edit-container">
                 <div className="edit-wall-paper-section">
-                    <WallPaperUpLoad onWallPaperUpload={handleWallPaperUpload} />
-                    <div className="edit-overlay-content">
-                        <h1>나의 프로필</h1>
-                        <div className="edit-profile-section">
-                            <ProfileUpload onProFileUpload={handleProFileUpload} />
-                        </div>
+                    <WallPaperUpLoad onWallPaperUpload={handleWallPaperUpload}
+                        className="edit-wall-paper-cover"
+                    />
+                </div>
+                <div className="edit-overlay-content">
+                    <h1 className="edit-profile-title">나의 프로필</h1>
+                    <div className="edit-profile-section">
+                        <ProfileUpload onProFileUpload={handleProFileUpload}
+                            className="edit-prorile-cover"
+                        />
                     </div>
                 </div>
 
                 <div className="edit-profile-details">
-                    <div className="edit-profile-details-exp">
-                        <div className="profile-details-save">
+                    <div className="profile-details-save">
+                        <div className="edit-profile-details-exp">
                             <input
+                                className="edit-profile-name"
                                 type="text"
                                 value={userInfo.name}
                                 onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
                             />
-                            <button>
-                                <div>
-                                    <img
-                                        className="profile-save"
-                                        src={EditImg}
-                                        alt="profile"
-                                        onClick={handleSave}
-                                    />
-                                </div>
-                            </button>
+
+                            <input
+                                className="edit-profile-onliner"
+                                type="text"
+                                value={userInfo.userOneliner}
+                                onChange={(e) => setUserInfo({ ...userInfo, userOneliner: e.target.value })}
+                            />
+                            <div className="edit-profile-email-title" >이메일</div>
+                            <input
+                                className="edit-profile-email"
+                                type="text"
+                                value={userInfo.email}
+                                onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+                            />
                         </div>
-                        <input
-                            type="text"
-                            value={userInfo.userOneliner}
-                            onChange={(e) => setUserInfo({ ...userInfo, userOneliner: e.target.value })}
-                        />
-                        <div>이메일</div>
-                        <input
-                            type="text"
-                            value={userInfo.email}
-                            onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
-                        />
+
+                        <div>
+                            <img
+                                className="profile-save"
+                                src={SaveImg}
+                                alt="profile"
+                                onClick={handleSave}
+                            />
+                        </div>
+
                     </div>
+
+
                     <div className="edit-profile-details-count">
                         <div className="edit-books-progress-count">
-                            <div>진행 중인 책</div>
-                            <div>{userInfo.progressProjects}권</div>
+                            <div className="edit-book-count-title">진행 중인 책</div>
+                            <div className="edit-book-count-set">
+                                <div className="edit-book-num">{userInfo.progressProjects}</div>
+                                <div className="edit-book-count-title">권</div>
+                            </div>
                         </div>
                         <div className="edit-books-completed-count">
-                            <div>완결된 책</div>
-                            <div>{userInfo.finishedProjects}권</div>
+                            <div className="edit-book-count-title">완결된 책</div>
+                            <div className="edit-book-count-set">
+                                <div className="edit-book-num">{userInfo.finishedProjects}</div>
+                                <div className="edit-book-count-title">권</div>
+                            </div>
                         </div>
                         <div className="edit-books-subscribe-count">
-                            <div>구독자</div>
-                            <div>{userInfo.subscribeUserCounts}명</div>
+                            <div className="edit-book-count-title">구독자</div>
+                            <div className="edit-book-count-set">
+                                <div className="edit-book-num">{userInfo.subscribeUserCounts}</div>
+                                <div className="edit-book-count-title">명</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="edit-my-book-lists">
                     <div className="edit-books-progress">
-                        <h3>진행 중인 책</h3>
-                        <Slide mode={2} data={bookData.progress} />
+                        <h3 className="edit-my-book-lists-title">진행 중인 책</h3>
+                        <Slide mode={2} data={userInfo.progressProjectList || []} />
                     </div>
                     <div className="edit-books-completed">
-                        <h3>완결된 책</h3>
-                        <Slide mode={2} data={bookData.completed} />
+                        <h3 className="edit-my-book-lists-title">완결된 책</h3>
+                        <Slide mode={2} data={userInfo.finishedProjectList || []} />
                     </div>
                     <div className="edit-books-favorite">
-                        <h3>좋아하는 책</h3>
-                        <Slide mode={2} data={bookData.favorite} />
+                        <h3 className="edit-my-book-lists-title">좋아하는 책</h3>
+                        <Slide mode={2} data={userInfo.likedProjectList || []} />
                     </div>
                 </div>
             </div>

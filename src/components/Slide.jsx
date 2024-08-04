@@ -57,12 +57,18 @@ const SlideContent = ({ data, mode }) => {
       className="slide-content"
       style={{
         backgroundImage: `url(${data.imageAddress})`,
-        boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 20%)',
+        boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)',
       }}
+      
       alt={data.name}
       onClick={() => handleSlideClick(data.id)}
     >
-      <div className="slide-book-info">
+      <div className="slide-book-info"
+      style={{
+        paddingLeft: '1.54vw',
+        paddingTop: '30px',
+        paddingBottom: '22px',
+      }}>
         <div className="slide-content-name">{data.name}</div>
         <div className="slide-content-description">{data.description}</div>
         <div className="slide-content-category">{data.category}</div>
@@ -82,16 +88,31 @@ const SlideContent = ({ data, mode }) => {
           className="slide-book-info"
           style={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            // alignItems: "center",
+            // justifyContent: "space-between",
+            paddingLeft: '0.972vw',
+            paddingRight: '0.972vw',
+            paddingTop: '16px',
+            paddingBottom: '16px',
           }}
         >
-          <img src={CrownImg} alt="crown" />
+          <img src={CrownImg} alt="crown" 
+            style={{
+              marginRight: '0.6vw'
+            }}
+          />
           <div>{data.name}</div>
-          <img src={SettingImg} alt="setting" onClick={(e) => toProjectSetting(e, data.id)}/>
+          <img src={SettingImg} alt="setting" onClick={(e) => toProjectSetting(e, data.id)}
+            style={{
+              marginLeft: 'auto'
+            }}
+          />
         </div>
       ) : (
-        <div className="slide-book-info" style={{ justifyContent: "center" }}>
+        <div className="slide-book-info" 
+        style={{ 
+          justifyContent: "center",
+        }}>
           <div>{data.name}</div>
         </div>
       )}
@@ -114,7 +135,7 @@ export default function Slide({ mode, data }) {
         mode === 1 
         ? { height: "345px" } 
         : mode === 2 
-        ? { height: "380px", backgroundColor: 'rgba(0, 0, 0, 0)', zIndex : 10} // 100% 투명도
+        ? { height: "275px", backgroundColor: 'rgba(0, 0, 0, 0)', zIndex : 10} // 100% 투명도
         : { height: "380px" }
       }
     >

@@ -8,7 +8,7 @@
 .my-page-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
 }
 
 .wall-paper-section {
@@ -16,7 +16,7 @@
   height: 362px;
   overflow: hidden;
   padding: 0 !important; // 패딩을 확실하게 제거하기 위해 !important 사용
-  margin-bottom: 100px;
+  margin-bottom: 76px;
   position: relative;
 }
 
@@ -28,55 +28,95 @@
 
 .overlay-content {
   position: absolute;
-  top: 70%;
-  text-align: center;
+  top: 35%; //프로필 사진 조정
+  left: 9%; //프로필 사진 조정
   z-index: 10;
   color: var(--black); // 텍스트 색상을 배경과 대비되게 설정
-  padding: 0 9.17vw;
 }
 
-.profile-section {
-  top: 10px; // 필요한 위치에 맞게 조정
+
+.my-page-title {
+  font-family:'Arita buri';
+  font-weight: 700;
+  font-size: 1.375em;
+}
+
+.my-page-profile-section {
+  z-index: 10;
+  position: relative;
+  
   width: 100px;
   height: 100px;
   overflow: hidden;
-  z-index: 100;
-  position: relative;
-  margin-top: 20px; // 여백 추가
+
+  margin-top: 60px; // 워딩과 프로필 사이의 여백
 }
 
-.profile-cover {
+.my-page-profile-cover {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 20px;
 }
 
-.profile-details {
+.my-page-profile-details {
   width: 100%;
   display: flex;
   flex-direction: row;
+
   @include flex-between;
-  margin-bottom: 20px;
+  margin-bottom: 100px;
   padding: 0 9.17vw;
 }
 
-.profile-details-exp {
-  flex: 1;
-  text-align: left;
+.my-page-name {
+  font-family: 'pretendard';
+  font-size: 1.25em;
+  font-weight: 600;
+
+  margin-bottom: 16px;
 }
 
-.profile-details-exp div {
-  margin-bottom: 10px;
+.my-page-oneliner {
+  font-family: 'pretendard';
+  font-size: 1em;
+  font-weight: 600;
+
+  margin-bottom: 45px;
 }
 
-.profile-details-edit {
-  width: 40vw;
-  display: flex;
+.my-page-email-title {
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 500;
+  color: #BFBFBF;
+
+  margin-bottom: 7px;
+}
+
+.my-page-email {
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+
+.my-page-profile-details-edit {
+  width: 36vw;
   flex-direction: row;
   @include flex-between;
+  align-items: flex-start;
+
 }
 
-.profile-edit {
+.my-page-profile-details-exp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.my-page-profile-edit {
+  //사진
   border: none;
   outline: none;
   background-color: white;
@@ -84,18 +124,45 @@
   cursor: pointer;
 }
 
-.profile-details-count {
+
+.my-page-profile-details-count {
   display: flex;
-  width: 33vw;
-  padding: 28px 36px;
+  align-items: center;
+  justify-content: center;
+  width: 32vw;
+  height: 162px;
+
+  padding: 35px;
   border-radius: 8px;
   background-color: var(--primarycolor-4);
   @include flex-between;
 }
 
-.profile-details-count div {
-  text-align: center;
+
+.book-count-title{
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 500;
+
+  margin-bottom: 22px;
 }
+
+.book-count-set{
+  width: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline
+}
+
+.book-num {
+  font-family:'Arita buri';
+  font-weight: 700;
+  font-size: 2.55em;
+  color: #5CA54B;
+
+  margin-right: 10px;
+}
+
 
 .books-progress,
 .books-completed,
@@ -103,6 +170,14 @@
   width: 100%;
   margin-bottom: 100px;
   padding: 0 9.17vw;
+}
+
+.my-book-lists-title {
+  font-family:'Arita buri';
+  font-weight: 700;
+  font-size: 1.375em;
+
+  margin-bottom: 20px;
 }
 
 .my-book-lists {
