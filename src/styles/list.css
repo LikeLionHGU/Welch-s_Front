@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  height: 100%;
 }
 
 .list-grid-container {
@@ -33,6 +35,7 @@
   height: 296px;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
 
   display: flex;
 }
