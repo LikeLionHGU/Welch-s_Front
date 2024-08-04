@@ -139,10 +139,10 @@ export default function Write({ user, mode, id, updatedId }) {
 
   const approvePost = async (isAllowed, rejectedReason) => {
     const token = localStorage.getItem("token");
-    console.log(tempPost.id, " 123123123 ")
+    console.log(updatedId, " 123123123 ")
     const value = {
       contents: data,
-      id: tempPost.id,
+      id: updatedId,
       rejectedReason: rejectedReason,
       isAllowed: isAllowed
     };
@@ -235,6 +235,7 @@ export default function Write({ user, mode, id, updatedId }) {
             withCredentials: true,
           })
           .then((response1) => {
+            console.log()
             setDefaultPost(response1.data); // 가장 최신 승인 post를 post 안에 저장
             // setInitialData(response1.data.contents);
           })
@@ -660,7 +661,7 @@ export default function Write({ user, mode, id, updatedId }) {
               style={modalStyle}
               mode={0}
               contents={data}
-              id={defaultPost.id}
+              id={updatedId}
             />
             <div className="write-btns">
               <button
