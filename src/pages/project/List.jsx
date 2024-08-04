@@ -39,7 +39,24 @@ export default function List() {
               }}
             >
               <div className="list-img-inner">
-                <div>{item.category}</div>
+                <div
+                  className="list-img-inner-contents"
+                  id="list-img-inner-name"
+                >
+                  {item.name}
+                </div>
+                <div
+                  className="list-img-inner-contents"
+                  id="list-img-inner-owner"
+                >
+                  {item.ownerName}
+                </div>
+                <div
+                  className="list-img-inner-contents"
+                  id="list-img-inner-category"
+                >
+                  {item.category}
+                </div>
               </div>
             </div>
           </div>
