@@ -68,7 +68,7 @@ import ModalContainer from "./ModalContainer";
 // useEffect 내부에서 updateId에 내용을 확인하고, null이 아닐 경우에만 사용
 
 // user === 0 : 독자, 1: 참여자, 2: 관리자
-// mode === 0 : /update, 1: /approval
+// mode === 0 : /update, 1: /approval, 2: /안보이는
 export default function Write({ user, mode, id, updatedId }) {
   // user, mode, 갈피 id를 받아옴
   const editorContainerRef = useRef(null);
@@ -135,6 +135,8 @@ export default function Write({ user, mode, id, updatedId }) {
     }
   };
 
+  console.log(data);
+
   useEffect(() => {
     if (updatedId != null) {
       // updated id가 null이 아닌 경우에만 호출하게 됨
@@ -147,6 +149,7 @@ export default function Write({ user, mode, id, updatedId }) {
 
       const fetchDefaultPost = () => {
         // 갈피의 가장 최신 승인 post 가져오기
+        // 원본
         axios
           .get(`https://likelion.info/bookmark/get/default/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -216,8 +219,9 @@ export default function Write({ user, mode, id, updatedId }) {
     console.log(openModal);
   };
 
-  if (loading && mode === 2) {
-    return <div>Loading...</div>;
+  // approval에서 양쪽의 글 로딩
+  if (loading && (mode === 2 || mode === 1)) {
+    return <div></div>;
   }
 
   const modalStyle = {
@@ -455,6 +459,7 @@ export default function Write({ user, mode, id, updatedId }) {
           <div className="editor-container__editor">
             <div ref={editorRef}>
               <div id="editor-history-btn-container">
+                {/* read only */}
                 <div id="editor-history-btn" onClick={toggleHistory}>
                   {mode === 0 ? <>History</> : <></>}
                 </div>
@@ -464,7 +469,7 @@ export default function Write({ user, mode, id, updatedId }) {
                   onReady={(editor) => {
                     editorRef.current = editor;
                     const toolbarElement = editor.ui.view.toolbar.element;
-                    if (user === 2 && mode === 2) {
+                    if (user === 2 && mode === 1) {
                       editor.enableReadOnlyMode("feature-id");
                     }
 
@@ -507,8 +512,6 @@ export default function Write({ user, mode, id, updatedId }) {
           </>
         ) : // 관리자의 수정 편집 페이지, 버전을 관리하는...
         mode === 2 && user === 2 ? (
-          <></>
-        ) : (
           <>
             <ModalContainer
               isOpen={openModal}
@@ -524,9 +527,13 @@ export default function Write({ user, mode, id, updatedId }) {
               >
                 미승인
               </button>
-              <button type="submit">승인</button>
+              <button type="submit" onClick={() => {}}>
+                승인
+              </button>
             </div>
           </>
+        ) : (
+          <></>
         )}
       </div>
     </div>
