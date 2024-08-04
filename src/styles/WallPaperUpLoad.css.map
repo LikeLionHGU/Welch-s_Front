@@ -1,1 +1,1 @@
-{"version":3,"sources":["WallPaperUpLoad.scss","WallPaperUpLoad.css"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,aAAA;EACA,gBAAA;EACA,cAAA;ACCJ;;ADEA;EACI,WAAA;EACA,YAAA;EACA,oBAAA;KAAA,iBAAA;ACCJ","file":"WallPaperUpLoad.css"}
+{"version":3,"sources":["WallPaperUpLoad.css","WallPaperUpLoad.scss"],"names":[],"mappings":"AAAA,gBAAgB;ACAhB;EACI,WAAA;EACA,aAAA;EACA,gBAAA;EACA,cAAA;EACA,kBAAA;ADEJ;;ACAA;EACI,WAAA;EACA,YAAA;EAEA,YAAA,EAAA,iBAAA;EACA,oBAAA;KAAA,iBAAA;ADEJ;;ACEA;EACI,kBAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;EACA,YAAA;ADCJ","file":"WallPaperUpLoad.css"}

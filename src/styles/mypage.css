@@ -1,3 +1,6 @@
+@import url("https://webfontbox.github.io/Arita/font.css");
+@import url("https://webfontbox.github.io/Arita/font.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 .my-page {
   height: 100vh;
 }
@@ -25,7 +28,7 @@
 
 .overlay-content {
   position: absolute;
-  top: 35%;
+  top: 325px;
   left: 9%;
   z-index: 10;
   color: var(--black);
@@ -91,6 +94,12 @@
   font-family: "pretendard";
   font-size: 0.875em;
   font-weight: 500;
+}
+
+.subscribed-button {
+  font-family: "pretendard";
+  font-size: 1.125em;
+  font-weight: 600;
 }
 
 .my-page-profile-details-edit {

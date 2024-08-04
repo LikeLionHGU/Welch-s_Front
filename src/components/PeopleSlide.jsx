@@ -5,6 +5,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import NextArrowImg from "../imgs/nextArrow.svg";
 import PrevArrowImg from "../imgs/prevArrow.svg";
 
+import '../styles/peopleslide.scss';
+
+
+
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -17,8 +22,13 @@ const PeopleSlideContent = ({ mode, data }) => {
     return (
         <div className='slide-setting-people-container'>
             <div className='setting-people-profile'>
-                <div>이미지</div>
-                <div>{data.name}</div>
+                <div>
+                    <img
+                        className="setting-people-img"
+                        src={data.imageAddress}
+                    />
+                </div>
+                <div className="setting-people-name">{data.name}</div>
             </div>
             {mode === 1 ? (
                 <div className='slide-setting-manange'>
@@ -31,7 +41,9 @@ const PeopleSlideContent = ({ mode, data }) => {
                 </div>
 
             ) : (
-                <div></div>
+                <div>
+
+                </div>
             )}
 
         </div>
@@ -51,7 +63,7 @@ export default function PeopleSlide({mode, data}) {
             <Swiper
                 modules={[Navigation, Pagination]}
                 spaceBetween={24}
-                slidesPerView={6}
+                slidesPerView={4.8}
                 navigation={{
                     prevEl: prevRef.current, // 이전 버튼
                     nextEl: nextRef.current, // 다음 버튼

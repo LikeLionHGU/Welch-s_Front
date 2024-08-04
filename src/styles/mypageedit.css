@@ -1,3 +1,7 @@
+@charset "UTF-8";
+@import url("https://webfontbox.github.io/Arita/font.css");
+@import url("https://webfontbox.github.io/Arita/font.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 .my-page-edit {
   height: 100vh;
 }
@@ -14,18 +18,12 @@
   padding: 0 !important;
   margin-bottom: 76px;
   position: relative;
-}
-
-.edit-wall-paper-cover {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  background-size: cover; /* 배경화면의 크기 조정 */
 }
 
 .edit-overlay-content {
   position: absolute;
-  top: 35%;
+  top: 325px;
   left: 9%;
   z-index: 10;
   color: var(--black);

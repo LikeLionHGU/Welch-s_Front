@@ -64,9 +64,12 @@ export default function Header({ mode }) {
 
   useEffect(() => {
     const token = query.get("token");
+    const id = query.get("userId");
+    console.log(id);
 
     if (token) {
       localStorage.setItem("token", token);
+      localStorage.setItem("id", id);
       setOnLogin(true);
       navigate("/", { replace: true });
     }
