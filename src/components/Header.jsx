@@ -14,11 +14,11 @@ function useQuery() {
 // mode == 0 : 메인 페이지, mode == 1 : 전체 페이지, mode == 2 : 프로젝트 상세 페이지, mode == 3 그 외에 페이지
 export default function Header({ mode }) {
   const [selectedCategory, setSelectedCategory] = useState("소설");
+  const [selectedSmallCategory, setSelectedSmallCategory] = useState("전체");
   const [onLogin, setOnLogin] = useState();
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const query = useQuery();
   const navigate = useNavigate();
-  
 
   const categories = {
     소설: ["전체", "공포", "로맨스", "미스터리/추리", "역사", "판타지", "SF"],
@@ -40,16 +40,25 @@ export default function Header({ mode }) {
   // };
 
   const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    setSelectedSmallCategory("전체");
     if (mode === 0) {
       // 카테고리를 넘겨야 함
-      setSelectedCategory(category);
-      navigate("/list", { state: { category: null, bigCategory: category, isFinished: false, isRecruit: true} });
-    } else if (mode === 1) {
-      setSelectedCategory(category);
+      navigate("/list", {
+        state: {
+          category: null,
+          bigCategory: category,
+          isFinished: false,
+          isRecruit: true,
+        },
+      });
     }
   };
 
-  
+  const handleSmallCategoryClick = (smallCategory) => {
+    setSelectedSmallCategory(smallCategory);
+    console.log(smallCategory);
+  };
 
   useEffect(() => {
     const token = query.get("token");
@@ -167,9 +176,11 @@ export default function Header({ mode }) {
               <button
                 key={category}
                 onClick={() => {
-                  
                   handleCategoryClick(category);
                 }}
+                style={
+                  selectedCategory === category ? { fontWeight: "700" } : {}
+                }
               >
                 {category}
               </button>
@@ -177,10 +188,27 @@ export default function Header({ mode }) {
           </div>
           {/* 프로젝트 전체 페이지일 경우 보여줌 */}
           {mode === 1 ? (
-            <div className="header-category">
-              {categories[selectedCategory].map((option, index) => (
-                <button key={index}>{option}</button>
-              ))}
+            <div
+              className="header-category"
+              id="header-small-category-container"
+            >
+              {categories[selectedCategory] &&
+                categories[selectedCategory].map((option, index) => (
+                  <button
+                    key={index}
+                    id="header-small-category"
+                    onClick={() => {
+                      handleSmallCategoryClick(option);
+                    }}
+                    style={
+                      selectedSmallCategory === option
+                        ? { fontWeight: "700" }
+                        : {}
+                    }
+                  >
+                    {option}
+                  </button>
+                ))}
             </div>
           ) : (
             <></>

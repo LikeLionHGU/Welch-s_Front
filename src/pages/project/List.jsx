@@ -5,7 +5,6 @@ import "../../styles/list.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 import { useLocation } from "react-router-dom";
 
 const ProjectList = ({ project = [] }) => {
@@ -17,15 +16,15 @@ const ProjectList = ({ project = [] }) => {
     <div>
       {project.map((item, index) => (
         <div key={index} className="list-card">
-        <div
-          className="list-img"
-          style={{ backgroundImage: `url(${item.imageAddress})` }}
-        >
-          <div className="list-img-inner">
-            <div>{item.category}</div>
+          <div
+            className="list-img"
+            style={{ backgroundImage: `url(${item.imageAddress})` }}
+          >
+            <div className="list-img-inner">
+              <div>{item.category}</div>
+            </div>
           </div>
         </div>
-      </div>
       ))}
     </div>
   );
@@ -37,12 +36,8 @@ export default function List() {
   const [dropdown, setDropdown] = useState("");
   const { category, bigCategory, isFinished, isRecruit } = location.state || {}; // id는 모집중, 완결, 연재중 여부
   console.log(isFinished, isRecruit);
-  
+
   const [projectList, setProjectList] = useState([]);
-
-
-
-  
 
   const handleSelectChange = (event) => {
     setDropdown(event.target.value);
@@ -58,21 +53,23 @@ export default function List() {
   //   }
   // };
 
-
-  const fetchProjectWithCategoryAndFinish = () => { // 대분류 사용하지 않고 검색
+  const fetchProjectWithCategoryAndFinish = () => {
+    // 대분류 사용하지 않고 검색
     const token = localStorage.getItem("token");
 
-      if (token == null) {
-        navigate("/", { replace: true });
-        return;
-      }
-
+    if (token == null) {
+      navigate("/", { replace: true });
+      return;
+    }
 
     axios
-      .get(`https://likelion.info/project/get/category/finish/${category}/${isFinished}`, {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
-      })
+      .get(
+        `https://likelion.info/project/get/category/finish/${category}/${isFinished}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         setProjectList(response.data);
       })
@@ -83,20 +80,23 @@ export default function List() {
       });
   };
 
-  const fetchProjectWithCategoryAndRecruit = () => { // 대분류 사용하지 않고 검색
+  const fetchProjectWithCategoryAndRecruit = () => {
+    // 대분류 사용하지 않고 검색
     const token = localStorage.getItem("token");
 
-      if (token == null) {
-        navigate("/", { replace: true });
-        return;
-      }
-
+    if (token == null) {
+      navigate("/", { replace: true });
+      return;
+    }
 
     axios
-      .get(`https://likelion.info/project/get/category/recruit/${category}/${isRecruit}`, {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
-      })
+      .get(
+        `https://likelion.info/project/get/category/recruit/${category}/${isRecruit}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         setProjectList(response.data);
       })
@@ -107,21 +107,23 @@ export default function List() {
       });
   };
 
-  const fetchProjectWithBigCategoryAndFinish = () => { // 대분류를 사용하여 검색
+  const fetchProjectWithBigCategoryAndFinish = () => {
+    // 대분류를 사용하여 검색
     const token = localStorage.getItem("token");
 
-      if (token == null) {
-        navigate("/", { replace: true });
-        return;
-      }
+    if (token == null) {
+      navigate("/", { replace: true });
+      return;
+    }
     axios
-      .get(`https://likelion.info/project/get/category/big/finish/${bigCategory}/${isFinished}`, {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
-      })
+      .get(
+        `https://likelion.info/project/get/category/big/finish/${bigCategory}/${isFinished}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      )
       .then((response) => {
-
-        
         setProjectList(response.data);
       })
       .catch((error) => {
@@ -131,18 +133,22 @@ export default function List() {
       });
   };
 
-  const fetchProjectWithBigCategoryAndRecruit = () => { // 대분류를 사용하여 검색
+  const fetchProjectWithBigCategoryAndRecruit = () => {
+    // 대분류를 사용하여 검색
     const token = localStorage.getItem("token");
 
-      if (token == null) {
-        navigate("/", { replace: true });
-        return;
-      }
+    if (token == null) {
+      navigate("/", { replace: true });
+      return;
+    }
     axios
-      .get(`https://likelion.info/project/get/category/big/recruit/${bigCategory}/${isRecruit}`, {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
-      })
+      .get(
+        `https://likelion.info/project/get/category/big/recruit/${bigCategory}/${isRecruit}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         setProjectList(response.data);
       })
@@ -156,16 +162,21 @@ export default function List() {
   useEffect(() => {
     // checkStatus(); // status 먼저 확인해야함
     // console.log(status);
-    if(isRecruit) { // 모집 중
-      if(category === null) { // 대분류 모집
+    if (isRecruit) {
+      // 모집 중
+      if (category === null) {
+        // 대분류 모집
         fetchProjectWithBigCategoryAndRecruit(); // 대분류 + 모집중
-      } else { // 소분류 모집
+      } else {
+        // 소분류 모집
         fetchProjectWithCategoryAndRecruit(); // 소분류 + 모집중
       }
     } else {
-      if(category === null) { // 대분류 모집
+      if (category === null) {
+        // 대분류 모집
         fetchProjectWithBigCategoryAndFinish(); // 대분류 + 완결 and 대분류 + 연재중
-      } else { // 소분류 모집
+      } else {
+        // 소분류 모집
         fetchProjectWithCategoryAndFinish(); // 소분류 + 완결 and 소분류 + 연재중
       }
     }
@@ -174,10 +185,6 @@ export default function List() {
   useEffect(() => {
     console.log(projectList);
   }, [projectList]);
-
-
-
-
 
   return (
     <div className="main-list-container">
