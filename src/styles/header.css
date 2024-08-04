@@ -110,6 +110,9 @@
 
 #header-small-category-container {
   background-color: white;
+  padding: 0;
+
+  border-bottom: 1px solid #bfbfbf;
 }
 
 #upper-category {
@@ -131,7 +134,7 @@
 #header-small-category {
   flex: 1;
 
-  padding: 15px 0;
+  padding: 12px 0;
 
   font-family: "Arita buri";
   font-weight: 500;

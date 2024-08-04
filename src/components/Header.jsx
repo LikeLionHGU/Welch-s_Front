@@ -195,23 +195,32 @@ export default function Header({ mode }) {
           </div>
           {/* 프로젝트 전체 페이지일 경우 보여줌 */}
           {mode === 1 ? (
-            <div
-              className="header-category"
-              id="header-small-category-container"
-            >
-              {categories[bigCategory] &&
-                categories[bigCategory].map((option, index) => (
-                  <button
-                    key={index}
-                    id="header-small-category"
-                    onClick={() => {
-                      handleSmallCategoryClick(option);
-                    }}
-                    style={Category === option ? { fontWeight: "bold" } : {}}
-                  >
-                    {option}
-                  </button>
-                ))}
+            <div style={{ padding: "0 100px" }}>
+              <div
+                className="header-category"
+                id="header-small-category-container"
+              >
+                {categories[bigCategory] &&
+                  categories[bigCategory].map((option, index) => (
+                    <button
+                      key={index}
+                      id="header-small-category"
+                      onClick={() => {
+                        handleSmallCategoryClick(option);
+                      }}
+                      style={
+                        Category === option
+                          ? {
+                              fontWeight: "bold",
+                              borderBottom: "4px solid #5ca54b",
+                            }
+                          : {}
+                      }
+                    >
+                      {option}
+                    </button>
+                  ))}
+              </div>
             </div>
           ) : (
             <></>
