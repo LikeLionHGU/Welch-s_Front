@@ -1,20 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
 import ImgNone from "../imgs/img_none.svg";
+import ProfileBack from "../imgs/profile_edit_back.svg"
+import ProfileEdit from "../imgs/profile_edit.svg";
+
 import "../styles/profileUpLoad.scss"
 
 
 export default function ProfileUpload({ onProFileUpload, initialImage }) {
-    const [profile, setProfile] = useState(ImgNone);
+    
+    const [profile, setProfile] = useState(initialImage);
     const proFileInput = useRef(null);
+    
 
     useEffect(() => {
         if (initialImage) {
-          setProfile(initialImage);
+            setProfile(initialImage);
+        } else {
+            setProfile(ImgNone);
         }
-      }, [initialImage]);
-
-
-
+    }, [initialImage]);
 
       const encodeFileToBase64 = (fileBlob) => {
         const reader = new FileReader();
@@ -38,6 +42,15 @@ export default function ProfileUpload({ onProFileUpload, initialImage }) {
                     alt="이미지 수정"
                     onClick={() => proFileInput.current.click()}
                 />
+                <img
+                  className="profile-edit-back"
+                  src={ProfileBack}
+                />
+                <img
+                  className="profile-edit-img"
+                  src={ProfileEdit}
+                  onClick={() => proFileInput.current.click()}
+                />
             </div>
 
             <input
@@ -46,8 +59,8 @@ export default function ProfileUpload({ onProFileUpload, initialImage }) {
                 accept="image/*"
                 onChange={(e) => {
                     const file = e.target.files[0];
-                    encodeFileToBase64(file).then(() => {
-                        onProFileUpload(file); // 파일을 부모 컴포넌트로 전달
+                    encodeFileToBase64(file).then((base64Image) => {
+                        onProFileUpload(base64Image); // 파일을 부모 컴포넌트로 전달
                     });
                   }}
                 ref={proFileInput}

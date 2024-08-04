@@ -96,22 +96,28 @@ const SlideContent = ({ data, mode }) => {
             paddingBottom: "16px",
           }}
         >
-          <img
-            src={CrownImg}
-            alt="crown"
+          {mode === 3 ? <div >{data.name}</div> : <><img src={CrownImg} alt="crown" 
             style={{
-              marginRight: "0.6vw",
-            }}
+              marginRight: '0.6vw'
+            }} // 사용자가 owner인 경우에만 왕관이 보여지게 해야 함
           />
-          <div>{data.name}</div>
-          <img
-            src={SettingImg}
-            alt="setting"
-            onClick={(e) => toProjectSetting(e, data.id)}
+          <div>{data.name}</div> 
+          <img src={SettingImg} alt="setting" onClick={(e) => toProjectSetting(e, data.id)}
             style={{
               marginLeft: "auto",
             }}
+          /></>}
+          {/* <img src={CrownImg} alt="crown" 
+            style={{
+              marginRight: '0.6vw'
+            }} // 사용자가 owner인 경우에만 왕관이 보여지게 해야 함
           />
+          <div>{data.name}</div> 
+          <img src={SettingImg} alt="setting" onClick={(e) => toProjectSetting(e, data.id)}
+            style={{
+              marginLeft: 'auto'
+            }}
+          /> */}
         </div>
       ) : (
         <div

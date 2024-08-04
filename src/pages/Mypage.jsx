@@ -100,9 +100,6 @@ export default function Mypage() {
                 }}
               />
             </div>
-            <div>{userInfo.information}</div>
-            <div>이메일</div>
-            <div>{userInfo.email}</div>
           </div>
           <div className="my-page-profile-details-count">
             <div className="my-page-books-progress-count">
