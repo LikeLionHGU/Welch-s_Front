@@ -39,7 +39,24 @@ export default function List() {
               }}
             >
               <div className="list-img-inner">
-                <div>{item.category}</div>
+                <div
+                  className="list-img-inner-contents"
+                  id="list-img-inner-name"
+                >
+                  {item.name}
+                </div>
+                <div
+                  className="list-img-inner-contents"
+                  id="list-img-inner-owner"
+                >
+                  {item.ownerName}
+                </div>
+                <div
+                  className="list-img-inner-contents"
+                  id="list-img-inner-category"
+                >
+                  {item.category}
+                </div>
               </div>
             </div>
           </div>
@@ -121,9 +138,17 @@ export default function List() {
       <Header mode={1} />
       <div className="list-grid-container">
         <div className="list-dropdown-container">
-          <select value={dropdown} onChange={handleSelectChange}>
-            <option value="option1">모집 중</option>
-            <option value="option2">완결</option>
+          <select
+            value={dropdown}
+            onChange={handleSelectChange}
+            className="list-dropdown-selector"
+          >
+            <option className="list-dropdown-option" value="option1">
+              모집 중
+            </option>
+            <option className="list-dropdown-option" value="option2">
+              완결
+            </option>
             <option value="option3">연재 중</option>
           </select>
         </div>
