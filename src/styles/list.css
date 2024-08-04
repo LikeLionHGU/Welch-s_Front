@@ -1,9 +1,12 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
 .main-list-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 
   height: 100%;
+  margin-bottom: 100px;
 }
 
 .list-grid-container {
@@ -16,15 +19,25 @@
 .list-dropdown-container {
   display: flex;
   flex-direction: row-reverse;
+
+  margin: 25px 0;
+}
+
+.list-dropdown-selector {
+  /* color: #5ca54b; */
+  border: 1px solid #5ca54b;
+  border-color: #5ca54b;
+  border-radius: 8px;
+  padding: 3px;
+
+  font-size: 14px;
 }
 
 .list-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
-  grid-gap: 10px;
-
-  /* padding: 10px; */
+  column-gap: 20px;
+  row-gap: 60px;
 }
 
 .list-card {
@@ -36,6 +49,46 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.3);
 
   display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.list-img-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: white;
+  opacity: 0.8;
+  padding: 10px 20px;
+
+  font-family: Pretendard;
+}
+
+.list-img-inner-contents {
+  margin: 2.5px 0;
+}
+
+#list-img-inner-name {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+#list-img-inner-owner {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+#list-img-inner-category {
+  font-size: 13px;
+
+  border: 1px solid black;
+  border-radius: 50px;
+  padding: 1px 10px;
 }
