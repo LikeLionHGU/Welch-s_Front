@@ -30,6 +30,16 @@ export default function Detail() {
 
   const [commentsLike, setCommentsLike] = useState();
 
+  const handleCommentClick = (id) => {
+    const user = localStorage.getItem("id");
+
+    if(id === user) {
+      navigate("/mypage");
+    } else {
+      navigate("/profile", { state: { id } });
+    }
+  };
+
   const AuthorList = ({ authors = [] }) => {
     return (
       <div>
@@ -64,7 +74,7 @@ export default function Detail() {
 
   const Comment = ({ comment }) => (
     <div id="detail-comments-container">
-      <div className="detail-comments-name">{comment.user.name}</div>
+      <div className="detail-comments-name" onClick={() => handleCommentClick(comment.user.id)}>{comment.user.name}</div>
       <div className="detail-comments-date">{comment.createdDate}</div>
       <div className="detail-comments-contents">{comment.contents}</div>
       <img
@@ -87,7 +97,7 @@ export default function Detail() {
     };
 
     if (comment !== "") {
-      console.log(comment);
+      // console.log(comment);
       try {
         const response = await axios.post(
           `https://likelion.info/project/comment/add/${id}`,
