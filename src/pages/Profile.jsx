@@ -21,28 +21,36 @@ export default function Profile() {
     setIsSubscribed(!isSubscribed);
   };
 
-  return(
+  return (
     <div className="profile-page">
-      <Header mode={2} />
-    <div className="profile-container">
-      <div className="profile-wall-paper-section">
-        <img className="profile-wall-pape-cover" src={wallpaper} alt="img" />
-        
-        <div className="profile-img-section">
-              <img className="profile-img-cover" src={profile} alt="img" />
+      <Header mode={3} />
+      <div className="profile-container">
+        <div className="profile-wall-paper-section">
+          <img className="profile-wall-pape-cover" src={wallpaper} alt="img" />
         </div>
-      </div>
-
-
-      <div className="profile-details">
-          <div className="profile-details-exp">
-            <div className="profile-details-edit">
-              <div>{userInfo.name}</div>
-            </div>
-            <div>{userInfo.userOneliner}</div>
-            <div>이메일</div>
-            <div>{userInfo.email}</div>
+        <div className="profile-overlay-content">
+          <div className="profile-img-section">
+            <img className="profile-img-cover" src={profile} alt="img" />
           </div>
+
+        </div>
+
+
+        <div className="profile-details">
+          <div className="profile-details-edit">
+            <div className="profile-details-exp">
+              <div>{userInfo.name}</div>
+              <div>{userInfo.userOneliner}</div>
+              <div>이메일</div>
+              <div>{userInfo.email}</div>
+            </div>
+            <div>
+              <button onClick={handleSubscribe}>
+                {isSubscribed ? '구독중' : '구독하기'}
+              </button>
+            </div>
+          </div>
+          
           <div className="profile-details-count">
             <div className="books-progress-count">
               <div>진행 중인 책</div>
@@ -57,13 +65,6 @@ export default function Profile() {
               <div>{userInfo.subscribeUserCounts}명</div>
             </div>
           </div>
-
-          <div>
-          <button onClick={handleSubscribe}>
-            {isSubscribed ? '구독중' : '구독하기'}
-          </button>
-          </div>
-          
         </div>
 
         <div className="profile-book-lists">
@@ -74,18 +75,17 @@ export default function Profile() {
             <Slide mode={2} data={userInfo.progressProjectList || []} />
           </div>
         </div>
-        </div>
+      </div>
 
     </div>
 
-  
-
-    
-    
 
 
-    
+
+
+
+
+
   )
 
 }
-  
