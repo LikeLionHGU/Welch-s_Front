@@ -89,11 +89,52 @@ export default function Write({ user, mode, id, updatedId }) {
   // 처음 입력되는 부분
   // const [initialData, setInitialData] = useState("");
   // const initialData = useRef("");
+  const [tempPost, setTempPost] = useState("");
+  const [defatulPost, setDefaultPost] = useState("");
 
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   const toggleHistory = () => {
     setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
+  };
+
+  const addTemporaryPost = async () => {
+    const token = localStorage.getItem("token");
+    const value = {
+      contents: data,
+      bookMarkId: id,
+    };
+
+    try {
+      const response = await axios.post(
+        `https://likelion.info/post/temp/upload`,
+        value,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        alert("게시물 업로드 성공");
+        // window.location.reload();
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
   };
 
   const addPost = async () => {
@@ -136,9 +177,7 @@ export default function Write({ user, mode, id, updatedId }) {
   };
 
   useEffect(() => {
-    if (updatedId != null) {
-      // updated id가 null이 아닌 경우에만 호출하게 됨
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
       if (token == null) {
         navigate("/", { replace: true });
@@ -153,7 +192,7 @@ export default function Write({ user, mode, id, updatedId }) {
             withCredentials: true,
           })
           .then((response1) => {
-            setPost(response1.data.contents); // 가장 최신 승인 post를 post 안에 저장
+            setDefaultPost(response1.data.contents); // 가장 최신 승인 post를 post 안에 저장
             // setInitialData(response1.data.contents);
           })
           .catch((error) => {
@@ -162,6 +201,9 @@ export default function Write({ user, mode, id, updatedId }) {
             navigate("/", { replace: true });
           });
       };
+
+    if (updatedId != null) {
+      // updated id가 null이 아닌 경우에만 호출하게 됨
 
       const fetchUpdatedPost = () => {
         // 검토 요청이 들어온 post 객체 가져오기
@@ -182,14 +224,53 @@ export default function Write({ user, mode, id, updatedId }) {
           });
       };
 
+      
+
       if (mode === 2 && user === 2) {
         fetchUpdatedPost();
+        
       }
       if (mode === 1 && user === 2) {
         fetchDefaultPost();
       }
+    } else {
+      const fetchTemporaryPost = () => {
+        // 갈피의 가장 최신 승인 post 가져오기
+        axios
+          .get(`https://likelion.info/post/temp/get/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          })
+          .then((response1) => {
+
+            console.log("이거 됨?");
+            console.log(response1.data);
+            setTempPost(response1.data); // 가장 최신 승인 post를 post 안에 저장
+            // setInitialData(response1.data.contents);
+          })
+          .catch((error) => {
+            console.error("Error fetching posts:", error);
+            localStorage.removeItem("token");
+            navigate("/", { replace: true });
+          });
+      };
+
+      fetchTemporaryPost();
+      fetchDefaultPost();
     }
   }, []);
+
+  useEffect(() => {
+    console.log("!!!!!!");
+    console.log(tempPost);
+
+  }, [tempPost]);
+
+  useEffect(() => {
+    console.log("@@@@");
+    console.log("default -> ", defatulPost);
+
+  }, [defatulPost]);
 
   useEffect(() => {
     if (post !== "" || updatedPost !== "") {
@@ -246,6 +327,8 @@ export default function Write({ user, mode, id, updatedId }) {
     if (editorRef.current) {
       const data = editorRef.current.getData();
       console.log(data);
+
+      addTemporaryPost();
     }
   };
 
