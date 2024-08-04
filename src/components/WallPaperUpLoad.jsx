@@ -6,21 +6,25 @@ import "../styles/WallPaperUpLoad.scss"
 
 
 export default function WallPaperUpload({ onWallPaperUpload, initialImage }) {
-    const [wallPaper, setWallPaper] = useState(initialImage || ImgNone);
+    const [wallPaper, setWallPaper] = useState(initialImage);
     const wallPaperFileInput = useRef(null);
 
+    
+    
     useEffect(() => {
-        console.log(initialImage);
         if (initialImage) {
-            setWallPaper(initialImage);
+
+          setWallPaper(initialImage);
+        } else {
+          setWallPaper(ImgNone);
         }
     }, [initialImage]);
-
 
     const encodeFileToBase64 = (fileBlob) => {
         const reader = new FileReader();
 
         reader.readAsDataURL(fileBlob);
+
 
         return new Promise((resolve) => {
             reader.onload = () => {
@@ -28,12 +32,16 @@ export default function WallPaperUpload({ onWallPaperUpload, initialImage }) {
                 resolve(reader.result); // Base64 인코딩된 파일 반환
             };
         });
+
     };
 
+    if(initialImage === null) {
+        return <></>;
+    }
 
     return (
         <main className="wall-paper-container">
-            <div className="wall-paper-preview">
+            <div className="wall-paper-preview" >
                 <img
                     className="wall-paper-edit"
                     src={wallPaper}
@@ -53,10 +61,14 @@ export default function WallPaperUpload({ onWallPaperUpload, initialImage }) {
                 accept="image/*"
                 onChange={(e) => {
                     const file = e.target.files[0];
-                    encodeFileToBase64(file).then(() => {
-                        onWallPaperUpload(file); // 파일을 부모 컴포넌트로 전달
-                    });
-                }}
+
+                    if(file) {
+                        encodeFileToBase64(file).then((base64Image) => {
+                            onWallPaperUpload(base64Image); // 파일을 부모 컴포넌트로 전달
+                        });
+                    }
+                    
+                  }}
                 ref={wallPaperFileInput}
                 name="profile_img"
                 style={{ display: "none" }}

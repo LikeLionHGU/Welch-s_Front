@@ -1,11 +1,10 @@
-@import url('https://webfontbox.github.io/Arita/font.css');
-@import url('https://webfontbox.github.io/Arita/font.min.css');
-
+@import url("https://webfontbox.github.io/Arita/font.css");
+@import url("https://webfontbox.github.io/Arita/font.min.css");
 
 #header {
   display: flex;
   flex-direction: column;
-  
+
   width: 100%;
 }
 
@@ -13,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
+
   padding: 0 9.17vw;
   margin-top: 28px;
   margin-bottom: 30px;
@@ -36,7 +35,6 @@
   height: 40px;
 }
 
-
 .header-headerRight {
   display: flex;
   align-items: center;
@@ -55,10 +53,9 @@
 .header-guide {
   display: flex;
   margin-right: 20px;
-  
 }
 
-.header-guide-img{
+.header-guide-img {
   margin-right: 5px;
 }
 
@@ -66,7 +63,6 @@
   font-size: 0.875em;
   border: none;
   background-color: white;
-  
 
   cursor: pointer;
 }
@@ -75,7 +71,6 @@
   font-size: 0.875em;
   border: none;
   background-color: white;
-  
 
   cursor: pointer;
 }
@@ -86,7 +81,7 @@
   width: 70%;
 }
 
-.header-searchBox::placeholder{
+.header-searchBox::placeholder {
   font-size: 1em;
 }
 
@@ -107,20 +102,37 @@
 
 .header-category {
   display: flex;
-  justify-content: space-evenly;
-
+  justify-content: space-between;
   width: 100%;
+
+  padding: 0 100px;
+}
+
+#header-small-category-container {
+  background-color: white;
 }
 
 #upper-category {
-  padding: 15px 0;
   background-color: #5ca54b;
 }
 
 #upper-category button {
+  flex: 1;
+
+  padding: 15px 0;
+
   background-color: #5ca54b;
-  font-family: 'Arita buri';
-  font-weight: 600;
+  font-family: "Arita buri";
+  font-weight: 500;
   font-size: 1rem;
   color: white;
+}
+
+#header-small-category {
+  flex: 1;
+
+  padding: 15px 0;
+
+  font-family: "Arita buri";
+  font-weight: 500;
 }

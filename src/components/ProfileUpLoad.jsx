@@ -7,14 +7,18 @@ import "../styles/profileUpLoad.scss"
 
 
 export default function ProfileUpload({ onProFileUpload, initialImage }) {
-    const [profile, setProfile] = useState(ImgNone);
+    
+    const [profile, setProfile] = useState(initialImage);
     const proFileInput = useRef(null);
+    
 
     useEffect(() => {
         if (initialImage) {
-          setProfile(initialImage);
+            setProfile(initialImage);
+        } else {
+            setProfile(ImgNone);
         }
-      }, [initialImage]);
+    }, [initialImage]);
 
       const encodeFileToBase64 = (fileBlob) => {
         const reader = new FileReader();
@@ -55,8 +59,8 @@ export default function ProfileUpload({ onProFileUpload, initialImage }) {
                 accept="image/*"
                 onChange={(e) => {
                     const file = e.target.files[0];
-                    encodeFileToBase64(file).then(() => {
-                        onProFileUpload(file); // 파일을 부모 컴포넌트로 전달
+                    encodeFileToBase64(file).then((base64Image) => {
+                        onProFileUpload(base64Image); // 파일을 부모 컴포넌트로 전달
                     });
                   }}
                 ref={proFileInput}

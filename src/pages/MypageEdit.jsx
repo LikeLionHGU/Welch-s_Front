@@ -24,11 +24,8 @@ export default function MypageEdit() {
 
 
     const handleProFileUpload = (file) => {
-
-        setProFile(file);
+        setProFile(file);  
     };
-
-
 
     const handleSave = async () => {
         // event.preventDefault();
@@ -95,33 +92,35 @@ export default function MypageEdit() {
         }
 
         const fetchUserInfo = async () => {
-            try {
-                const response = await axios.get("https://likelion.info/user/info", {
-                    headers: { Authorization: `Bearer ${token}` },
-                    withCredentials: true,
-                });
-                setUserInfo(response.data);
-                setWallPaper(response.data.backImage || `${ImgNone}`);
-                setProFile(response.data.profileImage || `${ImgNone}`);
-                // setBookData({
-                //   progress: response.data.progressBooks || [],
-                //   completed: response.data.completedBooks || [],
-                //   favorite: response.data.favoriteBooks || [],
-                // });
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-                localStorage.removeItem("token");
-                navigate('/', { replace: true });
-            }
+
+          try {
+            const response = await axios.get("https://likelion.info/user/info", {
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials: true,
+            });
+            setUserInfo(response.data);
+            setWallPaper(response.data.backImage);
+            setProFile(response.data.profileImage || `${ImgNone}`);
+            
+            
+          } catch (error) {
+            console.error('Error fetching user info:', error);
+            localStorage.removeItem("token");
+            navigate('/', { replace: true });
+          }
         };
 
         fetchUserInfo();
     }, []);
 
-    useEffect(() => {
-        console.log(userInfo);
-    }, [userInfo]);
+    // useEffect(() => {
+    //     console.log(userInfo);
+    // }, [userInfo]);
 
+    // useEffect(() => {
+    //     console.log("Updated wallpaper:", wallpaper);
+    // }, [wallpaper]);
+    
     return (
         <div className="my-page-edit">
             <Header mode={3} />
