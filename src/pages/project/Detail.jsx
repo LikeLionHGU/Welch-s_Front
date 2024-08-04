@@ -327,7 +327,7 @@ export default function Detail() {
         </div>
         <div id="about-the-writer">
           <div className="detail-title">작가 소개</div>
-              {/* <PeopleSlide/> */}
+            <PeopleSlide mode={0} data={userList}/>
         </div>
         <div id="detail-bookinfo">
           <div className="detail-title">책 소개</div>

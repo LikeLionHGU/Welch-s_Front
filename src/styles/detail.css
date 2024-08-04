@@ -73,7 +73,7 @@
 
   width: 100%;
   
-  border: 1px solid #5ca54b;
+  border: 1.3px solid #5ca54b;
   border-radius: 16px;
 }
 
@@ -99,13 +99,13 @@
 
 .detail-mywrite,
 .detail-readbegin {
-  border-right: 1px solid #5ca54b;
+  border-right: 1.3px solid #5ca54b;
 }
 
 .detail-above-right-bottom {
   display: flex;
 
-  border-top: 1px solid #5ca54b;
+  border-top: 1.3px solid #5ca54b;
 }
 
 .detail-mywrite,
