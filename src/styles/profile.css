@@ -13,6 +13,7 @@
   height: 362px;
   overflow: hidden;
   padding: 0 !important;
+  margin-bottom: 76px;
   position: relative;
 }
 
@@ -23,13 +24,21 @@
      object-fit: cover;
 }
 
+.profile-overlay-content {
+  position: absolute;
+  top: 41%;
+  left: 9%;
+  z-index: 10;
+  color: var(--black);
+}
+
 .profile-img-section {
-  top: 10px;
-  width: 100px;
-  height: 100px;
   z-index: 10;
   position: relative;
-  margin-top: 20px;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  margin-top: 60px;
 }
 
 .profile-img-cover {
@@ -37,4 +46,108 @@
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  border-radius: 20px;
+}
+
+.profile-details {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 100px;
+  padding: 0 9.17vw;
+}
+
+.profile-name {
+  font-family: "pretendard";
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.profile-oneliner {
+  font-family: "pretendard";
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 45px;
+}
+
+.profile-email-title {
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+  color: #BFBFBF;
+  margin-bottom: 7px;
+}
+
+.profile-email {
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+.profile-details-edit {
+  width: 36vw;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.profile-details-exp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-details-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32vw;
+  height: 162px;
+  padding: 35px;
+  border-radius: 8px;
+  background-color: var(--primarycolor-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.books-count-title {
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+  margin-bottom: 22px;
+}
+
+.books-count-set {
+  width: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.books-num {
+  font-family: "Arita buri";
+  font-weight: 700;
+  font-size: 2.55em;
+  color: #5CA54B;
+  margin-right: 10px;
+}
+
+.profile-book-lists {
+  width: 100%;
+  margin-bottom: 100px;
+  padding: 0 9.17vw;
+}
+
+.profile-book-title {
+  font-family: "Arita buri";
+  font-weight: 700;
+  font-size: 1.375em;
+  margin-bottom: 20px;
 }/*# sourceMappingURL=profile.css.map */
