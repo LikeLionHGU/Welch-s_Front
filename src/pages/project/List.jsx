@@ -5,14 +5,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { categoryState, bigCategoryState } from "../../atom";
+import { useLocation } from "react-router-dom";
 
 export default function List() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [dropdown, setDropdown] = useState("option1");
-  // const { category, bigCategory } = location.state || {};
+  const { search } = location.state || {};
+  const [isSearch, setIsSearch] = useState(true);
   const [projectList, setProjectList] = useState([]);
   const [category, setCategory] = useRecoilState(categoryState);
   const [bigCategory, setbigCategory] = useRecoilState(bigCategoryState);
+  
+  
 
   const handleSelectChange = (event) => {
     setDropdown(event.target.value);
@@ -90,23 +95,28 @@ export default function List() {
         break;
     }
 
-    if (isRecruit) {
-      // 모집 중
-      if (category === "전체") {
-        // 대분류 모집
-        endpoint = `https://likelion.info/project/get/category/big/recruit/${bigCategory}/${isRecruit}`; // 대분류 + 모집중
+    if(search === null || !isSearch) {
+      if (isRecruit) {
+        // 모집 중
+        if (category === "전체") {
+          // 대분류 모집
+          endpoint = `https://likelion.info/project/get/category/big/recruit/${bigCategory}/${isRecruit}`; // 대분류 + 모집중
+        } else {
+          // 소분류 모지
+          endpoint = `https://likelion.info/project/get/category/recruit/${category}/${isRecruit}`; // 소분류 + 모집중
+        }
       } else {
-        // 소분류 모지
-        endpoint = `https://likelion.info/project/get/category/recruit/${category}/${isRecruit}`; // 소분류 + 모집중
+        if (category === "전체") {
+          // 대분류 모집
+          endpoint = `https://likelion.info/project/get/category/big/finish/${bigCategory}/${isFinished}`; // 대분류 + 완결 and 대분류 + 연재중
+        } else {
+          // 소분류 모집
+          endpoint = `https://likelion.info/project/get/category/finish/${category}/${isFinished}`; // 소분류 + 완결 and 소분류 + 연재중
+        }
       }
     } else {
-      if (category === "전체") {
-        // 대분류 모집
-        endpoint = `https://likelion.info/project/get/category/big/finish/${bigCategory}/${isFinished}`; // 대분류 + 완결 and 대분류 + 연재중
-      } else {
-        // 소분류 모집
-        endpoint = `https://likelion.info/project/get/category/finish/${category}/${isFinished}`; // 소분류 + 완결 and 소분류 + 연재중
-      }
+      endpoint = `https://likelion.info/project/get/name/${search}`;
+      setIsSearch(false);
     }
 
     axios
