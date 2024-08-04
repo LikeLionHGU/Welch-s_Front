@@ -182,7 +182,7 @@ export default function BoardDetail() {
                 });
         };
         fetchPost();
-    }, []);
+    }, [post]);
 
     
 
