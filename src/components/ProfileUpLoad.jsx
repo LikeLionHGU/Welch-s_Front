@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import ImgNone from "../imgs/img_none.svg";
+import ProfileBack from "../imgs/profile_edit_back.svg"
+import ProfileEdit from "../imgs/profile_edit.svg";
+
 import "../styles/profileUpLoad.scss"
 
 
@@ -12,9 +15,6 @@ export default function ProfileUpload({ onProFileUpload, initialImage }) {
           setProfile(initialImage);
         }
       }, [initialImage]);
-
-
-
 
       const encodeFileToBase64 = (fileBlob) => {
         const reader = new FileReader();
@@ -37,6 +37,15 @@ export default function ProfileUpload({ onProFileUpload, initialImage }) {
                     src={profile}
                     alt="이미지 수정"
                     onClick={() => proFileInput.current.click()}
+                />
+                <img
+                  className="profile-edit-back"
+                  src={ProfileBack}
+                />
+                <img
+                  className="profile-edit-img"
+                  src={ProfileEdit}
+                  onClick={() => proFileInput.current.click()}
                 />
             </div>
 

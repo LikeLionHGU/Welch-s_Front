@@ -1,4 +1,9 @@
 @import '../styles/setting/mixin';
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
 
 .my-page-edit {
     height: 100vh;
@@ -18,18 +23,15 @@
     padding: 0 !important;  // 패딩을 확실하게 제거하기 위해 !important 사용
     margin-bottom: 76px;
     position: relative;
+    background-size: cover; /* 배경화면의 크기 조정 */
 }
 
-.edit-wall-paper-cover {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 
 .edit-overlay-content {
     position: absolute;
-    top: 35%; //프로필 사진 조정
-    left: 9%; //프로필 사진 조정
+    top: 325px; //프로필 사진 조정
+    left: 9%;
+    // left: 145px; //프로필 사진 조정
     z-index: 10;
     color: var(--black); // 텍스트 색상을 배경과 대비되게 설정
 }
