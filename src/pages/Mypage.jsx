@@ -74,30 +74,31 @@ export default function Mypage() {
       <div className="my-page-container">
         <div className="wall-paper-section">
           <img className="wall-pape-cover" src={wallpaper} alt="img" />
-          <div className="overlay-content">
-            <h1>나의 프로필</h1>
-            <div className="my-page-profile-section">
-              <img className="my-page-profile-cover" src={profile} alt="img" />
-            </div>
+        </div>
+        <div className="overlay-content">
+          <h1 className="my-page-title">나의 프로필</h1>
+          <div className="my-page-profile-section">
+            <img className="my-page-profile-cover" src={profile} alt="img" />
           </div>
         </div>
 
         <div className="my-page-profile-details">
-          <div className="my-page-profile-details-exp">
-            <div className="my-page-profile-details-edit">
-              <div>{userInfo.name}</div>
-              <button>
-                <div>
-                  <img
-                    className="my-page-profile-edit"
-                    src={EditImg}
-                    alt="profile/edit"
-                    onClick={() => {
-                      toEdit();
-                    }}
-                  />
-                </div>
-              </button>
+          <div className="my-page-profile-details-edit">
+            <div className="my-page-profile-details-exp">
+              <div className="my-page-name">{userInfo.name}</div>
+              <div className="my-page-oneliner">{userInfo.userOneliner}</div>
+              <div className="my-page-email-title">이메일</div>
+              <div className="my-page-email">{userInfo.email}</div>
+            </div>
+            <div>
+              <img
+                className="my-page-profile-edit"
+                src={EditImg}
+                alt="profile/edit"
+                onClick={() => {
+                  toEdit();
+                }}
+              />
             </div>
             <div>{userInfo.information}</div>
             <div>이메일</div>
@@ -105,31 +106,40 @@ export default function Mypage() {
           </div>
           <div className="my-page-profile-details-count">
             <div className="my-page-books-progress-count">
-              <div>진행 중인 책</div>
-              <div>{userInfo.progressProjects}권</div>
+              <div className="book-count-title">진행 중인 책</div>
+              <div className="book-count-set">
+                <div className="book-num">{userInfo.progressProjects}</div>
+                <div className="book-count-title">권</div>
+              </div>
             </div>
             <div className="my-page-books-completed-count">
-              <div>완결된 책</div>
-              <div>{userInfo.finishedProjects}권</div>
+              <div className="book-count-title">완결된 책</div>
+              <div className="book-count-set">
+                <div className="book-num">{userInfo.finishedProjects}</div>
+                <div className="book-count-title">권</div>
+              </div>
             </div>
             <div className="my-page-books-subscribe-count">
-              <div>구독자</div>
-              <div>{userInfo.subscribeUserCounts}명</div>
+              <div className="book-count-title">구독자</div>
+              <div className="book-count-set">
+                <div className="book-num">{userInfo.subscribeUserCounts}</div>
+                <div className="book-count-title">명</div>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="my-book-lists">
           <div className="books-progress">
-            <h3>진행 중인 책</h3>
+            <h3 className="my-book-lists-title">진행 중인 책</h3>
             <Slide mode={2} data={userInfo.progressProjectList || []} />
           </div>
           <div className="books-completed">
-            <h3>완결된 책</h3>
+            <h3 className="my-book-lists-title">완결된 책</h3>
             <Slide mode={2} data={userInfo.finishedProjectList || []} />
           </div>
           <div className="books-favorite">
-            <h3>좋아하는 책</h3>
+            <h3 className="my-book-lists-title">좋아하는 책</h3>
             <Slide mode={2} data={userInfo.likedProjectList || []} />
           </div>
         </div>
