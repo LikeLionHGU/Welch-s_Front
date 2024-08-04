@@ -1,6 +1,6 @@
 import Header from "../../components/Header";
-import PeopleSlide from "../../components/PeopleSlide";
-import TestImg from "../../imgs/test5.png";
+// import PeopleSlide from "../../components/PeopleSlide";
+// import TestImg from "../../imgs/test5.png";
 import LikeImg from "../../imgs/like.svg";
 import WhiteLikeImg from "../../imgs/whiteLike.svg";
 import GrayLikeImg from "../../imgs/grayLike.svg";
@@ -71,8 +71,6 @@ export default function Detail() {
     );
   };
 
-
-
   const Comment = ({ comment }) => (
     <div id="detail-comments-container">
       <div className="detail-comments-name" onClick={() => handleCommentClick(comment.user.id)}>{comment.user.name}</div>
@@ -87,7 +85,6 @@ export default function Detail() {
       />
       <div className="detail-comments-bottom"></div>
     </div>
-    
   );
 
   const handleSubmit = async () => {
@@ -326,9 +323,10 @@ export default function Detail() {
         <div className="detail-above">
           <div className="detail-img-container">
             <div
-              style={{ backgroundImage: `url(${project.imageAddress})`,
-              borderRadius: '16px'
-            }}
+              style={{
+                backgroundImage: `url(${project.imageAddress})`,
+                borderRadius: "16px",
+              }}
               className="detail-img-back"
             ></div>
             <img src={project.imageAddress} alt="img" id="detail-img-cover" />
@@ -374,7 +372,7 @@ export default function Detail() {
         </div>
         <div id="about-the-writer">
           <div className="detail-title">작가 소개</div>
-              {/* <PeopleSlide/> */}
+            <PeopleSlide mode={0} data={userList}/>
         </div>
         <div id="detail-bookinfo">
           <div className="detail-title">책 소개</div>

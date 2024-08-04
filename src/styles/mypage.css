@@ -28,7 +28,7 @@
 
 .overlay-content {
   position: absolute;
-  top: 325%;
+  top: 325px;
   left: 9%;
   z-index: 10;
   color: var(--black);
