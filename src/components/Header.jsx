@@ -182,7 +182,7 @@ export default function Header({ mode }) {
                 }}
                 style={
                   bigCategory === category && mode !== 0
-                    ? { fontWeight: "700" }
+                    ? { fontWeight: "bold" }
                     : {}
                 }
               >
@@ -204,7 +204,7 @@ export default function Header({ mode }) {
                     onClick={() => {
                       handleSmallCategoryClick(option);
                     }}
-                    style={Category === option ? { fontWeight: "700" } : {}}
+                    style={Category === option ? { fontWeight: "bold" } : {}}
                   >
                     {option}
                   </button>
