@@ -47,8 +47,8 @@ export default function Mypage() {
           withCredentials: true,
         });
         setUserInfo(response.data);
-        setWallPaper(response.data.wallpaper || `${ImgNone}`);
-        setProFile(response.data.profile || `${ImgNone}`);
+        setWallPaper(response.data.backImage || `${ImgNone}`);
+        setProFile(response.data.profileImage || `${ImgNone}`);
         // setBookData({
         //   progress: response.data.progressBooks || [],
         //   completed: response.data.completedBooks || [],
@@ -62,11 +62,11 @@ export default function Mypage() {
     };
 
     fetchUserInfo();
-  }, [navigate]);
+  }, []);
 
-  // useEffect(() => {
-  //   console.log(userInfo);
-  // }, [userInfo]);
+  useEffect(() => {
+    console.log(userInfo);
+  }, [userInfo]);
 
   return (
     <div className="my-page">
@@ -100,8 +100,10 @@ export default function Mypage() {
                 }}
               />
             </div>
+            <div>{userInfo.information}</div>
+            <div>이메일</div>
+            <div>{userInfo.email}</div>
           </div>
-          
           <div className="my-page-profile-details-count">
             <div className="my-page-books-progress-count">
               <div className="book-count-title">진행 중인 책</div>
