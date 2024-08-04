@@ -41,7 +41,8 @@ export default function Update() {
       // 관리자 / 승인 여부 상관 X
       return (
         <div>
-          <div>검토 대기 기록</div>
+          <div className="update-right-history-title">History</div>
+          <div>승인 대기 기록</div>
           <br></br>
           {waitPostList.map((item, index) => (
             <div key={index}>
@@ -65,6 +66,7 @@ export default function Update() {
       // 참여자 / 승인 여부 상관 X
       return (
         <div>
+          <div className="update-right-history-title">History</div>
           <div>모든 버전</div>
           {confirmedList.map((item, index) => (
             <div key={index}>
@@ -78,6 +80,7 @@ export default function Update() {
       // 독자 / 승인된 post만 보여줌
       return (
         <div>
+          <div className="update-right-history-title">History</div>
           <div>모든 버전</div>
           {approvedPostList.map((item, index) => (
             <div key={index}>
@@ -195,43 +198,7 @@ export default function Update() {
             id="update-right-contents"
             style={history ? { background: "white" } : {}}
           >
-            {history ? (
-              <></>
-            ) : user === 0 ? (
-              <div>
-                <div>History</div>
-                <div>
-                  <div>승인 대기 기록</div>
-                  <div>07.11</div>
-                  <div>23:00</div>
-                  <div>저자</div>
-                </div>
-                <div>
-                  <div>버전 기록</div>
-                  <div>07.11</div>
-                  <div>23:00</div>
-                  <div>저자</div>
-                </div>
-              </div>
-            ) : user === 1 ? (
-              <div>
-                <div>History</div>
-                <div>
-                  <div>버전 기록</div>
-                  <div>07.11</div>
-                  <div>23:00</div>
-                  <div>저자</div>
-                </div>
-                <div>승인/미승인</div>
-              </div>
-            ) : (
-              <div>
-                <div>History</div>
-                <div>
-                  <PostList />
-                </div>
-              </div>
-            )}
+            {history ? <></> : <PostList />}
           </div>
         </div>
       </div>
