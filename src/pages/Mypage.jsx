@@ -86,7 +86,7 @@ export default function Mypage() {
           <div className="my-page-profile-details-edit">
             <div className="my-page-profile-details-exp">
               <div className="my-page-name">{userInfo.name}</div>
-              <div className="my-page-oneliner">{userInfo.userOneliner}</div>
+              <div className="my-page-oneliner">{userInfo.information}</div>
               <div className="my-page-email-title">이메일</div>
               <div className="my-page-email">{userInfo.email}</div>
             </div>

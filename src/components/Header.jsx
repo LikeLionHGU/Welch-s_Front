@@ -6,6 +6,8 @@ import "../styles/header.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { bigCategoryState, categoryState } from "../atom";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -13,15 +15,15 @@ function useQuery() {
 
 // mode == 0 : 메인 페이지, mode == 1 : 전체 페이지, mode == 2 : 프로젝트 상세 페이지, mode == 3 그 외에 페이지
 export default function Header({ mode }) {
-  const [selectedCategory, setSelectedCategory] = useState("소설");
-  const [selectedSmallCategory, setSelectedSmallCategory] = useState("전체");
+  const [bigCategory, setedBigCategory] = useRecoilState(bigCategoryState);
+  const [Category, setCategory] = useRecoilState(categoryState);
   const [onLogin, setOnLogin] = useState();
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const query = useQuery();
   const navigate = useNavigate();
 
   const categories = {
-    소설: ["전체", "공포", "로맨스", "미스터리/추리", "역사", "판타지", "SF"],
+    소설: ["전체", "공포", "로맨스", "미스터리", "판타지", "SF"],
     시: ["전체", "감정", "사회", "자연", "철학"],
     에세이: ["전체", "개인경험", "사회", "여행", "자기개발"],
     비문학: ["전체", "과학", "자기개발", "전기", "역사"],
@@ -40,8 +42,8 @@ export default function Header({ mode }) {
   // };
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    setSelectedSmallCategory("전체");
+    setedBigCategory(category);
+    setCategory("전체");
     if (mode === 0) {
       // 카테고리를 넘겨야 함
       navigate("/list", {
@@ -55,9 +57,9 @@ export default function Header({ mode }) {
     }
   };
 
-  const handleSmallCategoryClick = (smallCategory) => {
-    setSelectedSmallCategory(smallCategory);
-    console.log(smallCategory);
+  const handleSmallCategoryClick = (Category) => {
+    setCategory(Category);
+    // console.log(Category);
   };
 
   useEffect(() => {
@@ -182,7 +184,9 @@ export default function Header({ mode }) {
                   handleCategoryClick(category);
                 }}
                 style={
-                  selectedCategory === category ? { fontWeight: "700" } : {}
+                  bigCategory === category && mode !== 0
+                    ? { fontWeight: "bold" }
+                    : {}
                 }
               >
                 {category}
@@ -191,27 +195,32 @@ export default function Header({ mode }) {
           </div>
           {/* 프로젝트 전체 페이지일 경우 보여줌 */}
           {mode === 1 ? (
-            <div
-              className="header-category"
-              id="header-small-category-container"
-            >
-              {categories[selectedCategory] &&
-                categories[selectedCategory].map((option, index) => (
-                  <button
-                    key={index}
-                    id="header-small-category"
-                    onClick={() => {
-                      handleSmallCategoryClick(option);
-                    }}
-                    style={
-                      selectedSmallCategory === option
-                        ? { fontWeight: "700" }
-                        : {}
-                    }
-                  >
-                    {option}
-                  </button>
-                ))}
+            <div style={{ padding: "0 100px" }}>
+              <div
+                className="header-category"
+                id="header-small-category-container"
+              >
+                {categories[bigCategory] &&
+                  categories[bigCategory].map((option, index) => (
+                    <button
+                      key={index}
+                      id="header-small-category"
+                      onClick={() => {
+                        handleSmallCategoryClick(option);
+                      }}
+                      style={
+                        Category === option
+                          ? {
+                              fontWeight: "bold",
+                              borderBottom: "4px solid #5ca54b",
+                            }
+                          : {}
+                      }
+                    >
+                      {option}
+                    </button>
+                  ))}
+              </div>
             </div>
           ) : (
             <></>
