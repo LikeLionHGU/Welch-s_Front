@@ -180,7 +180,11 @@ export default function Header({ mode }) {
                 onClick={() => {
                   handleCategoryClick(category);
                 }}
-                style={bigCategory === category ? { fontWeight: "700" } : {}}
+                style={
+                  bigCategory === category && mode !== 0
+                    ? { fontWeight: "700" }
+                    : {}
+                }
               >
                 {category}
               </button>
