@@ -73,6 +73,41 @@ export default function BoardDetail() {
         }
     };
 
+    const deleteComment = async (commentId) => {
+        const token = localStorage.getItem("token");
+    
+        try {
+          const response = await axios.delete(
+            `https://likelion.info/community/comment/delete/${commentId}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials: true,
+            }
+          );
+    
+          if (response.status === 200) {
+            console.log("Post uploaded successfully");
+            // alert("게시물 업로드 성공");
+            navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+            setComment("");
+          } else {
+            console.error("Error uploading post");
+          }
+        } catch (error) {
+          if (error.response) {
+            console.error("Error response from server:", error.response);
+          } else if (error.request) {
+            console.error("No response received:", error.request);
+          } else {
+            console.error("Error in setting up request:", error.message);
+          }
+          console.error("Error uploading post:", error);
+          alert(`Error uploading post: ${error.message}`);
+          localStorage.removeItem("token");
+          navigate("/", { replace: true });
+        }
+      }
+
     const Comment = ({ comment }) => (
         <div id="detail-comments-container">
             <div>{comment.user.name}</div>
@@ -86,6 +121,7 @@ export default function BoardDetail() {
                 alt="like"
             />
             <div>{comment.likeCount}</div>
+            {comment.user.id === localStorage.getItem("id") ? <div onClick={()=> deleteComment(comment.id)}>삭제하기</div> : <></>}
         </div>
     );
 
