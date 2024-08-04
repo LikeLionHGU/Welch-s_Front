@@ -2,13 +2,11 @@ import React, { useRef, useState } from "react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from 'swiper/react';
 //import { Navigation, Pagination } from 'swiper';
+import Notification from "../components/Notification";
 import NextArrowImg from "../imgs/nextArrow.svg";
 import PrevArrowImg from "../imgs/prevArrow.svg";
 
 import '../styles/peopleslide.scss';
-
-
-
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -32,7 +30,7 @@ const PeopleSlideContent = ({ mode, data }) => {
             </div>
             {mode === 1 ? (
                 <div className='slide-setting-manange'>
-                    <button>
+                    <button onClick={Notification }>
                         내보내기
                     </button>
                     <button>
