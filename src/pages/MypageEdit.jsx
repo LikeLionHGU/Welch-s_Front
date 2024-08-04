@@ -205,7 +205,6 @@ export default function MypageEdit() {
 
                     <div className="books-progress">
                         <h3>진행 중인 책</h3>
-
                         <Slide mode={2} data={userInfo.progressProjectList || []} />
                     </div>
                     <div className="books-completed">

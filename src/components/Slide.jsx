@@ -143,11 +143,13 @@ export default function Slide({ mode, data }) {
     <div
       className="slide-container"
       style={
-        mode === 1
-          ? { height: "345px" }
-          : mode === 2
-          ? { height: "275px", backgroundColor: "rgba(0, 0, 0, 0)", zIndex: 10 } // 100% 투명도
-          : { height: "380px" }
+        mode === 1 
+        ? { height: "345px" } 
+        : mode === 2
+        ? { height: "275px", backgroundColor: 'rgba(0, 0, 0, 0)', zIndex : 10} // 100% 투명도
+        : mode === 3
+        ? { height: "275px", backgroundColor: 'rgba(0, 0, 0, 0)', zIndex : 10} // 100% 투명도
+        : { height: "380px" }
       }
     >
       {mode === 1 ? (
@@ -160,7 +162,7 @@ export default function Slide({ mode, data }) {
       )}
       <Swiper
         // 한번에 보이는 슬라이드
-        slidesPerView={mode === 1 ? 2.7 : mode === 2 ? 6.3 : 4}
+        slidesPerView={mode === 1 ? 2.7 : mode === 2 ? 6.3 : mode === 3 ? 6.3 : 4}
         // 슬라이드 사이 거리
         spaceBetween={26}
         // 중간으로
