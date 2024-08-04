@@ -1,13 +1,40 @@
+@charset "UTF-8";
+@import url("https://webfontbox.github.io/Arita/font.css");
+@import url("https://webfontbox.github.io/Arita/font.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 .setting-container {
   padding: 0 9.17vw;
+  margin-top: 62px;
 }
 
 .setting-menu {
-  margin-bottom: 80px;
+  margin-bottom: 114px;
 }
 
 .title {
-  margin-bottom: 107px;
+  font-family: "Arita buri";
+  font-weight: 700;
+  font-size: 1.625em;
+  margin-bottom: 100px;
+}
+
+.setting-title {
+  font-family: "Arita buri";
+  font-weight: 700;
+  font-size: 1.125em;
+  margin-bottom: 12px;
+}
+
+.setting-title-input {
+  width: 40vw;
+  border: none;
+  outline: none;
+  background-color: #F4F4F4;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
 }
 
 .setting-categoryContainer {
@@ -16,13 +43,140 @@
   justify-content: space-between;
 }
 
+.setting-category {
+  font-family: "pretendard";
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
 .setting-radio-item {
   display: flex;
   align-items: center;
   margin: 12px 0px;
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+input[type=radio] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.4px solid #5CA54B;
+  border-radius: 20%;
+  outline: none;
+  cursor: pointer;
+}
+
+.radio {
+  margin-right: 8px;
+}
+
+input[type=radio]:checked {
+  background-color: #5CA54B;
+  border: 3px solid white;
+  box-shadow: 0 0 0 1.6px #5CA54B;
+}
+
+.setting-book-intro-input {
+  width: 53.8vw;
+  border: none;
+  outline: none;
+  background-color: #F4F4F4;
+  padding: 12px 20px;
+  border-radius: 8px;
+  resize: none; /* 사용자가 크기를 조절할 수 없도록 설정 */
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+  line-height: 180%;
+  overflow: hidden; /* 스크롤 바를 숨김 */
+}
+
+.visibility-radio {
+  display: flex;
+}
+
+.visibility-radio-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
 }
 
 .setting-peopleNum {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  background-color: #F4F4F4;
+  width: 12.2vw;
+  height: 49px;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.plus,
+.minus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #5CA54B;
+  color: white;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 50px;
+  font-family: "pretendard";
+  font-size: 1.875em;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.num {
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.modal-content {
+  width: 60.83vw;
+  height: 600px;
+  z-index: 100;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  background-color: white;
+  justify-content: center;
+  overflow: auto;
+}
+
+.modal-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background-color: white;
+}
+
+.modal-save-button {
+  border: none;
+  outline: none;
+  background-color: white;
 }/*# sourceMappingURL=setting.css.map */

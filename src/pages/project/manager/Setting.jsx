@@ -1,5 +1,6 @@
 // 프로젝트 관리 페이지
 import { useState, useEffect } from "react";
+import { useRef, useCallback } from "react";
 //import ModalContainer from "../../../components/ModalContainer";
 import ImgUpLoad from "../../../components/ImgUpLoad";
 import PeopleSlide from '../../../components/PeopleSlide'
@@ -39,7 +40,7 @@ export default function Setting() {
   const [likeCount, setLikeCount] = useState();
   const [userList, setUserList] = useState([]);
   const [bookmarkList, setBookmarkList] = useState([]);
-  
+
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -50,7 +51,7 @@ export default function Setting() {
 
 
   const [image, setImage] = useState(`${ImgNone}`);
-  
+
   const [participatiedPeople, setparticipatiedPeople] = useState([{
     profileImg: "",
     name: "",
@@ -61,10 +62,10 @@ export default function Setting() {
   }]);
   const [progress, setProgress] = useState("진행 중");
 
-    // Initial category selection
-    useEffect(() => {
-      setSelectedCategories({ 소설: project.category});
-    }, []);
+  // Initial category selection
+  useEffect(() => {
+    setSelectedCategories({ 소설: project.category });
+  }, []);
 
   const handleCategoryChange = (category, item) => {
     setSelectedCategories((prevSelectedCategories) => {
@@ -107,7 +108,7 @@ export default function Setting() {
     navigate("/galpi", { state: { id } });
   };
 
-  
+
 
   const handleSubmit = async (event) => {
     const storedToken = localStorage.getItem("token");
@@ -197,6 +198,8 @@ export default function Setting() {
           setLikeCount(response.data.likeCount);
 
           setTitle(response.data.name);
+          setDescription(response.data.description);
+          setInformation(response.data.information);
           setBookmarkList(response.data.bookMarkList);
         })
         .catch((error) => {
@@ -215,8 +218,12 @@ export default function Setting() {
     console.log(project);
   }, [project]);
 
+  console.log('imageAddress' + project.imageAddress);
 
-
+  const textRef = useRef();
+  const handleResizeHeight = useCallback(() => {
+    textRef.current.style.height = textRef.current.scrollHeight + "px";
+  }, []);
 
   return (
     <div className="setting-container">
@@ -224,8 +231,9 @@ export default function Setting() {
         <div className="title">책 설정/관리</div>
 
         <div className="setting-menu">
-          <div>책 제목*</div>
+          <div className="setting-title">책 제목</div>
           <input
+            className="setting-title-input"
             placeholder=""
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -233,12 +241,12 @@ export default function Setting() {
         </div>
 
         <div className="setting-menu">
-          <div>책 표지 이미지</div>
+          <div className="setting-title">책 표지 이미지</div>
           <ImgUpLoad onImageUpload={handleImageUpload} initialImage={project.imageAddress} />
         </div>
 
         <div className="setting-menu">
-          <div>책 장르 *</div>
+          <div className="setting-title">책 장르</div>
           <div className="setting-categoryContainer">
             {Object.keys(categories).map((categoriesString) => (
               <div key={categoriesString} className="setting-category">
@@ -246,6 +254,7 @@ export default function Setting() {
                 {categories[categoriesString].map((item) => (
                   <div key={item} className="setting-radio-item">
                     <input
+                      className="radio"
                       type="radio"
                       id={item}
                       value={item}
@@ -263,24 +272,34 @@ export default function Setting() {
         </div>
 
         <div className="setting-menu">
-          <div>책 소개 *</div>
-          <input
+          <div className="setting-title">책 소개</div>
+          <textarea
+            className="setting-book-intro-input"
+            ref={textRef}
             placeholder=""
-            value={project.description || ""}
+            value={description || ""}
             onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div className="create-menu">
-          <div>책 정보 *</div>
-          <input
-            placeholder="책 정보를 입력해주세요."
-            value={project.information || ""}
-            onChange={(e) => setInformation(e.target.value)}
+            onInput={handleResizeHeight}
+            rows={1}
           />
         </div>
 
+
+        {/* <div className="create-menu">
+          <div className="setting-title">책 정보 </div>
+          <textarea
+            className="setting-book-infor-input"
+            ref={textRef}
+            placeholder="책 정보를 입력해주세요."
+            value={information || ""}
+            onChange={(e) => setInformation(e.target.value)}
+            onInput={handleResizeHeight}
+            rows={1}
+          />
+        </div> */}
+
         <div className="setting-menu">
-          <div>갈피 목록</div>
+          <div className="setting-title">갈피 목록</div>
           <div onClick={() => toBookmark(project.id)}>갈피 추가하기</div>
           <div>
             {bookmarkList.map((it) => (
@@ -297,57 +316,63 @@ export default function Setting() {
         </div>
 
         <div className="setting-menu">
-          <div>책 공개 여부</div>
-          <div>
-            <div className="visibility-radio-item">
-              <input
-                type="radio"
-                id="public"
-                name="visibility"
-                value="공개"
-                checked={project.isPublic === true}
-                onChange={handleVisibilityChange}
-              />
-              <label htmlFor="public">공개</label>
-            </div>
-            <div className="visibility-radio-item">
-              <input
-                type="radio"
-                id="private"
-                name="visibility"
-                value="비공개"
-                checked={project.isPublic === false}
-                onChange={handleVisibilityChange}
-              />
-              <label htmlFor="private">비공개</label>
+          <div className="setting-title">책 공개 여부</div>
+          <div className="visibility-radio">
+            <div>
+              <div className="visibility-radio-item">
+                <input
+                  className="radio"
+                  type="radio"
+                  id="public"
+                  name="visibility"
+                  value="공개"
+                  checked={project.isPublic === true}
+                  onChange={handleVisibilityChange}
+                />
+                <label htmlFor="public">공개</label>
+              </div>
+              <div className="visibility-radio-item">
+                <input
+                  className="radio"
+                  type="radio"
+                  id="private"
+                  name="visibility"
+                  value="비공개"
+                  checked={project.isPublic === false}
+                  onChange={handleVisibilityChange}
+                />
+                <label htmlFor="private">비공개</label>
+              </div>
             </div>
           </div>
+
         </div>
 
         <div className="setting-menu">
-          <div>작가 정원 *</div>
+          <div className="setting-title">작가 정원</div>
           <div className="setting-peopleNum">
-            <div onClick={() => handlePeople(-1)}>-</div>
-            <div>{project.maximumNumber}</div>
-            <div onClick={() => handlePeople(+1)}>+</div>
+            <div className="plus" onClick={() => handlePeople(-1)}>-</div>
+            <div className="num">{project.maximumNumber}</div>
+            <div className="minus" onClick={() => handlePeople(+1)}>+</div>
           </div>
         </div>
 
         <div className="setting-menu">
-          <div>책 제작 명단</div>
+          <div className="setting-title">책 제작 명단</div>
           <div><PeopleSlide mode={1} data={participatiedPeople} /></div>
         </div>
 
         <div className="setting-menu">
-          <div>신청한 작가 명단</div>
+          <div className="setting-title">신청한 작가 명단</div>
           <div><PeopleSlide mode={1} data={appliedPeople} /></div>
         </div>
 
         <div className="setting-menu">
-          <div>책 진행 상태</div>
+          <div className="setting-title">책 진행 상태</div>
           <div>
             <div className="visibility-radio-item">
               <input
+                className="radio"
                 type="radio"
                 id="progress"
                 name="progress"
@@ -359,6 +384,7 @@ export default function Setting() {
             </div>
             <div className="visibility-radio-item">
               <input
+                className="radio"
                 type="radio"
                 id="finished"
                 name="progress"
