@@ -135,8 +135,6 @@ export default function Write({ user, mode, id, updatedId }) {
     }
   };
 
-  console.log(data);
-
   useEffect(() => {
     if (updatedId != null) {
       // updated id가 null이 아닌 경우에만 호출하게 됨
@@ -198,8 +196,6 @@ export default function Write({ user, mode, id, updatedId }) {
     if (post !== "" || updatedPost !== "") {
       setLoading(false);
     }
-    console.log("default!:", post);
-    console.log("update!:", updatedPost);
   }, [post, updatedPost]);
 
   useEffect(() => {
@@ -527,7 +523,12 @@ export default function Write({ user, mode, id, updatedId }) {
               >
                 미승인
               </button>
-              <button type="submit" onClick={() => {}}>
+              <button
+                type="submit"
+                onClick={() => {
+                  handleSetEditor();
+                }}
+              >
                 승인
               </button>
             </div>
