@@ -26,10 +26,10 @@ export default function Update() {
     }
 
     return (
-      <div id="detail-galpi-list">
+      <div id="update-galpi-list">
         {bookmark.map((item, index) => (
-          <div key={index} id="detail-galpi">
-            <div>{item.name}</div>
+          <div key={index} id="update-galpi">
+            {index + 1}갈피: {item.name}
           </div>
         ))}
       </div>
@@ -37,39 +37,157 @@ export default function Update() {
   };
 
   const PostList = () => {
+    const formatDateParts = (dateString) => {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1; // Months are zero-based
+      const day = date.getDate();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+
+      return {
+        year,
+        month: month < 10 ? `0${month}` : month,
+        day: day < 10 ? `0${day}` : day,
+        hours: hours < 10 ? `0${hours}` : hours,
+        minutes: minutes < 10 ? `0${minutes}` : minutes,
+        seconds: seconds < 10 ? `0${seconds}` : seconds,
+      };
+    };
+
+    const renderDateParts = (dateParts) => {
+      return (
+        <div id="update-date-container">
+          <div className="update-date-inner" id="update-date-inner-month">
+            <div>{dateParts.month}.</div>
+            <div>{dateParts.day}</div>
+          </div>
+          <div className="update-date-inner" id="update-date-inner-time">
+            <div>{dateParts.hours}:</div>
+            <div>{dateParts.minutes}</div>
+          </div>
+        </div>
+      );
+    };
     if (user === 2) {
       // 관리자 / 승인 여부 상관 X
       return (
-        <div>
-          <div>검토 대기 기록</div>
-          <br></br>
-          {waitPostList.map((item, index) => (
-            <div key={index}>
-              <div>{item.updatedDate}</div>
-              <div>{item.user.name}</div>
-              <div onClick={() => toApprove(item.id)}>검토하러 가기</div>
-              <br></br>
+        <div className="update-right-history-container">
+          <div className="update-right-history-title">History</div>
+          <div className="update-right-history-approval-box">
+            <div className="update-right-history-contents-title">
+              승인 대기 기록
             </div>
-          ))}
-          <div>모든 버전</div>
-          <br></br>
-          {confirmedList.map((item, index) => (
-            <div key={index}>
-              <div>{item.updatedDate}</div>
-              <div>{item.user.name}</div>
-            </div>
-          ))}
+            {waitPostList.map((item, index) => (
+              <div
+                className="update-right-history-date-approval-name"
+                key={index}
+              >
+                <div className="update-right-date-approval-box">
+                  <div className="update-right-date">
+                    {renderDateParts(formatDateParts(item.updatedDate))}
+                  </div>
+                  <div
+                    className="update-right-approval"
+                    onClick={() => toApprove(item.id)}
+                  >
+                    승인하러 가기
+                  </div>
+                </div>
+                <div className="update-right-name">{item.user.name}</div>
+              </div>
+            ))}
+          </div>
+          <div>
+            <div className="update-right-history-contents-title">버전 기록</div>
+            {confirmedList.map((item, index) => (
+              <div
+                key={index}
+                className="update-right-history-date-approval-name"
+              >
+                <div>
+                  <div className="update-right-date-approval-box">
+                    <div className="update-right-date">
+                      {renderDateParts(formatDateParts(item.updatedDate))}
+                    </div>
+                    <div>
+                      {item.isApproved ? (
+                        <div
+                          className="update-right-approval"
+                          style={{
+                            border: "1px solid #5CA54B",
+                            color: "#5CA54B",
+                            padding: "3px 10px ",
+                          }}
+                        >
+                          승인
+                        </div>
+                      ) : (
+                        <div
+                          className="update-right-approval"
+                          style={{
+                            border: "1px solid #FF4343",
+                            color: "#FF4343",
+                            padding: "3px 10px ",
+                          }}
+                        >
+                          미승인
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="update-right-name">{item.user.name}</div>
+              </div>
+            ))}
+          </div>
         </div>
       );
     } else if (user === 1) {
       // 참여자 / 승인 여부 상관 X
       return (
-        <div>
-          <div>모든 버전</div>
+        <div className="update-right-history-container">
+          <div className="update-right-history-title">History</div>
+          <div className="update-right-history-contents-title">버전 기록</div>
           {confirmedList.map((item, index) => (
-            <div key={index}>
-              <div>{item.updatedDate}</div>
-              <div>{item.user.name}</div>
+            <div
+              key={index}
+              className="update-right-history-date-approval-name"
+            >
+              <div>
+                <div className="update-right-date-approval-box">
+                  <div className="update-right-date">
+                    {renderDateParts(formatDateParts(item.updatedDate))}
+                  </div>
+                  <div>
+                    {item.isApproved ? (
+                      <div
+                        className="update-right-approval"
+                        style={{
+                          border: "1px solid #5CA54B",
+                          color: "#5CA54B",
+                          padding: "3px 10px ",
+                        }}
+                      >
+                        승인
+                      </div>
+                    ) : (
+                      <div
+                        className="update-right-approval"
+                        style={{
+                          border: "1px solid #FF4343",
+                          color: "#FF4343",
+                          padding: "3px 10px ",
+                        }}
+                      >
+                        미승인
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="update-right-name">{item.user.name}</div>
             </div>
           ))}
         </div>
@@ -77,12 +195,24 @@ export default function Update() {
     } else {
       // 독자 / 승인된 post만 보여줌
       return (
-        <div>
-          <div>모든 버전</div>
+        <div className="update-right-history-container">
+          <div className="update-right-history-title">History</div>
+          <div className="update-right-history-contents-title">버전 기록</div>
           {approvedPostList.map((item, index) => (
             <div key={index}>
-              <div>{item.updatedDate}</div>
-              <div>{item.user.name}</div>
+              <div
+                key={index}
+                className="update-right-history-date-approval-name"
+              >
+                <div>
+                  <div className="update-right-date-approval-box">
+                    <div className="update-right-date">
+                      {renderDateParts(formatDateParts(item.updatedDate))}
+                    </div>
+                  </div>
+                </div>
+                <div className="update-right-name">{item.user.name}</div>
+              </div>
             </div>
           ))}
         </div>
@@ -168,16 +298,18 @@ export default function Update() {
         <div id="update-left">
           {user === 0 ? (
             <div id="update-left-contents">
-              <div>갈피 목록</div>
+              <div id="update-left-contents-title">갈피 목록</div>
               <div>
                 <BookmarkList bookmark={bookmarkList} />
               </div>
             </div>
           ) : user === 1 ? (
             <div id="update-left-contents">
-              <div>미승인 사유</div>
+              <div id="update-left-no-approval">미승인 사유</div>
               <div>
-                <div>현재 승인 검토가 진행되지 않음</div>
+                <div id="update-left-no-approval-contents">
+                  현재 승인 검토가 진행되지 않음
+                </div>
               </div>
             </div>
           ) : (
@@ -195,43 +327,7 @@ export default function Update() {
             id="update-right-contents"
             style={history ? { background: "white" } : {}}
           >
-            {history ? (
-              <></>
-            ) : user === 0 ? (
-              <div>
-                <div>History</div>
-                <div>
-                  <div>승인 대기 기록</div>
-                  <div>07.11</div>
-                  <div>23:00</div>
-                  <div>저자</div>
-                </div>
-                <div>
-                  <div>버전 기록</div>
-                  <div>07.11</div>
-                  <div>23:00</div>
-                  <div>저자</div>
-                </div>
-              </div>
-            ) : user === 1 ? (
-              <div>
-                <div>History</div>
-                <div>
-                  <div>버전 기록</div>
-                  <div>07.11</div>
-                  <div>23:00</div>
-                  <div>저자</div>
-                </div>
-                <div>승인/미승인</div>
-              </div>
-            ) : (
-              <div>
-                <div>History</div>
-                <div>
-                  <PostList />
-                </div>
-              </div>
-            )}
+            {history ? <></> : <PostList />}
           </div>
         </div>
       </div>
