@@ -77,13 +77,11 @@ export default function Write({ user, mode, id, updatedId }) {
   const editorRef = useRef(null);
   const navigate = useNavigate();
 
-  // const { id, user, mode } = location.state || {};
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [history, setHistory] = useRecoilState(historyState);
   var data = ""; // contents에 해당하는 부분
 
-  // const [postList, setPostList] = useState([]); // 모든 버전(post를 다 가지고 옴)
   const [post, setPost] = useState(""); // 현재 선택한 버전의 post
   const [updatedPost, setUpdatedPost] = useState(""); // 검토 신청이 들어온 post
   // 처음 입력되는 부분
