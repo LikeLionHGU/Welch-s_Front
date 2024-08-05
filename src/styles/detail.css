@@ -191,6 +191,13 @@
   padding: 5px;
   margin-right: 10px;
 }
+#detail-galpi-update-btn-none {
+  border: 1px solid #bfbfbf;
+  color: #bfbfbf;
+  border-radius: 50px;
+  padding: 5px;
+  margin-right: 10px;
+}
 
 #detail-comments-container {
   width: 100%;

@@ -72,6 +72,12 @@ export default function Detail() {
               >
                 수정하기
               </div>
+              <div
+                onClick={() => toWrite(item.id)}
+                id="detail-galpi-update-btn-none"
+              >
+                수정하기
+              </div>
               <img src={SettingImg} alt="setting" style={{ height: "18px" }} />
             </div>
           </div>
