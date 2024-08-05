@@ -152,7 +152,7 @@ export default function MypageEdit() {
                             <input
                                 className="edit-profile-onliner"
                                 type="text"
-                                value={userInfo.userOneliner}
+                                value={userInfo.information}
                                 onChange={(e) => setUserInfo({ ...userInfo, userOneliner: e.target.value })}
                             />
                             <div className="edit-profile-email-title" >이메일</div>
