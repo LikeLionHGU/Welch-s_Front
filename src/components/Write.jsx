@@ -677,7 +677,12 @@ export default function Write({ user, mode, id, updatedId }) {
                     임시 저장
                   </button>
                 ) : (
-                  <>1</>
+                  <button
+                    className="write-white-btn"
+                    style={{ border: "1px solid #ced4da", color: "#ced4da" }}
+                  >
+                    임시 저장
+                  </button>
                 )}
 
                 {onBtn ? (
@@ -689,7 +694,15 @@ export default function Write({ user, mode, id, updatedId }) {
                     발행 검사
                   </button>
                 ) : (
-                  <>!</>
+                  <button
+                    className="write-green-btn"
+                    style={{
+                      border: "1px solid #85b285",
+                      background: "#85b285",
+                    }}
+                  >
+                    발행 검사
+                  </button>
                 )}
               </div>
             )}
@@ -716,7 +729,12 @@ export default function Write({ user, mode, id, updatedId }) {
                   미승인
                 </button>
               ) : (
-                <>2</>
+                <button
+                  className="write-white-btn"
+                  style={{ border: "1px solid #ced4da", color: "#ced4da" }}
+                >
+                  미승인
+                </button>
               )}
 
               {tempBtn ? (
@@ -730,17 +748,25 @@ export default function Write({ user, mode, id, updatedId }) {
                   승인
                 </button>
               ) : (
-                <div>?</div>
+                <button
+                  className="write-green-btn"
+                  style={{
+                    border: "1px solid #85b285",
+                    background: "#85b285",
+                  }}
+                >
+                  승인
+                </button>
               )}
             </div>
-            <div
+            <button
               onClick={() => {
                 approvalBtn();
                 checkAvailable();
               }}
             >
-              aa
-            </div>
+              확인하셨습니까?
+            </button>
           </>
         ) : (
           <></>
