@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import axios from "axios";
 //import { Navigation, Pagination } from 'swiper';
 import Notification from "../components/Notification";
 import NextArrowImg from "../imgs/nextArrow.svg";
@@ -113,7 +114,7 @@ const PeopleSlideContent = ({ mode, data, selected}) => {
 
 
 
-export default function PeopleSlide({ mode, data }) {
+export default function PeopleSlide({ mode, data, projectId }) {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
     const navigate = useNavigate();
@@ -127,12 +128,165 @@ export default function PeopleSlide({ mode, data }) {
           navigate("/profile", { state: { id } });
         }
       };
+
+    const toApprove = async (userId) => {
+        console.log(projectId);
+        const token = localStorage.getItem("token");
+        
+        const value = {
+          userId: userId,
+          projectId: projectId
+        };
+    
+        try {
+          const response = await axios.post(
+            `https://likelion.info/project/application/approve`,
+            value,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials: true,
+            }
+          );
+    
+          if (response.status === 200) {
+            console.log("Post uploaded successfully");
+            alert("게시물 업로드 성공");
+            
+          } else {
+            console.error("Error uploading post");
+          }
+        } catch (error) {
+          if (error.response) {
+            console.error("Error response from server:", error.response);
+          } else if (error.request) {
+            console.error("No response received:", error.request);
+          } else {
+            console.error("Error in setting up request:", error.message);
+          }
+          console.error("Error uploading post:", error);
+          alert(`Error uploading post: ${error.message}`);
+          localStorage.removeItem("token");
+          navigate("/", { replace: true });
+        }
+    }
+
+    const toDelete = async (userId) => {
+        console.log(projectId);
+        const token = localStorage.getItem("token");
+        
+        
+    
+        try {
+          const response = await axios.delete(
+            `https://likelion.info/project/application/delete/${userId}/${projectId}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials: true,
+            }
+          );
+    
+          if (response.status === 200) {
+            console.log("Post uploaded successfully");
+            alert("게시물 업로드 성공");
+            
+          } else {
+            console.error("Error uploading post");
+          }
+        } catch (error) {
+          if (error.response) {
+            console.error("Error response from server:", error.response);
+          } else if (error.request) {
+            console.error("No response received:", error.request);
+          } else {
+            console.error("Error in setting up request:", error.message);
+          }
+          console.error("Error uploading post:", error);
+          alert(`Error uploading post: ${error.message}`);
+          localStorage.removeItem("token");
+          navigate("/", { replace: true });
+        }
+    }
+
+    const toDeleteProjectUser = async (userId) => {
+        console.log(projectId);
+        const token = localStorage.getItem("token");
+        
+        
+    
+        try {
+          const response = await axios.delete(
+            `https://likelion.info/project/user/delete/${userId}/${projectId}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials: true,
+            }
+          );
+    
+          if (response.status === 200) {
+            console.log("Post uploaded successfully");
+            alert("게시물 업로드 성공");
+            
+          } else {
+            console.error("Error uploading post");
+          }
+        } catch (error) {
+          if (error.response) {
+            console.error("Error response from server:", error.response);
+          } else if (error.request) {
+            console.error("No response received:", error.request);
+          } else {
+            console.error("Error in setting up request:", error.message);
+          }
+          console.error("Error uploading post:", error);
+          alert(`Error uploading post: ${error.message}`);
+          localStorage.removeItem("token");
+          navigate("/", { replace: true });
+        }
+    }
+
+    const toUpdate = async (userId) => {
+        console.log(projectId);
+        const token = localStorage.getItem("token");
+    
+        try {
+          const response = await axios.patch(
+            `https://likelion.info/project/update/owner/${userId}/${projectId}`,
+            {},
+            {
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials: true,
+            }
+          );
+    
+          if (response.status === 200) {
+            console.log("Post uploaded successfully");
+            alert("게시물 업로드 성공");
+            
+          } else {
+            console.error("Error uploading post");
+          }
+        } catch (error) {
+          if (error.response) {
+            console.error("Error response from server:", error.response);
+          } else if (error.request) {
+            console.error("No response received:", error.request);
+          } else {
+            console.error("Error in setting up request:", error.message);
+          }
+          console.error("Error uploading post:", error);
+          alert(`Error uploading post: ${error.message}`);
+          localStorage.removeItem("token");
+          navigate("/", { replace: true });
+        }
+    }
+
+
+    
     
     
     
     const PeopleSlideContent = ({ mode, data }) => {
-        console.log(mode);
-        console.log(data);
+        
         return (
             <div className='slide-setting-people-container'>
                 <div className='setting-people-profile'>
@@ -147,28 +301,29 @@ export default function PeopleSlide({ mode, data }) {
                 </div>
                 {mode === 1 ? (
                     <div className='slide-setting-manange'>
-                        <button>
+                        <button onClick={() => toDeleteProjectUser(data.id)}>
                             내보내기
                         </button>
-                        <button>
+                        <button onClick={() => toUpdate(data.id)}>
                             권한 위임
                         </button>
                     </div>
     
-                ) : (
-                    <div className='slide-setting-manange'>
-                        <button>
-                            거절
-                        </button>
-                        <button>
-                            수락
-                        </button>
-                    </div>
-                )}
+                ) : mode === 0 ? (
+                    <></>
+                ) : (<div className='slide-setting-manange'>
+                    <button onClick={() => toDelete(data.id)}>
+                        거절
+                    </button>
+                    <button onClick={() => toApprove(data.id)}>
+                        수락
+                    </button>
+                </div>)}
     
             </div>
         )
     }
+    console.log(data);
 
 
 

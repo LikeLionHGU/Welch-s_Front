@@ -102,6 +102,11 @@ export default function Header({ mode }) {
     }
   }, []);
 
+  const toLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
+
   function toCreate() {
     navigate("/create");
   }
@@ -147,6 +152,14 @@ export default function Header({ mode }) {
         <div className="header-headerRight">
           {onLogin ? (
             <>
+              <button
+                id="goWrite"
+                onClick={() => {
+                  toLogout();
+                }}
+              >
+                로그아웃
+              </button>
               <button
                 id="goWrite"
                 onClick={() => {
