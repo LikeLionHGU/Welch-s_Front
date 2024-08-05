@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImgNone from "../imgs/img_none.svg";
 import "../styles/ImgUpLoad.css";
 
-export default function ImgUpLoad({ onImageUpload }) {
-  const [imageSrc, setImageSrc] = useState(`${ImgNone}`);
+export default function ImgUpLoad({ onImageUpload, initialImage }) {
+  const [imageSrc, setImageSrc] = useState(initialImage || `${ImgNone}`);
 
-  // useEffect(() => {
-  //   if (initialImage) {
-  //     setImageSrc(initialImage);
-  //   }
-  // }, [initialImage]);
+  useEffect(() => {
+    if (initialImage) {
+      setImageSrc(initialImage);
+    }
+  }, [initialImage]);
 
   const encodeFileToBase64 = (fileBlob) => {
     const reader = new FileReader();

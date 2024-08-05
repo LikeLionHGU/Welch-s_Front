@@ -103,8 +103,8 @@ export default function Board() {
 
 
 
-  function toWrite() {
-    navigate();
+  const toWrite = () => {
+    navigate("/detail", { state: { id } });
   }
 
   return (
@@ -132,7 +132,7 @@ export default function Board() {
             alt="img"
             id="board-book-img"
           />
-          <button className="board-go-wrote-btn">
+          <button className="board-go-wrote-btn" onClick={() => {toWrite()}}>
             책 쓰러가기
           </button>
         </div>

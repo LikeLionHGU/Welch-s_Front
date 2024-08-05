@@ -232,6 +232,7 @@ export default function Write({ user, mode, id, updatedId }) {
         })
         .then((response1) => {
           setPost(response1.data.contents); // 가장 최신 승인 post를 post 안에 저장
+          console.log(response1.data);
           // setInitialData(response1.data.contents);
         })
         .catch((error) => {
@@ -296,7 +297,7 @@ export default function Write({ user, mode, id, updatedId }) {
 
   useEffect(() => {
     // update
-    if (mode === 0 && post !== "" && updatedPost !== "") {
+    if (mode === 0 && post !== "") {
       setLoading(false);
     } else if (
       // approval
