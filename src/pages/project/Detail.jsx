@@ -23,6 +23,7 @@ export default function Detail() {
   const [like, setLike] = useState();
   const [likeCount, setLikeCount] = useState();
   const [comment, setComment] = useState("");
+  
   const navigate = useNavigate();
   const [project, setProject] = useState(false);
   const [userList, setUserList] = useState([]);
@@ -87,8 +88,9 @@ export default function Detail() {
       if (response.status === 200) {
         console.log("Post uploaded successfully");
         // alert("게시물 업로드 성공");
-        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
         setComment("");
+        window.location.reload();
       } else {
         console.error("Error uploading post");
       }
@@ -146,8 +148,10 @@ export default function Detail() {
         if (response.status === 200) {
           console.log("Post uploaded successfully");
           // alert("게시물 업로드 성공");
-          navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+          // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
           setComment("");
+          window.location.reload();
+          
         } else {
           console.error("Error uploading post");
         }
@@ -183,9 +187,12 @@ export default function Detail() {
       if (response.status === 200) {
         console.log("Post uploaded successfully");
         // alert("게시물 업로드 성공");
-        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        setLike(!like);
+        setLikeCount(like ? likeCount - 1 : likeCount + 1);
+        
       } else {
         console.error("Error uploading post");
+        
       }
     } catch (error) {
       if (error.response) {
@@ -219,7 +226,9 @@ export default function Detail() {
       if (response.status === 200) {
         console.log("Post uploaded successfully");
         // alert("게시물 업로드 성공");
-        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        setCommentsLike(!commentsLike);
+        window.location.reload();
       } else {
         console.error("Error uploading post");
       }
@@ -237,7 +246,7 @@ export default function Detail() {
       navigate("/", { replace: true });
     }
 
-    setCommentsLike(!commentsLike);
+    
   };
 
   const handleSetLike = () => {
@@ -250,6 +259,15 @@ export default function Detail() {
       setComment("");
     }
   };
+
+  useEffect(() => {
+    setLike(project.isLike);
+    setLikeCount(project.likeCount);
+}, [project.isLike, project.likeCount]);
+  
+
+
+  
 
   const toParticipate = async () => { // 참여 요청 api
     const token = localStorage.getItem("token");
@@ -268,7 +286,8 @@ export default function Detail() {
       if (response.status === 200) {
         console.log("Post uploaded successfully");
         // alert("게시물 업로드 성공");
-        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        window.location.reload(); // 화면 변경 해줘야함
       } else {
         console.error("Error uploading post");
       }
@@ -440,7 +459,7 @@ export default function Detail() {
           </div>
           <div id="detail-comments-container">
             <div id="detail-comments-container">
-              {commentList.map((comment, index) => (
+            {Array.isArray(commentList) && commentList.map((comment, index) => (
                 <Comment key={index} comment={comment} />
               ))}
             </div>
