@@ -18,9 +18,13 @@ export default function Header({ mode }) {
   const [bigCategory, setedBigCategory] = useRecoilState(bigCategoryState);
   const [Category, setCategory] = useRecoilState(categoryState);
   const [onLogin, setOnLogin] = useState();
+  const [search, setSearch] = useState();
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const query = useQuery();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  
 
   const categories = {
     소설: ["전체", "공포", "로맨스", "미스터리", "판타지", "SF"],
@@ -40,6 +44,18 @@ export default function Header({ mode }) {
   //     setIsFinished(true);
   //   }
   // };
+  const toSearch = () => {
+    console.log("!!!");
+    if (location.pathname === "/list") {
+      navigate("/dummy"); // 임시 경로로 이동
+      setTimeout(() => {
+        navigate("/list", { state: { search } });
+      }, 0);
+    } else {
+      navigate("/list", { state: { search } });
+    }
+    
+  }
 
   const handleCategoryClick = (category) => {
     setedBigCategory(category);
@@ -61,6 +77,7 @@ export default function Header({ mode }) {
     setCategory(Category);
     // console.log(Category);
   };
+  
 
   useEffect(() => {
     const token = query.get("token");
@@ -84,6 +101,11 @@ export default function Header({ mode }) {
       setOnLogin(true);
     }
   }, []);
+
+  const toLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
 
   function toCreate() {
     navigate("/create");
@@ -121,14 +143,23 @@ export default function Header({ mode }) {
           ></div>
         ) : (
           <div className="header-searchContainer">
-            <input className="header-searchBox" placeholder="책 제목, 작가명" />
-            <img src={SearchImg} alt="search" />
+            <input className="header-searchBox" placeholder="책 제목, 작가명" value={search}
+            onChange={(e) => setSearch(e.target.value)} />
+            <img src={SearchImg} alt="search" onClick={() => {toSearch()}}/>
           </div>
         )}
 
         <div className="header-headerRight">
           {onLogin ? (
             <>
+              <button
+                id="goWrite"
+                onClick={() => {
+                  toLogout();
+                }}
+              >
+                로그아웃
+              </button>
               <button
                 id="goWrite"
                 onClick={() => {

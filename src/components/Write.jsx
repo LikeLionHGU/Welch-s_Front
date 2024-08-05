@@ -131,6 +131,50 @@ export default function Write({ user, mode, id, updatedId }) {
     }
   };
 
+  const approvePost = async (isAllowed, rejectedReason) => {
+    const token = localStorage.getItem("token");
+    console.log(updatedId, " 123123123 ")
+    const value = {
+      contents: data,
+      id: updatedId,
+      rejectedReason: rejectedReason,
+      isAllowed: isAllowed
+    };
+
+    try {
+      const response = await axios.patch(
+        `https://likelion.info/post/confirm`,
+        value,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        alert("게시물 업로드 성공");
+        navigate("/update", { state: { id: id, updatedId: updatedId } });
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
+  };
+
+  
+
   const addPost = async () => {
     const token = localStorage.getItem("token");
     const value = {
@@ -320,6 +364,14 @@ export default function Write({ user, mode, id, updatedId }) {
       navigate("/update");
     }
   };
+
+  const handleApprove = (isAllowed, rejectedReason) => {
+    if (editorRef.current) {
+      const data = editorRef.current.getData();
+      console.log(data);
+      approvePost(isAllowed, rejectedReason);
+    }
+  }
 
   const editorConfig = {
     toolbar: {
@@ -598,6 +650,8 @@ export default function Write({ user, mode, id, updatedId }) {
               closeModal={handleSetOpenModal}
               style={modalStyle}
               mode={0}
+              contents={data}
+              id={updatedId}
             />
             <div className="write-btns">
               <button
@@ -612,7 +666,7 @@ export default function Write({ user, mode, id, updatedId }) {
                 className="write-green-btn"
                 type="submit"
                 onClick={() => {
-                  handleSetEditor();
+                  handleApprove(true, "");
                 }}
               >
                 승인

@@ -67,6 +67,8 @@ export default function Setting() {
     setSelectedCategories({ 소설: project.category });
   }, []);
 
+  
+
   const handleCategoryChange = (category, item) => {
     setSelectedCategories((prevSelectedCategories) => {
       const updatedCategories = {
@@ -285,6 +287,7 @@ export default function Setting() {
   }, []);
 
   useEffect(() => {
+    console.log("!@#!@#!@#");
     console.log(project);
   }, [project]);
 
@@ -429,12 +432,12 @@ export default function Setting() {
 
         <div className="setting-menu">
           <div className="setting-title">책 제작 명단</div>
-          <div><PeopleSlide mode={1} data={participatiedPeople} /></div>
+          <div><PeopleSlide mode={1} data={project.userProjectList} projectId={project.id} /></div>
         </div>
 
         <div className="setting-menu">
           <div className="setting-title">신청한 작가 명단</div>
-          <div><PeopleSlide mode={1} data={appliedPeople} /></div>
+          <div><PeopleSlide mode={3} data={project.userApplicationList} projectId={project.id} /></div>
         </div>
 
         <div className="setting-menu">
