@@ -1,3 +1,8 @@
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
 .create-modal-container {
     position: fixed;
     top: 0;
@@ -9,12 +14,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 10;
 }
 
 .create-modal-content {
     background: #fff;
-    padding: 4.4vh 2.0vw;
+    padding: 60px 2.0vw 20px 2.0vw;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 52vw;
@@ -24,57 +29,79 @@
 
 .create-close-button {
     position: absolute;
-    top: 10px;
-    right: 15px;
+    top: 20px;
+    right: 20px;
     background: none;
     border: none;
     font-size: 20px;
     cursor: pointer;
 }
 
-.create-form-group {
-    margin-bottom: 15px;
-}
 
-.create-form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
+.board-create-title {
+    font-family: 'pretendard';
+    font-size: 1.25em;
+    font-weight: 600;
 
-.create-form-title input,
-.create-form-title textarea {
     width: 100%;
-    font-size: 1.4rem;
-    padding: 1.5vh 0;
+    margin-bottom: 12px;
     border: none;
-    border-radius: 4px;
 }
 
-.create-form-content input,
-.create-form-content textarea {
+.board-create-content {
+    font-family: 'pretendard';
+    font-size: 0.875em;
+    font-weight: 500;
+    line-height: 180%;
+
     width: 100%;
-    height: 418px;
-    font-size: 1em;
-    //padding: 8px;
+    height: 360px;
     border: none;
-    border-radius: 4px;
 }
 
-.create-form-group textarea {
-    height: 100px;
-}
-
-.create-form-actions {
+.board-create-footer{
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-top: 45px;
 }
 
-.create-form-actions button {
-    padding: 8px 12px;
+.create-form-image{
+    display: flex;
+    align-items: center;
+}
+
+.img{
+    width: 18px;
+    height: 18px;
+
+    margin-right: 8px;
+}
+
+.img-title{
+    font-family: 'pretendard';
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+
+
+.board-create-btn{
+    justify-content: center;
+    align-items: center;
+    width: 5.55vw;
+    height: 35px;
+    padding: 5px 14px;
+
     border: none;
     border-radius: 4px;
+
     background: var(--primarycolor);
     color: white;
     cursor: pointer;
-    margin-left: 10px;
+
+    font-family: 'pretendard';
+    font-size: 0.875em;
+    font-weight: 600;
 }

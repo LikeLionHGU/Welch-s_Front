@@ -1,3 +1,8 @@
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
 .board-post {
     width: 64vw;
 
@@ -174,6 +179,13 @@
     font-size: 0.75em;
     font-weight: 500;
 }
+
+.board-delete-button,
+.board-edit-button:active{
+    background-color: #5CA54B;
+    color: #FFFF;
+}
+
 
 .board-edit-button{
     border-radius: 4px 4px 0px 0px;
