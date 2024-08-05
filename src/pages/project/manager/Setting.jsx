@@ -40,15 +40,17 @@ export default function Setting() {
   const [likeCount, setLikeCount] = useState();
   const [userList, setUserList] = useState([]);
   const [bookmarkList, setBookmarkList] = useState([]);
+  const [bigCategory, setBigCategory] = useState("");
+  const [category, setCategory] = useState("");
 
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [information, setInformation] = useState();
   const [selectedCategories, setSelectedCategories] = useState({});
-  const [visibility, setVisibility] = useState();
+  const [visibility, setVisibility] = useState(); // isPublic
   const [people, setPeople] = useState();
-
+  const [isRecruit, setIsRecruit] = useState(); // isRecruit
 
   const [image, setImage] = useState(`${ImgNone}`);
 
@@ -60,7 +62,7 @@ export default function Setting() {
     profileImg: "",
     name: "",
   }]);
-  const [progress, setProgress] = useState("진행 중");
+  const [progress, setProgress] = useState("진행 중"); // isFinish
 
   // Initial category selection
   useEffect(() => {
@@ -83,6 +85,11 @@ export default function Setting() {
   const handleVisibilityChange = (event) => {
     const newVisibility = event.target.value;
     setVisibility(newVisibility);
+    console.log(newVisibility);
+  }
+  const handleIsRecruit = (event) => {
+    const newVisibility = event.target.value;
+    setIsRecruit(newVisibility);
     console.log(newVisibility);
   }
 
@@ -125,15 +132,16 @@ export default function Setting() {
     const categoriesString = Object.values(selectedCategories).join(", ");
 
     const value = {
+      id: id,
       name: title,
-      category: categoriesString,
+      category: category,
+      bigCategory: bigCategory,
       information: information,
       description: description,
       isPublic: visibility === "공개",
       maximumNumber: people,
       isFinished: false,
       isRecruit: true,
-      isProgress: progress === "진행 중"
     };
 
     console.log(value);
@@ -147,8 +155,8 @@ export default function Setting() {
     );
 
     try {
-      const response = await axios.post(
-        "https://likelion.info/project/add",
+      const response = await axios.patch(
+        "https://likelion.info/project/update",
         formData,
         {
           headers: {
@@ -268,11 +276,13 @@ export default function Setting() {
           setUserList(response.data.userProjectList);
           setLike(response.data.isLiked);
           setLikeCount(response.data.likeCount);
+          setIsRecruit(response.data.isRecruit);
 
           setTitle(response.data.name);
           setDescription(response.data.description);
           setInformation(response.data.information);
           setBookmarkList(response.data.bookMarkList);
+          setImage(response.imageAddress);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -327,13 +337,13 @@ export default function Setting() {
                 {categories[categoriesString].map((item) => (
                   <div key={item} className="setting-radio-item">
                     <input
-                      className="radio"
                       type="radio"
                       id={item}
-                      value={item}
-                      name={categoriesString}
-                      onChange={() => handleCategoryChange(categoriesString, item)}
-                      checked={selectedCategories[categoriesString] === item}
+                      name="genre"
+                      onChange={() => {
+                        setCategory(item);
+                        setBigCategory(categoriesString);
+                      }}
                     />
                     <label htmlFor={item}>{item}</label>
                   </div>
@@ -419,7 +429,41 @@ export default function Setting() {
             </div>
           </div>
 
+          
+
         </div>
+
+        <div className="setting-menu">
+          <div className="setting-title">작가 모집 여부</div>
+          <div className="visibility-radio">
+            <div>
+              <div className="visibility-radio-item">
+                <input
+                  className="radio"
+                  type="radio"
+                  id="public"
+                  name="recruit"
+                  value="모집 중"
+                  checked={project.isRecruit === true}
+                  onChange={handleIsRecruit}
+                />
+                <label htmlFor="public">모집 중</label>
+              </div>
+              <div className="visibility-radio-item">
+                <input
+                  className="radio"
+                  type="radio"
+                  id="private"
+                  name="recruit"
+                  value="모집 마감"
+                  checked={project.isRecruit === false}
+                  onChange={handleIsRecruit}
+                />
+                <label htmlFor="private">모집 마감</label>
+              </div>
+            </div>
+          </div>
+          </div>
 
         <div className="setting-menu">
           <div className="setting-title">작가 정원</div>

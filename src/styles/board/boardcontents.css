@@ -1,4 +1,7 @@
 @charset "UTF-8";
+@import url("https://webfontbox.github.io/Arita/font.css");
+@import url("https://webfontbox.github.io/Arita/font.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 .board-post {
   width: 64vw;
   background: #fff;
@@ -8,80 +11,62 @@
   margin-bottom: 16px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
-.board-post .post-header {
+
+.post-header {
   display: flex;
   height: 40px;
   align-items: flex-start;
   position: relative;
   margin-bottom: 20px;
 }
-.board-post .post-header .post-profile {
+
+.post-profile {
   display: flex;
 }
-.board-post .post-header .post-detail {
+
+.post-detail {
   margin-left: auto;
 }
-.board-post .post-header .avatar {
+
+.avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 12px;
 }
-.board-post .post-header .user-info {
-  flex-grow: 1;
-}
-.board-post .post-header .user-info .username {
+
+.username {
   font-family: "pretendard";
   font-size: 0.875em;
   font-weight: 600;
 }
-.board-post .post-header .user-info .options-icon {
-  float: right;
-  cursor: pointer;
-}
-.board-post .post-header .user-info .post-options {
-  position: absolute;
-  top: 40px;
-  right: 0;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-}
-.board-post .post-header .user-info .post-options button {
-  background: none;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-}
-.board-post .post-header .user-info .post-options button:hover {
-  background: #f0f0f0;
-}
-.board-post .post-content {
+
+.post-content {
   margin-top: 16px;
 }
-.board-post .post-title {
+
+.post-title {
   font-family: "pretendard";
   font-size: 1.25em;
   font-weight: 600;
   margin-bottom: 12px;
 }
-.board-post .post-body {
+
+.post-body {
   font-family: "pretendard";
   font-size: 0.875em;
   font-weight: 500;
   line-height: 180%;
   margin-bottom: 20px;
 }
-.board-post .post-footer {
+
+.post-footer {
   margin-top: 16px;
   display: flex;
   align-items: center;
 }
-.board-post .post-footer .like-button {
+
+.like-button {
   background: none;
   border: none;
   cursor: pointer;
@@ -90,32 +75,37 @@
   color: #333;
   margin-right: 72px;
 }
-.board-post .post-footer .like-button .heart-icon {
+
+.heart-icon {
   width: 18px;
   height: 18px;
   margin-right: 4px;
 }
-.board-post .post-footer .like-button .heart-icon.liked {
+.heart-icon.liked {
   color: #F4623B;
 }
-.board-post .post-footer .like-button .heart-icon.unliked {
+.heart-icon.unliked {
   color: #BFBFBF;
 }
-.board-post .post-footer .like-button span {
+
+.like-count {
   font-family: "pretendard";
   font-size: 0.75em;
   font-weight: 500;
 }
-.board-post .post-footer .message-button {
+
+.message-button {
   display: flex;
   align-items: center;
   background: none;
   border: none;
 }
-.board-post .post-footer .message-button .message-btn-img {
+
+.message-btn-img {
   margin-right: 4px;
 }
-.board-post .post-footer .message-button span {
+
+.message-count {
   font-family: "pretendard";
   font-size: 0.75em;
   font-weight: 500;
@@ -142,6 +132,12 @@
   font-family: "pretendard";
   font-size: 0.75em;
   font-weight: 500;
+}
+
+.board-delete-button:active,
+.board-edit-button:active {
+  background-color: #5CA54B;
+  color: white;
 }
 
 .board-edit-button {

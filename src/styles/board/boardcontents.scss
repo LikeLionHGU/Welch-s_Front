@@ -1,3 +1,8 @@
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
 .board-post {
     width: 64vw;
 
@@ -7,148 +12,112 @@
     padding: 16px;
     margin-bottom: 16px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
 
-    .post-header {
-        display: flex;
-        height: 40px; //header의 길이
-        align-items: flex-start;
-        position: relative;
+.post-header {
+    display: flex;
+    height: 40px; //header의 길이
+    align-items: flex-start;
+    position: relative;
 
-        margin-bottom: 20px;
+    margin-bottom: 20px;
+}
 
-        .post-profile{
-            display: flex;
-        }
+.post-profile{
+    display: flex;
+}
 
-        .post-detail{
-            margin-left: auto;
-        }
+.post-detail{
+    margin-left: auto;
+}
 
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 12px;
-        }
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
 
-        .user-info {
-            flex-grow: 1;
-            .username {
-                font-family: 'pretendard';
-                font-size: 0.875em;
-                font-weight: 600;
-            }
 
-            .options-icon {
-                float: right;
-                cursor: pointer;
-            }
+.username {
+    font-family: 'pretendard';
+    font-size: 0.875em;
+    font-weight: 600;
+}
 
-            .post-options {
-                position: absolute;
-                top: 40px;
-                right: 0;
-                background: #fff;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                z-index: 10;
+.post-content {
+    margin-top: 16px;
+}
 
-                button {
-                    background: none;
-                    border: none;
-                    padding: 8px 16px;
-                    cursor: pointer;
-                    width: 100%;
-                    text-align: left;
+.post-title {
+    font-family: 'pretendard';
+    font-size: 1.25em;
+    font-weight: 600;
 
-                    &:hover {
-                        background: #f0f0f0;
-                    }
-                }
-            }
-        }
+    margin-bottom: 12px;
+}
+
+.post-body {
+    font-family: 'pretendard';
+    font-size: 0.875em;
+    font-weight: 500;
+    line-height: 180%;
+
+    margin-bottom: 20px;
+}
+
+.post-footer {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #333;
+
+    margin-right: 72px;
+}
+
+.heart-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+    &.liked {
+        color: #F4623B;
     }
 
-    
-
-    .post-content {
-        margin-top: 16px;
-    }
-
-    .post-title {
-        font-family: 'pretendard';
-        font-size: 1.25em;
-        font-weight: 600;
-
-        margin-bottom: 12px;
-    }
-
-    .post-body {
-        font-family: 'pretendard';
-        font-size: 0.875em;
-        font-weight: 500;
-        line-height: 180%;
-
-        margin-bottom: 20px;
-    }
-
-
-    .post-footer {
-        margin-top: 16px;
-        display: flex;
-        align-items: center;
-
-        .like-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            color: #333;
-
-            margin-right: 72px;
-
-            .heart-icon {
-                width: 18px;
-                height: 18px;
-                margin-right: 4px;
-                &.liked {
-                    color: #F4623B;
-                }
-
-                &.unliked{
-                    color: #BFBFBF;
-                }
-            }
-
-            span {
-                font-family: 'pretendard';
-                font-size: 0.75em;
-                font-weight: 500;
-            }
-        }
-
-
-        .message-button{
-            display: flex;
-            align-items: center;
-            background: none;
-            border: none;
-
-            .message-btn-img{
-                margin-right: 4px;
-            }
-
-            span {
-                font-family: 'pretendard';
-                font-size: 0.75em;
-                font-weight: 500;
-            }
-        }
+    &.unliked{
+        color: #BFBFBF;
     }
 }
 
+.like-count {
+    font-family: 'pretendard';
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.message-button{
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+}
+
+.message-btn-img{
+    margin-right: 4px;
+}
+
+.message-count{
+    font-family: 'pretendard';
+    font-size: 0.75em;
+    font-weight: 500;
+}
 
 .button-container{
     margin-top: 5px;
@@ -175,6 +144,13 @@
     font-weight: 500;
 }
 
+.board-delete-button:active,
+.board-edit-button:active{
+    background-color: #5CA54B;
+    color: #FFFF;
+}
+
+
 .board-edit-button{
     border-radius: 4px 4px 0px 0px;
 }
@@ -182,3 +158,9 @@
 .board-delete-button{
     border-radius: 0px 0px 4px 4px;
 }
+
+
+
+
+
+

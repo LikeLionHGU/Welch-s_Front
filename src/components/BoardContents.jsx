@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import BoardUpdate from './BoardUpdate';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import BoardProfile from '../imgs/board_profile.png';
@@ -17,6 +19,18 @@ const BoardContents = ({ post, loggedInUser }) => {
     const navigate = useNavigate();
     const [showNotification, setShowNotification] = useState(false);
     const [showBoardDetail, setShowBoardDetail] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+
+
+    const handleClick = (id) => {
+        const user = localStorage.getItem("id");
+    
+        if(id === user) {
+          navigate("/mypage");
+        } else {
+          navigate("/profile", { state: { id } });
+        }
+    };
 
     const handleLike = async (communityPostId) => {
         const token = localStorage.getItem("token");
@@ -99,7 +113,8 @@ const BoardContents = ({ post, loggedInUser }) => {
             if (response.status === 200) {
                 console.log("Post uploaded successfully");
                 // alert("게시물 업로드 성공");
-                navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+                // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+                window.location.reload();
 
             } else {
                 console.error("Error uploading post");
@@ -122,13 +137,28 @@ const BoardContents = ({ post, loggedInUser }) => {
     const BoardDetail = () => {
         return (
             <div className="button-container">
-                <button className="board-edit-button" onClick={handleEdit}>수정</button>
+                <button className="board-edit-button" 
+                    onClick={() => setModalOpen(true)}>수정
+                    {/* <BoardUpdate
+                        onClose={() => setModalOpen(false)}
+                        //onSubmit={}
+                        //id={id}
+                    /> */}
+                </button>
                 <button className="board-delete-button" onClick={()=> deletePost(post.id)}>삭제</button>
+                {modalOpen && (
+                <BoardUpdate
+                    onClose={() => setModalOpen(false)}
+                    //onSubmit={}
+                    //id={id}
+                />
+            )}
             </div>
         );
     };
 
     const handleOptionsToggle = () => {
+        console.log("!!")
         setShowBoardDetail(!showBoardDetail);
     };
     
@@ -137,9 +167,9 @@ return (
     <div className="board-post">
         <div className="post-header">
             <div className='post-profile'>
-                <img src={BoardProfile} alt="avatar" className="avatar" />
+                <img src={post.writer.profile} alt="avatar" className="avatar" onClick={() => {handleClick(post.writer.id)}} />
                 <div className="user-info">
-                    <div className="username">{post.writer.name}</div>
+                    <div className="username" onClick={() => {handleClick(post.writer.id)}}>{post.writer.name}</div>
                 </div>
             </div>
             <div className='post-detail'>
@@ -147,9 +177,10 @@ return (
                     <div>
                         <img
                             src={More}
-                            onClick={handleOptionsToggle}
+                            onClick={console.log("1@#!@#!@#")}
                         />
-                        {showBoardDetail && <BoardDetail />}
+                        {{showBoardDetail} ? <BoardDetail /> : <></>}
+                        {/* {showBoardDetail} */}
                     </div>
                     :
                     <></>
@@ -163,7 +194,7 @@ return (
         <div className="post-footer">
             <button className="like-button" onClick={(e) => { e.stopPropagation(); handleLike(post.id); }}>
                 <FontAwesomeIcon icon={liked ? solidHeart : solidHeart} className={`heart-icon ${liked ? 'liked' : 'unliked'}`} />
-                <span>{likeCount}</span>
+                <span className='like-count'>{likeCount}</span>
             </button>
 
             <button className="message-button">
@@ -171,7 +202,7 @@ return (
                     className='message-btn-img'
                     src={SppechBubble}
                 />
-                <span>{post.commentCount}</span>
+                <span className='message-count'>{post.commentCount}</span>
             </button>
         </div>
 

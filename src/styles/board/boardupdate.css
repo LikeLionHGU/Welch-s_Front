@@ -1,7 +1,7 @@
 @import url("https://webfontbox.github.io/Arita/font.css");
 @import url("https://webfontbox.github.io/Arita/font.min.css");
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-.create-modal-container {
+.update-modal-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -16,7 +16,7 @@
   z-index: 10;
 }
 
-.create-modal-content {
+.update-modal-content {
   background: #fff;
   padding: 60px 2vw 20px 2vw;
   border-radius: 8px;
@@ -26,7 +26,7 @@
   position: relative;
 }
 
-.create-close-button {
+.update-close-button {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -36,7 +36,7 @@
   cursor: pointer;
 }
 
-.board-create-title {
+.board-update-title {
   font-family: "pretendard";
   font-size: 1.25em;
   font-weight: 600;
@@ -45,7 +45,7 @@
   border: none;
 }
 
-.board-create-content {
+.board-update-content {
   font-family: "pretendard";
   font-size: 0.875em;
   font-weight: 500;
@@ -55,31 +55,31 @@
   border: none;
 }
 
-.board-create-footer {
+.board-update-footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 45px;
 }
 
-.create-form-image {
+.update-form-image {
   display: flex;
   align-items: center;
 }
 
-.img {
+.update-img {
   width: 18px;
   height: 18px;
   margin-right: 8px;
 }
 
-.img-title {
+.update-img-title {
   font-family: "pretendard";
   font-size: 0.75em;
   font-weight: 500;
 }
 
-.board-create-btn {
+.board-update-btn {
   justify-content: center;
   align-items: center;
   width: 5.55vw;
@@ -93,4 +93,4 @@
   font-family: "pretendard";
   font-size: 0.875em;
   font-weight: 600;
-}/*# sourceMappingURL=boardcreate.css.map */
+}/*# sourceMappingURL=boardupdate.css.map */
