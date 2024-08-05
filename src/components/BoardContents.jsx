@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import BoardUpdate from './BoardUpdate';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import BoardProfile from '../imgs/board_profile.png';
@@ -17,6 +19,7 @@ const BoardContents = ({ post, loggedInUser }) => {
     const navigate = useNavigate();
     const [showNotification, setShowNotification] = useState(false);
     const [showBoardDetail, setShowBoardDetail] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
 
     const handleLike = async (communityPostId) => {
         const token = localStorage.getItem("token");
@@ -122,7 +125,14 @@ const BoardContents = ({ post, loggedInUser }) => {
     const BoardDetail = () => {
         return (
             <div className="button-container">
-                <button className="board-edit-button" onClick={handleEdit}>수정</button>
+                <button className="board-edit-button" 
+                    onClick={() => setModalOpen(true)}>수정
+                    <BoardUpdate
+                        onClose={() => setModalOpen(false)}
+                        //onSubmit={}
+                        //id={id}
+                    />
+                </button>
                 <button className="board-delete-button" onClick={()=> deletePost(post.id)}>삭제</button>
             </div>
         );
@@ -146,6 +156,7 @@ return (
                 {post.writer.id === localStorage.getItem("id") ?
                     <div>
                         <img
+
                             src={More}
                             onClick={handleOptionsToggle}
                         />
@@ -163,7 +174,7 @@ return (
         <div className="post-footer">
             <button className="like-button" onClick={(e) => { e.stopPropagation(); handleLike(post.id); }}>
                 <FontAwesomeIcon icon={liked ? solidHeart : solidHeart} className={`heart-icon ${liked ? 'liked' : 'unliked'}`} />
-                <span>{likeCount}</span>
+                <span className='like-count'>{likeCount}</span>
             </button>
 
             <button className="message-button">
@@ -171,7 +182,7 @@ return (
                     className='message-btn-img'
                     src={SppechBubble}
                 />
-                <span>{post.commentCount}</span>
+                <span className='message-count'>{post.commentCount}</span>
             </button>
         </div>
 
