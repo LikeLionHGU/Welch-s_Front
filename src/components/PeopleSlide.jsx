@@ -192,7 +192,7 @@ export default function PeopleSlide({ mode, data }) {
                 pagination={{ clickable: true }}
             //scrollbar={{ draggable: true }}
             >
-                {data.map((item, index) => (
+                {(Array.isArray(data) ? data : []).map((item, index) => (
                     <SwiperSlide key={index}>
                         <PeopleSlideContent data={item} mode={mode} />
                     </SwiperSlide>

@@ -33,7 +33,7 @@ export default function MypageEdit() {
 
         const value = {
             name: userInfo.name,
-            information: userInfo.userOneliner,
+            information: userInfo.information,
             email: userInfo.email
         }
 
@@ -153,7 +153,7 @@ export default function MypageEdit() {
                                 className="edit-profile-onliner"
                                 type="text"
                                 value={userInfo.information}
-                                onChange={(e) => setUserInfo({ ...userInfo, userOneliner: e.target.value })}
+                                onChange={(e) => setUserInfo({ ...userInfo, information: e.target.value })}
                             />
                             <div className="edit-profile-email-title" >이메일</div>
                             <input

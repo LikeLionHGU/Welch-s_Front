@@ -436,7 +436,7 @@ export default function Setting() {
 
         <div className="setting-menu">
           <div className="setting-title">신청한 작가 명단</div>
-          <div><PeopleSlide mode={2} data={project.userApplicationList} /></div>
+          <div><PeopleSlide mode={3} data={project.userApplicationList} /></div>
         </div>
 
         <div className="setting-menu">
