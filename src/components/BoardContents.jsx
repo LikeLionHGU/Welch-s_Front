@@ -24,11 +24,11 @@ const BoardContents = ({ post, loggedInUser }) => {
 
     const handleClick = (id) => {
         const user = localStorage.getItem("id");
-    
-        if(id === user) {
-          navigate("/mypage");
+
+        if (id === user) {
+            navigate("/mypage");
         } else {
-          navigate("/profile", { state: { id } });
+            navigate("/profile", { state: { id } });
         }
     };
 
