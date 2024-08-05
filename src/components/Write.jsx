@@ -253,7 +253,14 @@ export default function Write({ user, mode, id, updatedId }) {
   }, []);
 
   useEffect(() => {
-    if (post !== "" && updatedPost !== "") {
+    // update
+    if (mode === 0 && post !== "" && updatedPost !== "") {
+      setLoading(false);
+    } else if (
+      // approval
+      (mode === 1 || mode === 2) &&
+      (post !== "" || updatedPost !== "")
+    ) {
       setLoading(false);
     }
   }, [post, updatedPost]);
