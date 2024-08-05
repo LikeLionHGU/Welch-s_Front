@@ -3,6 +3,9 @@ import PeopleSlide from '../../../components/PeopleSlide';
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
+import DeleteButton from "../../../imgs/delete.png";
+
 import "../../../styles/galpi.scss";
 
 export default function Galpi() {
@@ -231,12 +234,20 @@ export default function Galpi() {
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button className="modal-close" onClick={() => setIsModalOpen(false)}>
-              &times;
-            </button>
-              <div className="modal-body">
-                <PeopleSlide mode={2} data={galpimanange} />
-              </div>
+            <div className="modal-header">
+              <img
+                className="modal-close"
+                src={DeleteButton}
+                onClick={() => setIsModalOpen(false)}
+              />
+            </div>
+            <div className="modal-body">
+                <PeopleSlide 
+                  mode={2} 
+                  data={galpimanange} 
+                  // onSelect={handleSelect}
+                />
+            </div>
             <button className="modal-save-button" onClick={() => setIsModalOpen(false)}>
               저장하기
             </button>

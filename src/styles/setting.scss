@@ -219,14 +219,25 @@ input[type='radio']:checked {
     overflow: auto,
 }
 
-.modal-close {
+.modal-header {
+    margin: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+}
+
+.modal-close {
+    // justify-content: center;
+    // align-items: center;
+    width: 10px;
+    height: 10px;
 
     border: none;
     outline: none;
     background-color: #FFFF;
+}
+
+.modal-body {
+    padding: 30px;
 }
 
 
@@ -235,6 +246,10 @@ input[type='radio']:checked {
     outline: none;
     background-color: #FFFF;
 }
+
+
+
+
 
 
 

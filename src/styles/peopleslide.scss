@@ -5,6 +5,10 @@
 
 .slide-setting-people-container {
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -14,10 +18,22 @@
     justify-content: center;
     align-items: center;
     
-    width: 200px;
+    width: 176px;
     height: 140px;
     border: 1.3px solid #5CA54B; 
     border-radius: 8px; /* 둥근 모서리 */
+}
+
+.setting-people-profile-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    width: 176px;
+    height: 140px;
+    border: 1.3px solid #5CA54B; 
+    border-radius: 8px 8px 0px 0px; /* 둥근 모서리 */
 }
 
 
@@ -34,5 +50,35 @@
     font-family: 'pretendard';
     font-size: 0.875em;
     font-weight: 500;
+}
+
+.slide-setting-manange{
+    display: flex;
+    width: 176px;
+    height: 34px;
+    border: 1.4px solid #5CA54B;
+    border-radius: 0px 0px 8px 8px; /* 둥근 모서리 */
+    padding: 10px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+.exporting-button, 
+.permissions-button,
+.permissions-delete-button {
+    border: none;
+    outline: none;
+    background-color: #FFFF;
+
+    font-family: 'pretendard';
+    font-size: 0.875em;
+    font-weight: 500;
+}
+
+.permissions-button.active {
+    background-color: #5CA54B; /* 선택된 버튼의 배경색 */
+    color: #FFFFFF;
 }
 
