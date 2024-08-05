@@ -14,43 +14,106 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 
-
-const PeopleSlideContent = ({ mode, data }) => {
+const PeopleSlideContent = ({ mode, data, selected}) => {
     console.log(mode);
     console.log(data);
-    return (
-        <div className='slide-setting-people-container'>
-            <div className='setting-people-profile'>
-                <div>
-                    <img
-                        className="setting-people-img"
-                        src={data.imageAddress}
-                    />
-                </div>
-                <div className="setting-people-name">{data.name}</div>
-            </div>
-            {mode === 1 ? (
-                <div className='slide-setting-manange'>
-                    <button onClick={Notification }>
-                        내보내기
-                    </button>
-                    <button>
-                        권한 위임
-                    </button>
-                </div>
 
-            ) : (
-                <div>
+    const renderContent = () => {
+        switch (mode) {
+            case 0: //작가 네임, 프로필만 
+                return (
+                    <div className='slide-setting-people-container'>
+                        <div className='setting-people-profile'>
+                            <div>
+                                <img
+                                    className="setting-people-img"
+                                    src={data.imageAddress}
+                                />
+                            </div>
+                            <div className="setting-people-name">{data.name}</div>
+                        </div>
+                    </div>
+                );
+            case 1: //내보내기, 권한 위임
+                return (
+                    <div className='slide-setting-people-container'>
+                        <div className='setting-people-profile'>
+                            <div>
+                                <img
+                                    className="setting-people-img"
+                                    src={data.imageAddress}
+                                />
+                            </div>
+                            <div className="setting-people-name">{data.name}</div>
+                        </div>
+                        <div className='slide-setting-manange'>
+                            <button
+                                onClick={Notification}
+                                className="exporting-button"
+                            >
+                                내보내기
+                            </button>
+                            <button
+                                className="permissions-button"
+                            >
+                                권한 위임
+                            </button>
+                        </div>
+                    </div>
+                );
+            case 2: //권한 위임하기 
+                return (
+                    <div className='slide-setting-people-container'>
+                        <div className='setting-people-profile-2'>
+                            <div>
+                                <img
+                                    className="setting-people-img"
+                                    src={data.imageAddress}
+                                />
+                            </div>
+                            <div className="setting-people-name">{data.name}</div>
+                        </div>
+                        <div className='slide-setting-manange'>
+                            <button
+                                className={`permissions-button ${selected ? "active" : ""}`}
+                            >
+                                권한 위임
+                            </button>
+                        </div>
+                    </div>
+                );
+            case 3: //권한 취소하기
+                return (
+                    <div className='slide-setting-people-container'>
+                        <div className='setting-people-profile-2'>
+                            <div>
+                                <img
+                                    className="setting-people-img"
+                                    src={data.imageAddress}
+                                />
+                            </div>
+                            <div className="setting-people-name">{data.name}</div>
+                        </div>
+                        <div className='slide-setting-manange'>
+                            <button
+                                className="permissions-delete-button"
+                            >
+                                권한 위임 취소
+                            </button>
+                        </div>
+                    </div>
+                );
+            default:
+                return null;
+        }
+    }
 
-                </div>
-            )}
-
-        </div>
-    )
+    return renderContent();
 }
 
 
-export default function PeopleSlide({mode, data}) {
+
+export default function PeopleSlide({ mode, data }) {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
     const navigate = useNavigate();
