@@ -21,6 +21,17 @@ const BoardContents = ({ post, loggedInUser }) => {
     const [showBoardDetail, setShowBoardDetail] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
 
+
+    const handleClick = (id) => {
+        const user = localStorage.getItem("id");
+    
+        if(id === user) {
+          navigate("/mypage");
+        } else {
+          navigate("/profile", { state: { id } });
+        }
+    };
+
     const handleLike = async (communityPostId) => {
         const token = localStorage.getItem("token");
 
@@ -102,7 +113,8 @@ const BoardContents = ({ post, loggedInUser }) => {
             if (response.status === 200) {
                 console.log("Post uploaded successfully");
                 // alert("게시물 업로드 성공");
-                navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+                // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+                window.location.reload();
 
             } else {
                 console.error("Error uploading post");
@@ -127,18 +139,26 @@ const BoardContents = ({ post, loggedInUser }) => {
             <div className="button-container">
                 <button className="board-edit-button" 
                     onClick={() => setModalOpen(true)}>수정
-                    <BoardUpdate
+                    {/* <BoardUpdate
                         onClose={() => setModalOpen(false)}
                         //onSubmit={}
                         //id={id}
-                    />
+                    /> */}
                 </button>
                 <button className="board-delete-button" onClick={()=> deletePost(post.id)}>삭제</button>
+                {modalOpen && (
+                <BoardUpdate
+                    onClose={() => setModalOpen(false)}
+                    //onSubmit={}
+                    //id={id}
+                />
+            )}
             </div>
         );
     };
 
     const handleOptionsToggle = () => {
+        console.log("!!")
         setShowBoardDetail(!showBoardDetail);
     };
     
@@ -147,20 +167,20 @@ return (
     <div className="board-post">
         <div className="post-header">
             <div className='post-profile'>
-                <img src={post.writer.profile} alt="avatar" className="avatar" />
+                <img src={post.writer.profile} alt="avatar" className="avatar" onClick={() => {handleClick(post.writer.id)}} />
                 <div className="user-info">
-                    <div className="username">{post.writer.name}</div>
+                    <div className="username" onClick={() => {handleClick(post.writer.id)}}>{post.writer.name}</div>
                 </div>
             </div>
             <div className='post-detail'>
                 {post.writer.id === localStorage.getItem("id") ?
                     <div>
                         <img
-
                             src={More}
-                            onClick={handleOptionsToggle}
+                            onClick={console.log("1@#!@#!@#")}
                         />
-                        {showBoardDetail && <BoardDetail />}
+                        {{showBoardDetail} ? <BoardDetail /> : <></>}
+                        {/* {showBoardDetail} */}
                     </div>
                     :
                     <></>
