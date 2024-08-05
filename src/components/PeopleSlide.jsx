@@ -156,8 +156,13 @@ export default function PeopleSlide({ mode, data }) {
                     </div>
     
                 ) : (
-                    <div>
-    
+                    <div className='slide-setting-manange'>
+                        <button>
+                            거절
+                        </button>
+                        <button>
+                            수락
+                        </button>
                     </div>
                 )}
     
