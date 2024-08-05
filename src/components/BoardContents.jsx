@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as solidHeart, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import BoardProfile from '../imgs/board_profile.png';
 import Notification from './Notification'; // 삭제 모달 컴포넌트 임포트
+import SppechBubble from '../imgs/speechbubble.svg';
+import More from '../imgs/board_more.svg'
+import SppechBubbleDisabled from '../imgs/speechbubble_disabled.svg';
 import '../styles/board/boardcontents.scss';
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +16,7 @@ const BoardContents = ({ post, loggedInUser }) => {
     const [showOptions, setShowOptions] = useState(false);
     const navigate = useNavigate();
     const [showNotification, setShowNotification] = useState(false);
+    const [showBoardDetail, setShowBoardDetail] = useState(false);
 
     const handleLike = async (communityPostId) => {
         const token = localStorage.getItem("token");
@@ -47,9 +50,6 @@ const BoardContents = ({ post, loggedInUser }) => {
         }
     };
 
-    const handleOptionsToggle = () => {
-        setShowOptions(!showOptions);
-    };
 
     const handleEdit = () => {
         console.log("Edit functionality not implemented yet");
@@ -88,22 +88,22 @@ const BoardContents = ({ post, loggedInUser }) => {
         const token = localStorage.getItem("token");
 
         try {
-        const response = await axios.delete(
-            `https://likelion.info/post/community/delete/${postId}`,
-            {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
-            }
-        );
+            const response = await axios.delete(
+                `https://likelion.info/post/community/delete/${postId}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    withCredentials: true,
+                }
+            );
 
-        if (response.status === 200) {
-            console.log("Post uploaded successfully");
-            // alert("게시물 업로드 성공");
-            navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
-            
-        } else {
-            console.error("Error uploading post");
-        }
+            if (response.status === 200) {
+                console.log("Post uploaded successfully");
+                // alert("게시물 업로드 성공");
+                navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+
+            } else {
+                console.error("Error uploading post");
+            }
         } catch (error) {
             if (error.response) {
                 console.error("Error response from server:", error.response);
@@ -119,34 +119,71 @@ const BoardContents = ({ post, loggedInUser }) => {
         }
     }
 
-    return (
-        <div className="board-post">
-            <div className="post-header">
+    const BoardDetail = () => {
+        return (
+            <div className="button-container">
+                <button className="board-edit-button" onClick={handleEdit}>수정</button>
+                <button className="board-delete-button" onClick={()=> deletePost(post.id)}>삭제</button>
+            </div>
+        );
+    };
+
+    const handleOptionsToggle = () => {
+        setShowBoardDetail(!showBoardDetail);
+    };
+    
+
+return (
+    <div className="board-post">
+        <div className="post-header">
+            <div className='post-profile'>
                 <img src={BoardProfile} alt="avatar" className="avatar" />
                 <div className="user-info">
                     <div className="username">{post.writer.name}</div>
                 </div>
             </div>
-            <div className="post-content">
-                <h2 className="post-title" onClick={handlePostClick} >{post.title}</h2>
-                <p className="post-body">{post.contents}</p>
-                {post.writer.id === localStorage.getItem("id") ? <div onClick={()=> deletePost(post.id)}>삭제하기</div> : <></>}
+            <div className='post-detail'>
+                {post.writer.id === localStorage.getItem("id") ?
+                    <div>
+                        <img
+                            src={More}
+                            onClick={handleOptionsToggle}
+                        />
+                        {showBoardDetail && <BoardDetail />}
+                    </div>
+                    :
+                    <></>
+                }
             </div>
-            <div className="post-footer">
-                <button className="like-button" onClick={(e) => { e.stopPropagation(); handleLike(post.id); }}>
-                    <FontAwesomeIcon icon={liked ? solidHeart : regularHeart} className={`heart-icon ${liked ? 'liked' : ''}`} />
-                    <span>{likeCount}</span>
-                </button>
-            </div>
-            {showNotification && (
-                <Notification
-                    message="정말로 삭제하시겠습니까?"
-                    onConfirm={confirmDelete}
-                    onCancel={cancelDelete}
-                />
-            )}
         </div>
-    );
+        <div className="post-content">
+            <h2 className="post-title" onClick={handlePostClick} >{post.title}</h2>
+            <p className="post-body">{post.contents}</p>
+        </div>
+        <div className="post-footer">
+            <button className="like-button" onClick={(e) => { e.stopPropagation(); handleLike(post.id); }}>
+                <FontAwesomeIcon icon={liked ? solidHeart : solidHeart} className={`heart-icon ${liked ? 'liked' : 'unliked'}`} />
+                <span>{likeCount}</span>
+            </button>
+
+            <button className="message-button">
+                <img
+                    className='message-btn-img'
+                    src={SppechBubble}
+                />
+                <span>{post.commentCount}</span>
+            </button>
+        </div>
+
+        {showNotification && (
+            <Notification
+                message="정말로 삭제하시겠습니까?"
+                onConfirm={confirmDelete}
+                onCancel={cancelDelete}
+            />
+        )}
+    </div>
+);
 };
 
 export default BoardContents;

@@ -1,3 +1,74 @@
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
 .board-container{
     padding: 0 9.17vw;
+}
+
+
+.board-title {
+    font-family: 'Arita buri';
+    font-weight: 700;
+    font-size: 1.625em;
+
+    margin-bottom: 16px;
+}
+
+.board-write {
+    display: flex;
+    justify-content: flex-end
+}
+
+.board-write-btn{
+    border: none;
+    outline: none;
+    background-color: #5CA54B;
+    color: #FFFF;
+    padding: 14px;
+    border-radius: 8px;
+
+    font-family: 'pretendard';
+    font-size: 1em;
+    font-weight: 600;
+
+    margin-bottom: 16px;
+}
+
+
+.board-setting{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.board-book {
+    width: 9.23vw;
+}
+
+#board-book-img{
+    width: 13.6vw;
+    height: 275px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 30px;
+
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.board-go-wrote-btn{
+    width: 13.6vw;
+
+    border: none;
+    outline: none;
+    background-color: #5CA54B;
+    color: #FFFF;
+    padding: 14px;
+    border-radius: 8px;
+
+    font-family: 'pretendard';
+    font-size: 1em;
+    font-weight: 600;
 }
