@@ -137,7 +137,7 @@ return (
     <div className="board-post">
         <div className="post-header">
             <div className='post-profile'>
-                <img src={BoardProfile} alt="avatar" className="avatar" />
+                <img src={post.writer.profile} alt="avatar" className="avatar" />
                 <div className="user-info">
                     <div className="username">{post.writer.name}</div>
                 </div>

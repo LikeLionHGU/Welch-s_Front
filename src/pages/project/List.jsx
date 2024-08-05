@@ -29,7 +29,7 @@ export default function List() {
 
   const ProjectList = ({ project = [] }) => {
     if (!project || project.length === 0) {
-      return <p>No projects found</p>;
+      return <p>진행 중인 프로젝트가 없습니다!</p>;
     }
 
     return (
