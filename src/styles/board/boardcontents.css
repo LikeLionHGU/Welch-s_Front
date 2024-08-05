@@ -1,15 +1,25 @@
+@charset "UTF-8";
 .board-post {
+  width: 64vw;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 .board-post .post-header {
   display: flex;
-  align-items: center;
+  height: 40px;
+  align-items: flex-start;
   position: relative;
+  margin-bottom: 20px;
+}
+.board-post .post-header .post-profile {
+  display: flex;
+}
+.board-post .post-header .post-detail {
+  margin-left: auto;
 }
 .board-post .post-header .avatar {
   width: 40px;
@@ -21,7 +31,9 @@
   flex-grow: 1;
 }
 .board-post .post-header .user-info .username {
-  font-weight: bold;
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 600;
 }
 .board-post .post-header .user-info .options-icon {
   float: right;
@@ -51,14 +63,18 @@
 .board-post .post-content {
   margin-top: 16px;
 }
-.board-post .post-content .post-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
+.board-post .post-title {
+  font-family: "pretendard";
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
-.board-post .post-content .post-body {
-  font-size: 14px;
-  color: #333;
+.board-post .post-body {
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+  line-height: 180%;
+  margin-bottom: 20px;
 }
 .board-post .post-footer {
   margin-top: 16px;
@@ -72,13 +88,66 @@
   display: flex;
   align-items: center;
   color: #333;
+  margin-right: 72px;
 }
 .board-post .post-footer .like-button .heart-icon {
+  width: 18px;
+  height: 18px;
   margin-right: 4px;
 }
 .board-post .post-footer .like-button .heart-icon.liked {
-  color: red;
+  color: #F4623B;
+}
+.board-post .post-footer .like-button .heart-icon.unliked {
+  color: #BFBFBF;
 }
 .board-post .post-footer .like-button span {
-  font-size: 14px;
+  font-family: "pretendard";
+  font-size: 0.75em;
+  font-weight: 500;
+}
+.board-post .post-footer .message-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+}
+.board-post .post-footer .message-button .message-btn-img {
+  margin-right: 4px;
+}
+.board-post .post-footer .message-button span {
+  font-family: "pretendard";
+  font-size: 0.75em;
+  font-weight: 500;
+}
+
+.button-container {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  position: absolute; /* 위치를 절대 위치로 설정 */
+  right: 0; /* More 버튼과 동일한 위치에 고정 */
+}
+
+.board-delete-button,
+.board-edit-button {
+  border: none;
+  outline: none;
+  background-color: white;
+  border: 1.2px solid #5CA54B;
+  padding: 5px;
+  width: 4.16vw;
+  height: 24px;
+  font-family: "pretendard";
+  font-size: 0.75em;
+  font-weight: 500;
+}
+
+.board-edit-button {
+  border-radius: 4px 4px 0px 0px;
+}
+
+.board-delete-button {
+  border-radius: 0px 0px 4px 4px;
 }/*# sourceMappingURL=boardcontents.css.map */

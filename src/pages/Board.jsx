@@ -110,16 +110,21 @@ export default function Board() {
   return (
     <div className="board-container">
       <Header mode={3} />
-      <h2>게시판</h2>
-      <button onClick={() => setModalOpen(true)}>글 작성하기</button>
-      {modalOpen && (
-        <BoardCreate
-          onClose={() => setModalOpen(false)}
-          onSubmit={handleCreatePost}
-          id={id}
-        />
-      )}
+      <h2 className="board-title">게시판</h2>
+      <div className="board-write">
+        <button
+          className="board-write-btn"
+          onClick={() => setModalOpen(true)}
+        >글 작성하기</button>
+        {modalOpen && (
+          <BoardCreate
+            onClose={() => setModalOpen(false)}
+            onSubmit={handleCreatePost}
+            id={id}
+          />
+        )}
 
+      </div>
       <div className="board-setting">
         <div className="board-book">
           <img
@@ -127,7 +132,7 @@ export default function Board() {
             alt="img"
             id="board-book-img"
           />
-          <button>
+          <button className="board-go-wrote-btn">
             책 쓰러가기
           </button>
         </div>
