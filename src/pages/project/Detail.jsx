@@ -25,7 +25,7 @@ export default function Detail() {
   const [like, setLike] = useState();
   const [likeCount, setLikeCount] = useState();
   const [comment, setComment] = useState("");
-  
+
   const navigate = useNavigate();
   const [project, setProject] = useState(false);
   console.log(project);
@@ -38,11 +38,12 @@ export default function Detail() {
   const toSetting = (id) => {
     console.log(id);
     navigate("/galpi/update", { state: { id } });
-  }
+  };
 
-  const toPost = (id) => { // 갈피 아이디
+  const toPost = (id) => {
+    // 갈피 아이디
     navigate("/post", { state: { id } });
-  }
+  };
 
   const handleCommentClick = (id) => {
     const user = localStorage.getItem("id");
@@ -71,8 +72,6 @@ export default function Detail() {
 
     console.log(bookmark);
 
-    
-
     return (
       <div id="detail-galpi-list">
         {bookmark.map((item, index) => (
@@ -80,36 +79,44 @@ export default function Detail() {
             <div className="detail-galpi-title">
               {index + 1}갈피: {item.name}
             </div>
-            <div
-                onClick={() => toPost(item.id)}
-                id="detail-galpi-update-btn"
-              >
-                읽기
+            <div onClick={() => toPost(item.id)} id="detail-galpi-update-btn">
+              읽기
             </div>
             {/* 공유 가능 여부로 먼저 한 번 정렬 */}
-            {item.isShared ? (item.isCurrentEdit ? <div
-                id="detail-galpi-update-btn-none"
-              >
-                수정하기
-              </div> : <div
+            {item.isShared ? (
+              item.isCurrentEdit ? (
+                <div id="detail-galpi-update-btn-none">수정하기</div>
+              ) : (
+                <div
+                  onClick={() => toWrite(item.id)}
+                  id="detail-galpi-update-btn"
+                >
+                  수정하기
+                </div>
+              )
+            ) : item.canEdit ? (
+              <div
                 onClick={() => toWrite(item.id)}
                 id="detail-galpi-update-btn"
               >
                 수정하기
-              </div>) : (item.canEdit ? <div
-                onClick={() => toWrite(item.id)}
-                id="detail-galpi-update-btn"
-              >
-                수정하기
-              </div>: <div
-                id="detail-galpi-update-btn-none"
-              >
-                수정하기
-              </div>)}
+              </div>
+            ) : (
+              <div id="detail-galpi-update-btn-none">수정하기</div>
+            )}
             <div id="detail-galpi-update-setting">
-              
-              {item.canEdit ? <img src={SettingImg} alt="setting" style={{ height: "18px" }} onClick={()=>{toSetting(item.id)}} /> : <></>}
-              
+              {item.canEdit ? (
+                <img
+                  src={SettingImg}
+                  alt="setting"
+                  style={{ height: "18px" }}
+                  onClick={() => {
+                    toSetting(item.id);
+                  }}
+                />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         ))}
@@ -165,26 +172,23 @@ export default function Detail() {
           className="setting-people-img"
         />
         {/* 이름이랑 같은 줄에 들어가야 함 */}
-      <div
-        className="detail-comments-name"
-        onClick={() => handleCommentClick(comment.user.id)}
-      > 
-
-      </div>
+        <div
+          className="detail-comments-name"
+          onClick={() => handleCommentClick(comment.user.id)}
+        ></div>
         {comment.user.name}
       </div>
       <div className="detail-comments-date">{comment.createdDate}</div>
       <div className="detail-comments-contents">{comment.contents}</div>
       <div>
-
-      <img
-        onClick={() => {
-          handleSetCommentsLike(comment.id);
-        }}
-        src={comment.isLiked ? RedLikeImg : GrayLikeImg}
-        alt="like"
-      />
-      <div>{comment.commentLikeCount}명이 좋아합니다.</div>
+        <img
+          onClick={() => {
+            handleSetCommentsLike(comment.id);
+          }}
+          src={comment.isLiked ? RedLikeImg : GrayLikeImg}
+          alt="like"
+        />
+        <div>{comment.commentLikeCount}명이 좋아합니다.</div>
       </div>
       {comment.user.id === localStorage.getItem("id") ? (
         <div onClick={() => deleteComment(comment.id)}>삭제하기</div>
@@ -220,7 +224,6 @@ export default function Detail() {
           // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
           setComment("");
           window.location.reload();
-          
         } else {
           console.error("Error uploading post");
         }
@@ -258,10 +261,8 @@ export default function Detail() {
         // alert("게시물 업로드 성공");
         setLike(!like);
         setLikeCount(like ? likeCount - 1 : likeCount + 1);
-        
       } else {
         console.error("Error uploading post");
-        
       }
     } catch (error) {
       if (error.response) {
@@ -314,8 +315,6 @@ export default function Detail() {
       localStorage.removeItem("token");
       navigate("/", { replace: true });
     }
-
-    
   };
 
   const handleSetLike = () => {
@@ -332,13 +331,10 @@ export default function Detail() {
   useEffect(() => {
     setLike(project.isLike);
     setLikeCount(project.likeCount);
-}, [project.isLike, project.likeCount]);
-  
+  }, [project.isLike, project.likeCount]);
 
-
-  
-
-  const toParticipate = async () => { // 참여 요청 api
+  const toParticipate = async () => {
+    // 참여 요청 api
     const token = localStorage.getItem("token");
 
     try {
@@ -453,25 +449,27 @@ export default function Detail() {
           </div>
           <div className="detail-above-right">
             <div className="detail-above-right-bottom">
-              {project.isParticipate ? <div
-                className="detail-mywrite"
-                onClick={() => handleGoCommunity(id)}
-              >
-                게시판 접속하기
-              </div> : (project.isApplication) ? <div
-                className="detail-mywrite"
-                onClick={() => {
-                  toParticipate();
-                }}
-              >
-                나도 글쓰기
-              </div> : <div
-                className="detail-mywrite"
-                onClick={() => {
-                }}
-              >
-                신청 완료
-              </div>}
+              {project.isParticipate ? (
+                <div
+                  className="detail-mywrite"
+                  onClick={() => handleGoCommunity(id)}
+                >
+                  게시판 접속하기
+                </div>
+              ) : project.isApplication ? (
+                <div
+                  className="detail-mywrite"
+                  onClick={() => {
+                    toParticipate();
+                  }}
+                >
+                  나도 글쓰기
+                </div>
+              ) : (
+                <div className="detail-mywrite" onClick={() => {}}>
+                  신청 완료
+                </div>
+              )}
               {/* <div className="detail-readbegin">처음부터 읽기</div> */}
               <div className="detail-like-container">
                 <img
@@ -526,9 +524,10 @@ export default function Detail() {
           </div>
           <div id="detail-comments-container">
             <div id="detail-comments-container">
-            {Array.isArray(commentList) && commentList.map((comment, index) => (
-                <Comment key={index} comment={comment} />
-              ))}
+              {Array.isArray(commentList) &&
+                commentList.map((comment, index) => (
+                  <Comment key={index} comment={comment} />
+                ))}
             </div>
           </div>
         </div>
