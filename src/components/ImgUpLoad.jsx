@@ -49,6 +49,7 @@ export default function ImgUpLoad({ onImageUpload, initialImage }) {
           const file = e.target.files[0];
           encodeFileToBase64(file).then(() => {
             onImageUpload(file); // 파일을 부모 컴포넌트로 전달
+            
           });
         }}
       />

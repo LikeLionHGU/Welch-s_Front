@@ -32,6 +32,7 @@ export default function ProfileUpload({ onProFileUpload, initialImage }) {
           };
         });
       };
+      
 
     return(
         <main className="profile-container">
@@ -60,7 +61,8 @@ export default function ProfileUpload({ onProFileUpload, initialImage }) {
                 onChange={(e) => {
                     const file = e.target.files[0];
                     encodeFileToBase64(file).then((base64Image) => {
-                        onProFileUpload(base64Image); // 파일을 부모 컴포넌트로 전달
+                        setProfile(base64Image);
+                        onProFileUpload(file); // 파일을 부모 컴포넌트로 전달
                     });
                   }}
                 ref={proFileInput}

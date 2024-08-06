@@ -18,7 +18,13 @@ export default function WallPaperUpload({ onWallPaperUpload, initialImage }) {
         } else {
           setWallPaper(ImgNone);
         }
+        console.log("!!");
     }, [initialImage]);
+
+    // useEffect(() => {
+
+    //     setWallPaper()
+    // }, []);
 
     const encodeFileToBase64 = (fileBlob) => {
         const reader = new FileReader();
@@ -29,11 +35,18 @@ export default function WallPaperUpload({ onWallPaperUpload, initialImage }) {
         return new Promise((resolve) => {
             reader.onload = () => {
                 setWallPaper(reader.result);
+                console.log("Base64 image:", reader.result);
+                console.log(wallPaper);
                 resolve(reader.result); // Base64 인코딩된 파일 반환
             };
         });
 
+        
+
     };
+    console.log(wallPaper);
+
+    
 
     if(initialImage === null) {
         return <></>;
@@ -64,7 +77,8 @@ export default function WallPaperUpload({ onWallPaperUpload, initialImage }) {
 
                     if(file) {
                         encodeFileToBase64(file).then((base64Image) => {
-                            onWallPaperUpload(base64Image); // 파일을 부모 컴포넌트로 전달
+                            setWallPaper(base64Image); // 파일을 부모 컴포넌트로 전달
+                            onWallPaperUpload(file);
                         });
                     }
                     
