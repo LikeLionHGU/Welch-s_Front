@@ -4,6 +4,8 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import "../../../styles/galpimanage.scss";
+
 export default function GalpiUpdate() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,6 +17,9 @@ export default function GalpiUpdate() {
   const [concurrentWork, setConcurrentWork] = useState(true);
   const { id } = location.state || {}; // 갈피 아이디
   const [setting, setSetting] = useState("");
+
+
+
 
 
 
@@ -175,22 +180,23 @@ export default function GalpiUpdate() {
   }, []);
 
   return (
-    <div className="galpi-setting-container">
+    <div className="galpi-update-setting-container">
       <form onSubmit={handleSubmit}>
         <div className="galpi-title">갈피 설정/관리</div>
 
-        <div className="galpi-menu">
-          <div>갈피 관리자</div>
+        <div className="galpi-update-menu">
+          <div className="galpi-update-sub-title">갈피 관리자</div>
           <div>
-            <PeopleSlide mode={2} data={galpimanange} />
+            <PeopleSlide mode={1} data={galpimanange} />
           </div>
         </div>
 
-        <div className="galpi-menu">
-          <div>공동 작업 가능 여부</div>
+        <div className="galpi-update-menu">
+          <div className="galpi-update-sub-title">공동 작업 가능 여부</div>
           <div>
             <div className="collaborate-radio-item">
               <input
+                className="update-radio"
                 type="radio"
                 id="collaborate-possible"
                 name="collaborate"
@@ -202,6 +208,7 @@ export default function GalpiUpdate() {
             </div>
             <div className="collaborate-radio-item">
               <input
+                className="update-radio"
                 type="radio"
                 id="collaborate-impossible"
                 name="collaborate"
@@ -214,11 +221,12 @@ export default function GalpiUpdate() {
           </div>
         </div>
 
-        <div className="galpi-menu">
-          <div>동시 작업 가능 여부</div>
+        <div className="galpi-update-menu">
+          <div className="galpi-update-sub-title">동시 작업 가능 여부</div>
           <div>
             <div className="concurrentWork-radio-item">
               <input
+                className="update-radio"
                 type="radio"
                 id="concurrentWork-possible"
                 name="concurrentWork"
@@ -230,6 +238,7 @@ export default function GalpiUpdate() {
             </div>
             <div className="concurrentWork-radio-item">
               <input
+                className="update-radio"
                 type="radio"
                 id="concurrentWork-impossible"
                 name="concurrentWork"
@@ -242,7 +251,10 @@ export default function GalpiUpdate() {
           </div>
         </div>
 
-        <button type="submit">저장하기</button>
+        <div className="galpi-update-btn-container">
+          <button className="galpi-update-btn" type="submit">저장하기</button>
+        </div>
+
       </form>
     </div>
   );

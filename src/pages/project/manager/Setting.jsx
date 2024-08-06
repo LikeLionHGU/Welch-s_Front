@@ -84,22 +84,37 @@ export default function Setting() {
     });
   };
 
+  
+
+  // const handleVisibilityChange = (event) => {
+  //   const newVisibility = event.target.value;
+  //   setVisibility(newVisibility);
+  //   console.log(newVisibility);
+  // };
+
+  // handleVisibilityChange 함수 수정
   const handleVisibilityChange = (event) => {
-    const newVisibility = event.target.value;
+    const newVisibility = event.target.value === "공개";
     setVisibility(newVisibility);
-    console.log(newVisibility);
-  };
-  const handleIsRecruit = (event) => {
-    const newVisibility = event.target.value;
-    setIsRecruit(newVisibility);
-    console.log(newVisibility);
   };
 
-  const handleProgressChange = (event) => {
-    const newProgress = event.target.value;
-    setProgress(newProgress);
-    console.log(newProgress);
+  // handleIsRecruitChange 함수 추가
+  const handleIsRecruitChange = (event) => {
+    const newRecruit = event.target.value === "모집 중";
+    setIsRecruit(newRecruit);
   };
+
+  // const handleIsRecruit = (event) => {
+  //   const newVisibility = event.target.value;
+  //   setIsRecruit(newVisibility);
+  //   console.log(newVisibility);
+  // };
+
+  // const handleProgressChange = (event) => {
+  //   const newProgress = event.target.value;
+  //   setProgress(newProgress);
+  //   console.log(newProgress);
+  // };
 
   // const handlePeople = (upDown) => {
   //   if (upDown === 1) {
@@ -145,11 +160,12 @@ export default function Setting() {
       bigCategory: bigCategory,
       information: information,
       description: description,
-      isPublic: visibility === "공개",
+      isPublic: visibility,
       maximumNumber: people,
-      isFinished: false,
-      isRecruit: true,
+      isFinished: progress === "완결",
+      isRecruit: isRecruit,
     };
+  
 
     console.log(value);
     const formData = new FormData();
@@ -175,6 +191,8 @@ export default function Setting() {
 
       if (response.status === 200) {
         console.log("Post uploaded successfully");
+
+        navigate("/mypage"); //저장한 후에 마이페이지로 이동
         // alert("게시물 업로드 성공");
         //navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
       } else {
@@ -282,6 +300,8 @@ export default function Setting() {
           setLike(response.data.isLiked);
           setLikeCount(response.data.likeCount);
           setIsRecruit(response.data.isRecruit);
+          setVisibility(response.data.isPublic); // 초기화
+          setProgress(response.data.isFinished ? "완결" : "진행 중");
 
           setTitle(response.data.name);
           setDescription(response.data.description);
@@ -418,7 +438,8 @@ export default function Setting() {
                   id="public"
                   name="visibility"
                   value="공개"
-                  checked={project.isPublic === true}
+                  checked={visibility === true}
+                  //checked={project.isPublic === true}
                   onChange={handleVisibilityChange}
                 />
                 <label htmlFor="public">공개</label>
@@ -430,7 +451,8 @@ export default function Setting() {
                   id="private"
                   name="visibility"
                   value="비공개"
-                  checked={project.isPublic === false}
+                  checked={visibility === false}
+                  //checked={project.isPublic === false}
                   onChange={handleVisibilityChange}
                 />
                 <label htmlFor="private">비공개</label>
@@ -440,29 +462,31 @@ export default function Setting() {
 
         <div className="setting-menu">
           <div className="setting-title">작가 모집 여부</div>
-          <div className="visibility-radio">
+          <div className="recruit-radio">
             <div>
-              <div className="visibility-radio-item">
+              <div className="recruit-radio-item">
                 <input
                   className="radio"
                   type="radio"
                   id="public"
                   name="recruit"
                   value="모집 중"
-                  checked={project.isRecruit === true}
-                  onChange={handleIsRecruit}
+                  checked={isRecruit === true}
+                  //checked={project.isRecruit === true}
+                  onChange={handleIsRecruitChange}
                 />
                 <label htmlFor="public">모집 중</label>
               </div>
-              <div className="visibility-radio-item">
+              <div className="recruit-radio-item">
                 <input
                   className="radio"
                   type="radio"
                   id="private"
                   name="recruit"
                   value="모집 마감"
-                  checked={project.isRecruit === false}
-                  onChange={handleIsRecruit}
+                  checked={isRecruit === false}
+                  //checked={project.isRecruit === false}
+                  onChange={handleIsRecruitChange}
                 />
                 <label htmlFor="private">모집 마감</label>
               </div>
@@ -516,7 +540,7 @@ export default function Setting() {
                 name="progress"
                 value="진행 중"
                 checked={progress === "진행 중"}
-                onChange={handleProgressChange}
+                onChange={handleIsRecruitChange}
               />
               <label htmlFor="progress">진행 중</label>
             </div>
@@ -528,9 +552,9 @@ export default function Setting() {
                 name="progress"
                 value="완결"
                 checked={progress === "완결"}
-                onChange={handleProgressChange}
+                onChange={handleIsRecruitChange}
               />
-              <label htmlFor="finished">비공개</label>
+              <label htmlFor="finished">완결</label>
             </div>
           </div>
         </div>

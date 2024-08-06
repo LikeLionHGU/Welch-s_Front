@@ -1,0 +1,53 @@
+@import url("https://webfontbox.github.io/Arita/font.css");
+@import url("https://webfontbox.github.io/Arita/font.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
+.galpi-update-setting-container{
+    padding: 0 9.17vw;
+    margin-top: 62px;
+    margin-bottom: 62px;
+}
+
+
+.galpi-update-menu{
+    margin-bottom: 114px;
+}
+
+.galpi-update-sub-title {
+    font-family: "Arita buri";
+    font-weight: 700;
+    font-size: 1.125em;
+
+    margin-bottom: 12px;
+}
+
+
+.update-radio{
+    margin-right: 8px; //버튼 사이의 간격
+}
+
+
+.galpi-update-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.galpi-update-btn {
+
+    padding: 20px 6.94vw;
+    border: none;
+    outline: none;
+    background-color: #5CA54B;
+    color: #FFF;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+
+    font-family: 'pretendard';
+    font-size: 1.125em;
+    font-weight: 700;
+}
