@@ -1,31 +1,23 @@
-import { useState, useEffect } from "react";
-import { useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 import "../styles/board/boarddetail.scss";
 import CommentArrowImg from "../imgs/commentArrow.svg";
 import GrayLikeImg from "../imgs/grayLike.svg";
 import RedLikeImg from "../imgs/redLike.svg";
+import Delete from "../imgs/delete.png";
+import More from '../imgs/board_more.svg';
 import axios from 'axios';
 
-
-export default function BoardDetail(onClose, id) {
-    const location = useLocation();
-    //const { id } = location.state || {};
-    const [project, setProject] = useState({});
+export default function BoardDetail({ onClose, id }) {
     const [likeCount, setLikeCount] = useState(0);
     const [like, setLike] = useState(false);
     const [comment, setComment] = useState("");
     const [commentsLike, setCommentsLike] = useState();
     const [commentList, setCommentList] = useState([]);
-    const modalBackground = useRef();
+    const [showBoardToggleId, setShowBoardToggleId] = useState(null); // 상태 관리 추가
+    const modalBackground = useRef(null);
     const navigate = useNavigate();
-
-
-
     const [post, setPost] = useState("");
-
 
     const handleSetPostLike = async () => {
         const token = localStorage.getItem("token");
@@ -87,12 +79,11 @@ export default function BoardDetail(onClose, id) {
             );
 
             if (response.status === 200) {
-                console.log("Post uploaded successfully");
-                // alert("게시물 업로드 성공");
+                console.log("Post deleted successfully");
                 navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
                 setComment("");
             } else {
-                console.error("Error uploading post");
+                console.error("Error deleting comment");
             }
         } catch (error) {
             if (error.response) {
@@ -102,27 +93,54 @@ export default function BoardDetail(onClose, id) {
             } else {
                 console.error("Error in setting up request:", error.message);
             }
-            console.error("Error uploading post:", error);
-            alert(`Error uploading post: ${error.message}`);
+            console.error("Error deleting comment:", error);
+            alert(`Error deleting comment: ${error.message}`);
             localStorage.removeItem("token");
             navigate("/", { replace: true });
         }
-    }
+    };
+
+    const handleOptionsToggle = (commentId) => {
+        setShowBoardToggleId(prevId => (prevId === commentId ? null : commentId)); // 토글 상태 변경
+    };
+
+    const BoardToggle = ({ comment }) => {
+        return (
+            <div className="board-detail-button-container">
+                <button className="board-detail-delete-button" onClick={() => deleteComment(comment.id)}>삭제</button>
+            </div>
+        );
+    };
 
     const Comment = ({ comment }) => (
         <div id="detail-comments-container">
-            <div>{comment.user.name}</div>
-            <div>{comment.createdDate}</div>
-            <div>{comment.contents}</div>
-            <img
-                onClick={() => {
-                    handleSetCommentsLike(comment.id);
-                }}
-                src={comment.isLike ? RedLikeImg : GrayLikeImg}
-                alt="like"
-            />
-            <div>{comment.likeCount}</div>
-            {comment.user.id === localStorage.getItem("id") ? <div onClick={() => deleteComment(comment.id)}>삭제하기</div> : <></>}
+            <div className="board-detail-comments-header">
+                <div className="board-detail-comments-name">{comment.user.name}</div>
+                <div className='board-detail-comments-toggle'>
+                    {comment.user.id === localStorage.getItem("id") &&
+                        <div>
+                            <img
+                                src={More}
+                                onClick={() => handleOptionsToggle(comment.id)} // 토글 함수 호출
+                                alt="more"
+                            />
+                            {showBoardToggleId === comment.id && <BoardToggle comment={comment} />} {/* 토글 상태 확인 */}
+                        </div>
+                    }
+                </div>
+            </div>
+            <div className="board-detail-comments-date">{comment.createdDate}</div>
+            <div className="board-detail-comments-contents">{comment.contents}</div>
+            <div className="board-detail-comments-likebtn">
+                <img
+                    className="board-detail-comments-like-img"
+                    onClick={() => handleSetCommentsLike(comment.id)}
+                    src={comment.isLike ? RedLikeImg : GrayLikeImg}
+                    alt="like"
+                />
+                <div className="board-detail-comments-likecount">{comment.likeCount}</div>
+            </div>
+            <div className='board-detail-comments-bottom'></div>
         </div>
     );
 
@@ -146,20 +164,18 @@ export default function BoardDetail(onClose, id) {
                 if (response.status === 200) {
                     setCommentsLike(!commentsLike);
                 } else {
-                    console.error("Error toggling comment like");
+                    console.error("Error adding comment");
                 }
             } catch (error) {
-                console.error("Error toggling comment like:", error);
+                console.error("Error adding comment:", error);
             }
             setComment("");
         }
     };
 
     useEffect(() => {
-
         const fetchPost = () => {
             const token = localStorage.getItem("token");
-            console.log("?!");
             if (!token) {
                 navigate("/", { replace: true });
                 return;
@@ -171,10 +187,8 @@ export default function BoardDetail(onClose, id) {
                     withCredentials: true,
                 })
                 .then((response) => {
-                    console.log(response.data);
                     setPost(response.data);
                     setCommentList(response.data.commentList);
-                    // console.log(post);
                 })
                 .catch((error) => {
                     console.error("Error fetching project:", error);
@@ -183,17 +197,21 @@ export default function BoardDetail(onClose, id) {
                 });
         };
         fetchPost();
-    }, []);
-
-
+    }, [id, navigate]);
 
     return (
         <div className='board-detail-container' ref={modalBackground} onClick={e => {
-            if (e.target === modalBackground.current && modalBackground.current) {
-                navigate(-1);
+            if (e.target === modalBackground.current) {
+                onClose();
             }
         }}>
-            <div className='board-detail-content'>
+            <div className='board-modal-detail-content'>
+                <img
+                    src={Delete}
+                    className="create-close-button"
+                    onClick={onClose}
+                    alt="close"
+                />
                 <div className='board-detail-date'>
                     {post.createdDate}
                 </div>
@@ -204,25 +222,23 @@ export default function BoardDetail(onClose, id) {
                     {post.contents}
                 </div>
                 <div>
-                    <img
-                        src={post.imageAddress}
-                        alt="img"
-                    />
+                    {post.imageAddress && (
+                        <img
+                            className="board-detail-img"
+                            src={post.imageAddress}
+                            alt="img"
+                        />
+                    )}
                 </div>
-
-
                 <div className='board-detail-like-container'>
                     <img
-                        sec={post.isLike ? RedLikeImg : GrayLikeImg}
-                        onClick={() => {
-                            handleSetPostLike();
-                        }}
-                        alt='like'
-                        style={{ width: "22px", height: "20px" }}
+                        className="board-detail-like-img"
+                        src={post.isLike ? RedLikeImg : GrayLikeImg}
+                        onClick={handleSetPostLike}
+                        alt="like"
                     />
+                    <div className="board-detail-like-count">{post.likeCount}</div>
                 </div>
-                <div>{post.likeCount}</div>
-
                 <div id="board-detail-comments-list">
                     <div id="detail-write-comments">
                         <input
@@ -235,10 +251,7 @@ export default function BoardDetail(onClose, id) {
                         <img
                             src={CommentArrowImg}
                             alt='comment'
-                            disabled=""
-                            onClick={() => {
-                                handleSubmit();
-                            }}
+                            onClick={handleSubmit}
                         />
                     </div>
                     <div id="board-detail-comments-container">
@@ -250,7 +263,4 @@ export default function BoardDetail(onClose, id) {
             </div>
         </div>
     );
-
 }
-
-

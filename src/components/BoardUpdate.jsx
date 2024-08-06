@@ -100,7 +100,7 @@ const BoardUpdate = ({ onClose, onSubmit, id }) => {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             required
-                            placeholder="제목은 생략이 가능합니다."
+                            placeholder=""
                         />
                     </div>
                     <div className="update-form-content">

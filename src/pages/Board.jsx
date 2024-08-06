@@ -115,7 +115,7 @@ export default function Board() {
         <button
           className="board-write-btn"
           onClick={() => setModalOpen(true)}
-        >글 작성하기</button>
+          >글 작성하기</button>
         {modalOpen && (
           <BoardCreate
             onClose={() => setModalOpen(false)}

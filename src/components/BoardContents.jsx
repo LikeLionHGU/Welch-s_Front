@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BoardUpdate from './BoardUpdate';
+import BoardDetail from '../pages/BoardDetail';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
@@ -18,8 +19,9 @@ const BoardContents = ({ post, loggedInUser }) => {
     const [showOptions, setShowOptions] = useState(false);
     const navigate = useNavigate();
     const [showNotification, setShowNotification] = useState(false);
-    const [showBoardDetail, setShowBoardDetail] = useState(false);
+    const [showBoardToggle, setShowBoardToggle] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
+    const [detailmodalOpen, setdetailModalOpen] = useState(false);
 
 
     const handleClick = (id) => {
@@ -134,7 +136,7 @@ const BoardContents = ({ post, loggedInUser }) => {
         }
     }
 
-    const BoardDetail = () => {
+    const BoardToggle = () => {
         return (
             <div className="button-container">
                 <button className="board-edit-button" 
@@ -157,9 +159,14 @@ const BoardContents = ({ post, loggedInUser }) => {
         );
     };
 
+    // const handleOptionsToggle = () => {
+    //     console.log("!!")
+    //     setShowBoardToggle(!showBoardToggle);
+    // };
+
     const handleOptionsToggle = () => {
         console.log("!!")
-        setShowBoardDetail(!showBoardDetail);
+        setShowBoardToggle(prevState => !prevState);
     };
     
 
@@ -173,23 +180,31 @@ return (
                 </div>
             </div>
             <div className='post-detail'>
-                {post.writer.id === localStorage.getItem("id") ?
+                {post.writer.id === localStorage.getItem("id") &&
                     <div>
                         <img
                             src={More}
-                            onClick={console.log("1@#!@#!@#")}
+                            onClick={handleOptionsToggle}
                         />
-                        {{showBoardDetail} ? <BoardDetail /> : <></>}
+                        {/* {{showBoardToggle} ? <BoardToggle /> : <></>} */}
+                        {showBoardToggle && <BoardToggle />}
                         {/* {showBoardDetail} */}
                     </div>
-                    :
-                    <></>
+                    // :
+                    // <></>
                 }
             </div>
         </div>
-        <div className="post-content">
-            <h2 className="post-title" onClick={handlePostClick} >{post.title}</h2>
-            <p className="post-body">{post.contents}</p>
+        <div className="post-content" onClick={() => setdetailModalOpen(true)}>
+            {detailmodalOpen && (
+                <BoardDetail
+                    onClose={() => setdetailModalOpen(false)}
+                    id={post.id}
+                />
+            )}
+            <h2 className="post-title">{post.title}</h2>
+            {/* <p className="post-body" onClick={handlePostClick}>{post.contents}</p> 기존의 방법*/} 
+            <div className="post-body">{post.contents}</div>
         </div>
         <div className="post-footer">
             <button className="like-button" onClick={(e) => { e.stopPropagation(); handleLike(post.id); }}>
