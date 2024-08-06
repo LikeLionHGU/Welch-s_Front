@@ -39,7 +39,8 @@ export default function Galpi() {
 
       if (response.status === 200) {
         console.log("Post uploaded successfully");
-        window.location.reload();
+        navigate(-1);
+        //window.location.reload();
       } else {
         console.error("Error uploading post");
       }

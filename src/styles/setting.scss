@@ -142,9 +142,27 @@ input[type='radio']:checked {
 
 .visibility-radio {
     display: flex;
+    justify-content: space-between;
+    width: 150px;
 }
 
 .visibility-radio-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+
+    font-family: 'pretendard';
+    font-size: 0.875em;
+    font-weight: 500;
+}
+
+.recruit-radio {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
+
+.recruit-radio-item {
     display: flex;
     align-items: center;
     margin-bottom: 12px;
