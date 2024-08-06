@@ -135,7 +135,8 @@ const BoardContents = ({ post, loggedInUser }) => {
         }
     }
 
-    const BoardToggle = () => {
+    const BoardToggle = ({postId}) => {
+        console.log("test -> ", postId)
         return (
             <div className="button-container">
                 <button className="board-edit-button" 
@@ -217,7 +218,7 @@ return (
                             onClick={handleOptionsToggle}
                         />
                         {/* {{showBoardToggle} ? <BoardToggle /> : <></>} */}
-                        {showBoardToggle && <BoardToggle />}
+                        {showBoardToggle && <BoardToggle postId={post.id} />}
                         {/* {showBoardDetail} */}
                     </div>
                     // :

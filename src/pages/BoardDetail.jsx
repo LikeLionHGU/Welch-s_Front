@@ -15,7 +15,7 @@ export default function BoardDetail({ onClose, id }) {
     const [commentsLike, setCommentsLike] = useState();
     const [commentList, setCommentList] = useState([]);
     const [showBoardToggleId, setShowBoardToggleId] = useState(null); // 상태 관리 추가
-    const modalBackground = useRef(null);
+    const modalBackground = useRef();
     const navigate = useNavigate();
     const [post, setPost] = useState("");
 
@@ -80,8 +80,7 @@ export default function BoardDetail({ onClose, id }) {
 
             if (response.status === 200) {
                 console.log("Post deleted successfully");
-                navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
-                setComment("");
+                setCommentList(commentList.filter(comment => comment.id !== commentId)); // 삭제된 댓글 제거
             } else {
                 console.error("Error deleting comment");
             }
@@ -162,7 +161,7 @@ export default function BoardDetail({ onClose, id }) {
                 );
 
                 if (response.status === 200) {
-                    setCommentsLike(!commentsLike);
+                    setCommentList([...commentList, response.data]); // 새로운 댓글 추가
                 } else {
                     console.error("Error adding comment");
                 }
