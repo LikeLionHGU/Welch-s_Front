@@ -101,15 +101,22 @@ export default function Setting() {
     console.log(newProgress);
   };
 
+  // const handlePeople = (upDown) => {
+  //   if (upDown === 1) {
+  //     setPeople(people + 1);
+  //   } else if (upDown === -1) {
+  //     if (people !== 1) {
+  //       setPeople(people - 1);
+  //     }
+  //   }
+  // };
+
   const handlePeople = (upDown) => {
-    if (upDown === 1) {
-      setPeople(people + 1);
-    } else if (upDown === -1) {
-      if (people !== 1) {
-        setPeople(people - 1);
-      }
-    }
-  };
+    setPeople(prevPeople => {
+        if (prevPeople == null) return 0 + upDown;
+        return prevPeople + upDown < 0 ? 0 : prevPeople + upDown;
+    });
+};
 
   const handleImageUpload = (file) => {
     setImage(file);
@@ -281,6 +288,7 @@ export default function Setting() {
           setInformation(response.data.information);
           setBookmarkList(response.data.bookMarkList);
           setImage(response.imageAddress);
+          setPeople(response.data.maximumNumber); // 초기값 설정
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -469,7 +477,7 @@ export default function Setting() {
             <div className="plus" onClick={() => handlePeople(-1)}>
               -
             </div>
-            <div className="num">{project.maximumNumber}</div>
+            <div className="num">{people || 0}</div>
             <div className="minus" onClick={() => handlePeople(+1)}>
               +
             </div>
@@ -528,8 +536,11 @@ export default function Setting() {
           </div>
         </div>
 
-        <button onClick={() => deleteProject(project.id)}>책 발간 취소</button>
-        <button type="submit">저장하기</button>
+        <button className="setting-delete-btn" onClick={() => deleteProject(project.id)}>책 발간 취소</button>
+
+        <div className="setting-btn-container">
+          <button className="setting-btn" type="submit">저장하기</button>
+        </div>
       </form>
     </div>
   );
