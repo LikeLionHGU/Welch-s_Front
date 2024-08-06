@@ -14,6 +14,8 @@ const BoardUpdate = ({ onClose, onSubmit, id }) => {
     const navigate = useNavigate();
     console.log(id, "!?!?!?!?!?");
 
+    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -98,10 +100,10 @@ const BoardUpdate = ({ onClose, onSubmit, id }) => {
                             className='board-update-title'
                             id="title"
                             type="text"
-                            value={title}
+                            value={id.title}
                             onChange={(e) => setTitle(e.target.value)}
                             required
-                            placeholder="제목은 생략이 가능합니다."
+                            placeholder=""
                         />
                     </div>
                     <div className="update-form-content">

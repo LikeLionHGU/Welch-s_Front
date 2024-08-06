@@ -94,6 +94,7 @@ const BoardCreate = ({ onClose, onSubmit, id }) => {
         onClose();
       }
     }}>
+      
       <div className="create-modal-content">
         <img
           src={Delete}

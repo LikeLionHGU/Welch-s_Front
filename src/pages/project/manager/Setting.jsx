@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import { useRef, useCallback } from "react";
 //import ModalContainer from "../../../components/ModalContainer";
 import ImgUpLoad from "../../../components/ImgUpLoad";
-import PeopleSlide from '../../../components/PeopleSlide'
+import PeopleSlide from "../../../components/PeopleSlide";
 import ImgNone from "../../../imgs/img_none.svg";
+import GalpiPlusImg from "../../../imgs/galpiPlus.svg"
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import "../../../styles/setting.scss"
+import "../../../styles/setting.scss";
 
 const categories = {
   소설: ["공포", "로맨스", "미스터리/추리", "역사", "판타지", "SF"],
@@ -18,7 +19,7 @@ const categories = {
   비문학: ["과학", "자기개발", "전기", "역사"],
   드라마: ["가족", "모험", "사회", "정치"],
   기타: ["기타"],
-}
+};
 
 export default function Setting() {
   // const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -43,7 +44,6 @@ export default function Setting() {
   const [bigCategory, setBigCategory] = useState("");
   const [category, setCategory] = useState("");
 
-
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [information, setInformation] = useState();
@@ -54,22 +54,24 @@ export default function Setting() {
 
   const [image, setImage] = useState(`${ImgNone}`);
 
-  const [participatiedPeople, setparticipatiedPeople] = useState([{
-    profileImg: "",
-    name: "",
-  }]);
-  const [appliedPeople, setappliedProple] = useState([{
-    profileImg: "",
-    name: "",
-  }]);
+  const [participatiedPeople, setparticipatiedPeople] = useState([
+    {
+      profileImg: "",
+      name: "",
+    },
+  ]);
+  const [appliedPeople, setappliedProple] = useState([
+    {
+      profileImg: "",
+      name: "",
+    },
+  ]);
   const [progress, setProgress] = useState("진행 중"); // isFinish
 
   // Initial category selection
   useEffect(() => {
     setSelectedCategories({ 소설: project.category });
   }, []);
-
-  
 
   const handleCategoryChange = (category, item) => {
     setSelectedCategories((prevSelectedCategories) => {
@@ -79,25 +81,25 @@ export default function Setting() {
       };
       console.log(updatedCategories);
       return updatedCategories;
-    })
+    });
   };
 
   const handleVisibilityChange = (event) => {
     const newVisibility = event.target.value;
     setVisibility(newVisibility);
     console.log(newVisibility);
-  }
+  };
   const handleIsRecruit = (event) => {
     const newVisibility = event.target.value;
     setIsRecruit(newVisibility);
     console.log(newVisibility);
-  }
+  };
 
   const handleProgressChange = (event) => {
     const newProgress = event.target.value;
     setProgress(newProgress);
     console.log(newProgress);
-  }
+  };
 
   const handlePeople = (upDown) => {
     if (upDown === 1) {
@@ -116,8 +118,6 @@ export default function Setting() {
   const toBookmark = (id) => {
     navigate("/galpi", { state: { id } });
   };
-
-
 
   const handleSubmit = async (event) => {
     const storedToken = localStorage.getItem("token");
@@ -190,71 +190,69 @@ export default function Setting() {
   const deleteBookmark = async (bookmarkId) => {
     const token = localStorage.getItem("token");
 
-        try {
-        const response = await axios.delete(
-            `https://likelion.info/bookmark/delete/${bookmarkId}`,
-            {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
-            }
-        );
+    try {
+      const response = await axios.delete(
+        `https://likelion.info/bookmark/delete/${bookmarkId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
 
-        if (response.status === 200) {
-            console.log("Post uploaded successfully");
-            // alert("게시물 업로드 성공");
-            navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
-            
-        } else {
-            console.error("Error uploading post");
-        }
-        } catch (error) {
-            if (error.response) {
-                console.error("Error response from server:", error.response);
-            } else if (error.request) {
-                console.error("No response received:", error.request);
-            } else {
-                console.error("Error in setting up request:", error.message);
-            }
-            console.error("Error uploading post:", error);
-            alert(`Error uploading post: ${error.message}`);
-            localStorage.removeItem("token");
-            navigate("/", { replace: true });
-        }
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        // alert("게시물 업로드 성공");
+        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
   };
 
   const deleteProject = async (projectId) => {
     const token = localStorage.getItem("token");
 
-        try {
-        const response = await axios.delete(
-            `https://likelion.info/project/delete/${projectId}`,
-            {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
-            }
-        );
+    try {
+      const response = await axios.delete(
+        `https://likelion.info/project/delete/${projectId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
 
-        if (response.status === 200) {
-            console.log("Post uploaded successfully");
-            // alert("게시물 업로드 성공");
-            navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
-            
-        } else {
-            console.error("Error uploading post");
-        }
-        } catch (error) {
-            if (error.response) {
-                console.error("Error response from server:", error.response);
-            } else if (error.request) {
-                console.error("No response received:", error.request);
-            } else {
-                console.error("Error in setting up request:", error.message);
-            }
-            console.error("Error uploading post:", error);
-            alert(`Error uploading post: ${error.message}`);
-            localStorage.removeItem("token");
-            navigate("/", { replace: true });
-        }
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        // alert("게시물 업로드 성공");
+        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
   };
 
   useEffect(() => {
@@ -292,16 +290,13 @@ export default function Setting() {
     };
 
     fetchProject();
-
-
   }, []);
 
   useEffect(() => {
-    console.log("!@#!@#!@#");
-    console.log(project);
+    console.log("project:", project);
   }, [project]);
 
-  console.log('imageAddress' + project.imageAddress);
+  console.log("imageAddress" + project.imageAddress);
 
   const textRef = useRef();
   const handleResizeHeight = useCallback(() => {
@@ -325,7 +320,10 @@ export default function Setting() {
 
         <div className="setting-menu">
           <div className="setting-title">책 표지 이미지</div>
-          <ImgUpLoad onImageUpload={handleImageUpload} initialImage={project.imageAddress} />
+          <ImgUpLoad
+            onImageUpload={handleImageUpload}
+            initialImage={project.imageAddress}
+          />
         </div>
 
         <div className="setting-menu">
@@ -340,18 +338,21 @@ export default function Setting() {
                       type="radio"
                       id={item}
                       name="genre"
+                      checked={project.category === item}
                       onChange={() => {
                         setCategory(item);
                         setBigCategory(categoriesString);
                       }}
                     />
-                    <label htmlFor={item}>{item}</label>
+                    <label htmlFor={item} style={{ marginLeft: "5px" }}>
+                      {" "}
+                      {item}
+                    </label>
                   </div>
                 ))}
               </div>
             ))}
           </div>
-
         </div>
 
         <div className="setting-menu">
@@ -366,7 +367,6 @@ export default function Setting() {
             rows={1}
           />
         </div>
-
 
         {/* <div className="create-menu">
           <div className="setting-title">책 정보 </div>
@@ -383,18 +383,19 @@ export default function Setting() {
 
         <div className="setting-menu">
           <div className="setting-title">갈피 목록</div>
-          <div onClick={() => toBookmark(project.id)}>갈피 추가하기</div>
-          <div>
-            {bookmarkList.map((it) => (
-              <di>
-                {it.index}갈피: {it.name}
-                <di>
-                  <button onClick={() => deleteBookmark(it.id)}>
+          
+          <div className="setting-galpi-list">
+            {bookmarkList.map((it, index) => (
+              <div className="setting-galpi">
+                {index + 1}갈피: {it.name}
+                <div>
+                  <button onClick={() => deleteBookmark(it.id)} className="setting-galpi-remove-btn">
                     삭제하기
                   </button>
-                </di>
-              </di>
+                </div>
+              </div>
             ))}
+          <div onClick={() => toBookmark(project.id)}><img src={GalpiPlusImg}/></div>
           </div>
         </div>
 
@@ -428,9 +429,6 @@ export default function Setting() {
               </div>
             </div>
           </div>
-
-          
-
         </div>
 
         <div className="setting-menu">
@@ -463,25 +461,41 @@ export default function Setting() {
               </div>
             </div>
           </div>
-          </div>
+        </div>
 
         <div className="setting-menu">
           <div className="setting-title">작가 정원</div>
           <div className="setting-peopleNum">
-            <div className="plus" onClick={() => handlePeople(-1)}>-</div>
+            <div className="plus" onClick={() => handlePeople(-1)}>
+              -
+            </div>
             <div className="num">{project.maximumNumber}</div>
-            <div className="minus" onClick={() => handlePeople(+1)}>+</div>
+            <div className="minus" onClick={() => handlePeople(+1)}>
+              +
+            </div>
           </div>
         </div>
 
         <div className="setting-menu">
           <div className="setting-title">책 제작 명단</div>
-          <div><PeopleSlide mode={1} data={project.userProjectList} projectId={project.id} /></div>
+          <div>
+            <PeopleSlide
+              mode={1}
+              data={project.userProjectList}
+              projectId={project.id}
+            />
+          </div>
         </div>
 
         <div className="setting-menu">
           <div className="setting-title">신청한 작가 명단</div>
-          <div><PeopleSlide mode={3} data={project.userApplicationList} projectId={project.id} /></div>
+          <div>
+            <PeopleSlide
+              mode={3}
+              data={project.userApplicationList}
+              projectId={project.id}
+            />
+          </div>
         </div>
 
         <div className="setting-menu">
@@ -518,5 +532,5 @@ export default function Setting() {
         <button type="submit">저장하기</button>
       </form>
     </div>
-  )
+  );
 }
