@@ -1,3 +1,7 @@
+#detail-comments-real-container {
+  display: flex;
+}
+
 .board-detail-container {
   position: fixed;
   top: 0;
@@ -13,7 +17,7 @@
 
 .board-modal-detail-content {
   background: #fff;
-  padding: 65px 10.48vw 60px 10.48vw;
+  padding: 60px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 52vw;
@@ -149,4 +153,26 @@
   font-family: "pretendard";
   font-size: 0.75em;
   font-weight: 500;
+}
+
+#board-detail-comment-remove-btn {
+  width: 60px;
+  text-align: center;
+
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+#board-detail-comment-zumzumzum {
+}
+
+#board-detail-comment-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#board-detail-comment-zumzumzum-container {
+  height: 20px;
+  margin: 12px 5px;
 }
