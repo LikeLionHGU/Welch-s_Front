@@ -4,7 +4,6 @@ import "../styles/board/boarddetail.scss";
 import CommentArrowImg from "../imgs/commentArrow.svg";
 import GrayLikeImg from "../imgs/grayLike.svg";
 import RedLikeImg from "../imgs/redLike.svg";
-import Delete from "../imgs/delete.png";
 import More from "../imgs/board_more.svg";
 import Zumzumzum from "../imgs/zzumzzumzzum.svg";
 import axios from "axios";
@@ -234,7 +233,6 @@ export default function BoardDetail({ id }) {
   return (
     <div className="board-detail-container" style={{ overflowY: "hidden" }}>
       <div className="board-modal-detail-content">
-        <img src={Delete} className="create-close-button" alt="close" />
         <div className="board-detail-date">{post.createdDate}</div>
         <div className="board-detail-title">{post.title}</div>
         <div className="board-detail-content">{post.contents}</div>
