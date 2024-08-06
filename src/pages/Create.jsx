@@ -151,7 +151,9 @@ export default function Create() {
       <form onSubmit={handleSubmit}>
         <div id="pageTitle">책 발간</div>
         <div className="create-menu">
-          <div className="create-sub-title">책 제목 <p className="essential">*</p></div>
+          <div className="create-sub-title">
+            책 제목 <p className="essential">*</p>
+          </div>
           <input
             className="create-menu-title"
             placeholder="책 제목을 입력해 주세요."
@@ -164,7 +166,9 @@ export default function Create() {
           <ImgUpLoad onImageUpload={handleImageUpload} />
         </div>
         <div className="create-menu">
-          <div className="create-sub-title">책 장르 <p className="essential">*</p></div>
+          <div className="create-sub-title">
+            책 장르 <p className="essential">*</p>
+          </div>
           <div className="create-categoryContainer">
             {Object.keys(categories).map((category) => (
               <div key={category} className="create-category">
@@ -189,7 +193,9 @@ export default function Create() {
           </div>
         </div>
         <div className="create-menu">
-          <div className="create-sub-title">책 한 줄 소개 <p className="essential">*</p></div>
+          <div className="create-sub-title">
+            책 한 줄 소개 <p className="essential">*</p>
+          </div>
           <input
             className="create-book-intro-input"
             placeholder="책 한 줄 소개를 입력해 주세요."
@@ -198,7 +204,9 @@ export default function Create() {
           />
         </div>
         <div className="create-menu">
-          <div className="create-sub-title">책 정보 <p className="essential">*</p></div>
+          <div className="create-sub-title">
+            책 정보 <p className="essential">*</p>
+          </div>
           <textarea
             className="create-book-infor-input"
             placeholder="책 정보를 입력해주세요."
@@ -237,15 +245,23 @@ export default function Create() {
           </div>
         </div>
         <div className="create-menu">
-          <div className="create-sub-title">작가 정원 <p className="essential">*</p></div>
+          <div className="create-sub-title">
+            작가 정원 <p className="essential">*</p>
+          </div>
           <div className="create-peopleNum">
-            <div className="create-minus" onClick={() => handlePeople(-1)}>-</div>
+            <div className="create-minus" onClick={() => handlePeople(-1)}>
+              -
+            </div>
             <div className="create-num">{people}</div>
-            <div className="create-plus" onClick={() => handlePeople(+1)}>+</div>
+            <div className="create-plus" onClick={() => handlePeople(+1)}>
+              +
+            </div>
           </div>
         </div>
         <div className="create-btn-container">
-          <button className="create-btn" type="submit">발간하기</button>
+          <button className="create-btn" type="submit">
+            발간하기
+          </button>
         </div>
       </form>
     </div>

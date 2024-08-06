@@ -141,7 +141,7 @@ export default function Detail() {
         // alert("게시물 업로드 성공");
         // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
         setComment("");
-        window.location.reload();
+        window.location.replace("https://sseuim.netlify.app/detail");
       } else {
         console.error("Error uploading post");
       }
@@ -223,7 +223,7 @@ export default function Detail() {
           // alert("게시물 업로드 성공");
           // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
           setComment("");
-          window.location.reload();
+          window.location.replace("https://sseuim.netlify.app/detail");
         } else {
           console.error("Error uploading post");
         }
@@ -298,7 +298,7 @@ export default function Detail() {
         // alert("게시물 업로드 성공");
         // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
         setCommentsLike(!commentsLike);
-        window.location.reload();
+        window.location.replace("https://sseuim.netlify.app/detail");
       } else {
         console.error("Error uploading post");
       }
@@ -351,7 +351,8 @@ export default function Detail() {
         console.log("Post uploaded successfully");
         // alert("게시물 업로드 성공");
         // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
-        window.location.reload(); // 화면 변경 해줘야함
+        window.location.replace("https://sseuim.netlify.app/detail");
+        // window.location.reload(); // 화면 변경 해줘야함
       } else {
         console.error("Error uploading post");
       }

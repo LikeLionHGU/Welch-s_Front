@@ -16,16 +16,14 @@ export default function Profile() {
   const navigate = useNavigate();
   const { id } = location.state || {};
   console.log(id);
-  
+
   const [wallpaper, setWallPaper] = useState(`${ImgNone}`);
   const [profile, setProFile] = useState(`${ImgNone}`);
   const [userInfo, setUserInfo] = useState([]);
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   const handleSubscribe = async () => {
-
     const token = localStorage.getItem("token");
-    
 
     try {
       const response = await axios.post(
@@ -41,7 +39,7 @@ export default function Profile() {
         console.log("Post uploaded successfully");
         // alert("게시물 업로드 성공");
         //navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
-        window.location.reload();
+        window.location.replace("https://sseuim.netlify.app/profile");
       } else {
         console.error("Error uploading post");
       }
@@ -72,10 +70,13 @@ export default function Profile() {
 
     const fetchUserInfo = async () => {
       try {
-        const response = await axios.get(`https://likelion.info/user/info/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          `https://likelion.info/user/info/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
         console.log(response.data);
         setUserInfo(response.data);
         setWallPaper(response.data.backImage || `${ImgNone}`);
@@ -87,9 +88,9 @@ export default function Profile() {
         //   favorite: response.data.favoriteBooks || [],
         // });
       } catch (error) {
-        console.error('Error fetching user info:', error);
+        console.error("Error fetching user info:", error);
         localStorage.removeItem("token");
-        navigate('/', { replace: true });
+        navigate("/", { replace: true });
       }
     };
 
@@ -108,8 +109,7 @@ export default function Profile() {
             <img className="profile-img-cover" src={profile} alt="img" />
           </div>
         </div>
-        <div>
-      </div>
+        <div></div>
 
         <div className="profile-details">
           <div className="profile-details-edit">
@@ -119,23 +119,24 @@ export default function Profile() {
               <div className="profile-email-title">이메일</div>
               <div className="profile-email">{userInfo.email}</div>
             </div>
-            <button onClick={handleSubscribe}
-            className="subscribed-button"
-            style={{
-              backgroundColor: isSubscribed ? '#356B28' : '#5CA54B', // 구독중: 녹색, 구독하기: 파란색
-              width: '7.2vw',
-              color: 'white',
-              padding: '10px',
-              textAlign: 'center',
-              textDecoration: 'none',
-              display: 'inline-block',
-              cursor: 'pointer',
-              border: 'none',
-              borderRadius: '30px',
-            }}
-          >
-            {isSubscribed ? '구독중' : '구독하기'}
-          </button>
+            <button
+              onClick={handleSubscribe}
+              className="subscribed-button"
+              style={{
+                backgroundColor: isSubscribed ? "#356B28" : "#5CA54B", // 구독중: 녹색, 구독하기: 파란색
+                width: "7.2vw",
+                color: "white",
+                padding: "10px",
+                textAlign: "center",
+                textDecoration: "none",
+                display: "inline-block",
+                cursor: "pointer",
+                border: "none",
+                borderRadius: "30px",
+              }}
+            >
+              {isSubscribed ? "구독중" : "구독하기"}
+            </button>
           </div>
 
           <div className="profile-details-count">
@@ -165,23 +166,11 @@ export default function Profile() {
 
         <div className="profile-book-lists">
           <div className="profile-book-projects">
-            <div className="profile-book-title">
-              프로젝트
-            </div>
+            <div className="profile-book-title">프로젝트</div>
             <Slide mode={3} data={userInfo.progressProjectList || []} />
           </div>
         </div>
       </div>
-
     </div>
-
-
-
-
-
-
-
-
-  )
-
+  );
 }
