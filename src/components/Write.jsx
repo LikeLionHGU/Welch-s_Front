@@ -207,6 +207,7 @@ export default function Write({ user, mode, id, updatedId }) {
       if (response.status === 200) {
         console.log("Post uploaded successfully");
         alert("게시물 업로드 성공");
+        navigate(-1);
         // window.location.reload();
       } else {
         console.error("Error uploading post");
