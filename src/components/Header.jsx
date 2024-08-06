@@ -181,9 +181,11 @@ export default function Header({ mode }) {
                   className="header-guide-img"
                   src={GuideImg}
                   alt="guide"
-                  onClick={() => {}}
+                  onClick={() => {window.open('https://ordinary-buffer-ba6.notion.site/USER-GUIDE-b74d9fd2d43f4da4b2b1d54a1eeb2889')}}
                 />
-                <button id="goGuide">가이드</button>
+                <button id="goGuide"
+                  onClick={() => {window.open('https://ordinary-buffer-ba6.notion.site/USER-GUIDE-b74d9fd2d43f4da4b2b1d54a1eeb2889')}}
+                >가이드</button>
               </div>
 
               <img

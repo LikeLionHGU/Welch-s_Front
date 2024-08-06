@@ -67,7 +67,7 @@ export default function Detail() {
       <div id="detail-galpi-list">
         {bookmark.map((item, index) => (
           <div key={index} id="detail-galpi">
-            <div>
+            <div className="detail-galpi-title">
               {index + 1}갈피: {item.name}
             </div> 
             {/* 공유 가능 여부로 먼저 한 번 정렬 */}
