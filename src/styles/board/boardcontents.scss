@@ -1,166 +1,198 @@
-@import url('https://webfontbox.github.io/Arita/font.css');
-@import url('https://webfontbox.github.io/Arita/font.min.css');
+@import url("https://webfontbox.github.io/Arita/font.css");
+@import url("https://webfontbox.github.io/Arita/font.min.css");
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
-
 .board-post {
-    width: 64vw;
+  width: 64vw;
 
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .post-header {
-    display: flex;
-    height: 40px; //header의 길이
-    align-items: flex-start;
-    position: relative;
+  display: flex;
+  height: 40px; //header의 길이
+  align-items: flex-start;
+  position: relative;
 
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-.post-profile{
-    display: flex;
+.post-profile {
+  display: flex;
 }
 
-.post-detail{
-    margin-left: auto;
+.post-detail {
+  margin-left: auto;
 }
 
 .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
 }
 
-
 .username {
-    font-family: 'pretendard';
-    font-size: 0.875em;
-    font-weight: 600;
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 600;
 }
 
 .post-content {
-    margin-top: 16px;
+  margin-top: 16px;
 }
 
 .post-title {
-    font-family: 'pretendard';
-    font-size: 1.25em;
-    font-weight: 600;
+  font-family: "pretendard";
+  font-size: 1.25em;
+  font-weight: 600;
 
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
 .post-body {
-    font-family: 'pretendard';
-    font-size: 0.875em;
-    font-weight: 500;
-    line-height: 180%;
+  font-family: "pretendard";
+  font-size: 0.875em;
+  font-weight: 500;
+  line-height: 180%;
 
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .post-footer {
-    margin-top: 16px;
-    display: flex;
-    align-items: center;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
 }
 
 .like-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #333;
 
-    margin-right: 72px;
+  margin-right: 72px;
 }
 
 .heart-icon {
-    width: 18px;
-    height: 18px;
-    margin-right: 4px;
-    &.liked {
-        color: #F4623B;
-    }
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+  &.liked {
+    color: #f4623b;
+  }
 
-    &.unliked{
-        color: #BFBFBF;
-    }
+  &.unliked {
+    color: #bfbfbf;
+  }
 }
 
 .like-count {
-    font-family: 'pretendard';
-    font-size: 0.75em;
-    font-weight: 500;
+  font-family: "pretendard";
+  font-size: 0.75em;
+  font-weight: 500;
 }
 
-.message-button{
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
+.message-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
 }
 
-.message-btn-img{
-    margin-right: 4px;
+.message-btn-img {
+  margin-right: 4px;
 }
 
-.message-count{
-    font-family: 'pretendard';
-    font-size: 0.75em;
-    font-weight: 500;
+.message-count {
+  font-family: "pretendard";
+  font-size: 0.75em;
+  font-weight: 500;
 }
 
-.button-container{
-    margin-top: 5px;
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
-    position: absolute; /* 위치를 절대 위치로 설정 */
-    right: 0; /* More 버튼과 동일한 위치에 고정 */
+.button-container {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  position: absolute; /* 위치를 절대 위치로 설정 */
+  right: 0; /* More 버튼과 동일한 위치에 고정 */
 }
 
 .board-delete-button,
-.board-edit-button{
-    border: none;
-    outline: none;
-    background-color: #FFFF;
-    border: 1.2px solid #5CA54B;
-    padding: 5px;
+.board-edit-button {
+  border: none;
+  outline: none;
+  background-color: #ffff;
+  border: 1.2px solid #5ca54b;
+  padding: 5px;
 
-    width: 4.16vw;
-    height: 24px;
+  width: 4.16vw;
+  height: 24px;
 
-    font-family: 'pretendard';
-    font-size: 0.75em;
-    font-weight: 500;
+  font-family: "pretendard";
+  font-size: 0.75em;
+  font-weight: 500;
 }
 
 .board-delete-button:active,
-.board-edit-button:active{
-    background-color: #5CA54B;
-    color: #FFFF;
+.board-edit-button:active {
+  background-color: #5ca54b;
+  color: #ffff;
 }
 
-
-.board-edit-button{
-    border-radius: 4px 4px 0px 0px;
+.board-edit-button {
+  border-radius: 4px 4px 0px 0px;
 }
 
-.board-delete-button{
-    border-radius: 0px 0px 4px 4px;
+.board-delete-button {
+  border-radius: 0px 0px 4px 4px;
 }
 
+#board-contents-zumzumzum {
+  width: 30px;
+  //   margin-bottom: 10px;
+  padding: 10px 0px;
+}
 
+.board-contents-btns {
+  border: 1px solid #5ca54b;
+  border-radius: 8px;
+}
 
+#board-contents-zumzumzum-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 10001;
+}
 
+#board-contents-update {
+  border-bottom: 1px solid #5ca54b;
+}
 
+.board-contents-update-delete {
+  padding: 5px 30px;
+}
 
+#board-contents-update:hover {
+  background-color: #5ca54b;
+  color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+#board-contents-delete:hover {
+  background-color: #5ca54b;
+  color: white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
