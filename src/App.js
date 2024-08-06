@@ -15,6 +15,7 @@ import GalpiUpdate from "./pages/project/manager/GalpiUpdate"
 
 import { RecoilRoot } from "recoil";
 import BoardDetail from "./pages/BoardDetail";
+import Post from "./pages/Post";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/boardDetail/" element={<BoardDetail/>} />
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/galpi/update" element={<GalpiUpdate />} />
+          <Route path="/post" element={<Post />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
