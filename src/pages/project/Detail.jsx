@@ -59,15 +59,39 @@ export default function Detail() {
       return null;
     }
 
+    console.log(bookmark);
+
+    
+
     return (
       <div id="detail-galpi-list">
         {bookmark.map((item, index) => (
           <div key={index} id="detail-galpi">
             <div>
               {index + 1}갈피: {item.name}
-            </div>
+            </div> 
+            {/* 공유 가능 여부로 먼저 한 번 정렬 */}
+            {item.isShared ? (item.isCurrentEdit ? <div
+                id="detail-galpi-update-btn-none"
+              >
+                수정하기
+              </div> : <div
+                onClick={() => toWrite(item.id)}
+                id="detail-galpi-update-btn"
+              >
+                수정하기
+              </div>) : (item.canEdit ? <div
+                onClick={() => toWrite(item.id)}
+                id="detail-galpi-update-btn"
+              >
+                수정하기
+              </div>: <div
+                id="detail-galpi-update-btn-none"
+              >
+                수정하기
+              </div>)}
             <div id="detail-galpi-update-setting">
-              <div
+              {/* <div
                 onClick={() => toWrite(item.id)}
                 id="detail-galpi-update-btn"
               >
@@ -78,8 +102,9 @@ export default function Detail() {
                 id="detail-galpi-update-btn-none"
               >
                 수정하기
-              </div>
-              <img src={SettingImg} alt="setting" style={{ height: "18px" }} />
+              </div> */}
+              {item.canEdit ? <img src={SettingImg} alt="setting" style={{ height: "18px" }} /> : <></>}
+              
             </div>
           </div>
         ))}
