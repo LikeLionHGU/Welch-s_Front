@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../styles/board/boardcreate.scss';
 import { useNavigate } from "react-router-dom";
 import IMG from "../imgs/board_img.svg"
 import Delete from "../imgs/delete.png"
 import axios from "axios";
 
-const BoardCreate = ({ onClose, onSubmit, id }) => {
+const BoardCreate = ({ onClose, onSubmit, id, postId, isUpdate }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
@@ -25,6 +25,35 @@ const BoardCreate = ({ onClose, onSubmit, id }) => {
   //     onSubmit(newPost);
   //     onClose();
   // };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const fetchBestProjects = () => {
+      axios
+        .get(`https://likelion.info/post/community/get/one/${postId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setTitle(response.title);
+          setContent(response.contents);
+          setImage(response.imageAddress);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          navigate("/", { replace: true });
+        });
+    };
+
+
+
+
+    if(isUpdate) {
+      fetchBestProjects();
+    }
+  }, []);
+
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
