@@ -354,6 +354,7 @@ export default function Write({ user, mode, id, updatedId }) {
     setOpenModal(!openModal);
     console.log(openModal);
   };
+
   if (loading) {
     return <>loading...</>;
   }
