@@ -20,7 +20,7 @@ const BoardContents = ({ post, loggedInUser }) => {
     const [showNotification, setShowNotification] = useState(false);
     const [showBoardDetail, setShowBoardDetail] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
-
+    
 
     const handleClick = (id) => {
         const user = localStorage.getItem("id");
@@ -134,23 +134,19 @@ const BoardContents = ({ post, loggedInUser }) => {
         }
     }
 
-    const BoardDetail = () => {
+    const BoardDetail = ({postId}) => {
+        console.log(postId);
         return (
             <div className="button-container">
                 <button className="board-edit-button" 
                     onClick={() => setModalOpen(true)}>수정
-                    {/* <BoardUpdate
-                        onClose={() => setModalOpen(false)}
-                        //onSubmit={}
-                        //id={id}
-                    /> */}
                 </button>
-                <button className="board-delete-button" onClick={()=> deletePost(post.id)}>삭제</button>
+                <button className="board-delete-button" onClick={()=> deletePost(postId)}>삭제</button>
                 {modalOpen && (
                 <BoardUpdate
                     onClose={() => setModalOpen(false)}
                     //onSubmit={}
-                    //id={id}
+                    id={postId}
                 />
             )}
             </div>
@@ -158,9 +154,45 @@ const BoardContents = ({ post, loggedInUser }) => {
     };
 
     const handleOptionsToggle = () => {
-        console.log("!!")
+        
         setShowBoardDetail(!showBoardDetail);
     };
+
+    const updatePost = async (postId) => {
+        const token = localStorage.getItem("token");
+
+        try {
+            const response = await axios.delete(
+                `https://likelion.info/post/community/delete/${postId}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    withCredentials: true,
+                }
+            );
+
+            if (response.status === 200) {
+                console.log("Post uploaded successfully");
+                // alert("게시물 업로드 성공");
+                // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+                window.location.reload();
+
+            } else {
+                console.error("Error uploading post");
+            }
+        } catch (error) {
+            if (error.response) {
+                console.error("Error response from server:", error.response);
+            } else if (error.request) {
+                console.error("No response received:", error.request);
+            } else {
+                console.error("Error in setting up request:", error.message);
+            }
+            console.error("Error uploading post:", error);
+            alert(`Error uploading post: ${error.message}`);
+            localStorage.removeItem("token");
+            navigate("/", { replace: true });
+        }
+    }
     
 
 return (
@@ -177,10 +209,9 @@ return (
                     <div>
                         <img
                             src={More}
-                            onClick={console.log("1@#!@#!@#")}
+                            onClick={handleOptionsToggle}
                         />
-                        {{showBoardDetail} ? <BoardDetail /> : <></>}
-                        {/* {showBoardDetail} */}
+                        {showBoardDetail ? <BoardDetail postId={post.id}/> : <></>}
                     </div>
                     :
                     <></>
