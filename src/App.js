@@ -11,6 +11,7 @@ import Setting from "./pages/project/manager/Setting";
 import Galpi from "./pages/project/manager/Galpi";
 import Approval from "./pages/project/manager/Approval";
 import Profile from "./pages/Profile";
+import GalpiUpdate from "./pages/project/manager/GalpiUpdate"
 
 import { RecoilRoot } from "recoil";
 import BoardDetail from "./pages/BoardDetail";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/approval" element={<Approval />} />
           <Route path="/boardDetail/" element={<BoardDetail/>} />
           <Route path="/profile" element={<Profile/>}/>
+          <Route path="/galpi/update" element={<GalpiUpdate />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
