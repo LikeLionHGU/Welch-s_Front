@@ -2,6 +2,7 @@ import LogoImg from "../imgs/logo.svg";
 import SearchImg from "../imgs/search.svg";
 import ProfileImg from "../imgs/myprofile.svg";
 import GuideImg from "../imgs/guide.svg";
+import Logout from "../imgs/logout.svg";
 import "../styles/header.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -158,14 +159,14 @@ export default function Header({ mode }) {
         <div className="header-headerRight">
           {onLogin ? (
             <>
-              <button
+              {/* <button
                 id="goWrite"
                 onClick={() => {
                   toLogout();
                 }}
               >
                 로그아웃
-              </button>
+              </button> */}
               <button
                 id="goWrite"
                 onClick={() => {
@@ -191,6 +192,14 @@ export default function Header({ mode }) {
                 alt="profile"
                 onClick={() => {
                   toMyPage();
+                }}
+              />
+
+              <img
+                className="header-logout"
+                src={Logout}
+                onClick={() => {
+                  toLogout();
                 }}
               />
             </>
