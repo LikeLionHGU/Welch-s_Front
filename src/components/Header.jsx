@@ -23,8 +23,6 @@ export default function Header({ mode }) {
   const query = useQuery();
   const navigate = useNavigate();
   const location = useLocation();
-  
-  
 
   const categories = {
     소설: ["전체", "공포", "로맨스", "미스터리", "판타지", "SF"],
@@ -54,8 +52,7 @@ export default function Header({ mode }) {
     } else {
       navigate("/list", { state: { search } });
     }
-    
-  }
+  };
 
   const handleCategoryClick = (category) => {
     setedBigCategory(category);
@@ -77,7 +74,6 @@ export default function Header({ mode }) {
     setCategory(Category);
     // console.log(Category);
   };
-  
 
   useEffect(() => {
     const token = query.get("token");
@@ -105,7 +101,7 @@ export default function Header({ mode }) {
   const toLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
-  }
+  };
 
   function toCreate() {
     navigate("/create");
@@ -143,9 +139,19 @@ export default function Header({ mode }) {
           ></div>
         ) : (
           <div className="header-searchContainer">
-            <input className="header-searchBox" placeholder="책 제목, 작가명" value={search}
-            onChange={(e) => setSearch(e.target.value)} />
-            <img src={SearchImg} alt="search" onClick={() => {toSearch()}}/>
+            <input
+              className="header-searchBox"
+              placeholder="책 제목, 작가명"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <img
+              src={SearchImg}
+              alt="search"
+              onClick={() => {
+                toSearch();
+              }}
+            />
           </div>
         )}
 
@@ -216,8 +222,8 @@ export default function Header({ mode }) {
                 }}
                 style={
                   bigCategory === category && mode !== 0
-                    ? { fontWeight: "bold" }
-                    : {}
+                    ? { fontWeight: "bold", cursor: "pointer" }
+                    : { cursor: "pointer" }
                 }
               >
                 {category}
@@ -244,8 +250,9 @@ export default function Header({ mode }) {
                           ? {
                               fontWeight: "bold",
                               borderBottom: "4px solid #5ca54b",
+                              cursor: "pointer",
                             }
-                          : {}
+                          : { cursor: "pointer" }
                       }
                     >
                       {option}
