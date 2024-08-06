@@ -34,6 +34,11 @@ export default function Detail() {
 
   const [commentsLike, setCommentsLike] = useState();
 
+  const toSetting = (id) => {
+    console.log(id);
+    navigate("/galpi/update", { state: { id } });
+  }
+
   const handleCommentClick = (id) => {
     const user = localStorage.getItem("id");
 
@@ -103,7 +108,7 @@ export default function Detail() {
               >
                 수정하기
               </div> */}
-              {item.canEdit ? <img src={SettingImg} alt="setting" style={{ height: "18px" }} /> : <></>}
+              {item.canEdit ? <img src={SettingImg} alt="setting" style={{ height: "18px" }} onClick={()=>{toSetting(item.id)}} /> : <></>}
               
             </div>
           </div>

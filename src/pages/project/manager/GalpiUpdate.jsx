@@ -8,43 +8,26 @@ export default function GalpiUpdate() {
   const navigate = useNavigate();
   const location = useLocation();
   const [galpimanange, setGalpiManange] = useState([
-    {
-      profileImg: "",
-      name: "",
-    },
+    
   ]);
 
-  const [collaborate, setCollaborate] = useState("가능");
-  const [concurrentWork, setConcurrentWork] = useState("가능");
-  const { id } = location.state || {}; // 프로젝트 아이디
+  const [collaborate, setCollaborate] = useState(true);
+  const [concurrentWork, setConcurrentWork] = useState(true);
+  const { id } = location.state || {}; // 갈피 아이디
+  const [setting, setSetting] = useState("");
 
-  const [galpilist, setGalpilist] = useState([
-    {
-      id: 1,
-      topic: "갈피 목록",
-      children: [
-        {
-          id: 11,
-          topic: "갈피 1",
-        },
-        {
-          id: 12,
-          topic: "갈피 2",
-        },
-      ],
-    },
-  ]);
+
 
   const handleCollaborateChange = (event) => {
-    const newCollaborate = event.target.value;
-    setCollaborate(newCollaborate);
-    console.log(newCollaborate);
+    
+    setCollaborate(!collaborate);
+    
   };
 
   const handleConcurrentWorkChange = (event) => {
-    const newConcurrentWork = event.target.value;
-    setConcurrentWork(newConcurrentWork);
-    console.log(newConcurrentWork);
+    
+    setConcurrentWork(!concurrentWork);
+    
   };
 
   const handleSubmit = async (event) => {
@@ -141,44 +124,60 @@ export default function GalpiUpdate() {
     );
   };
 
-  const handleChildClick = (child, parentId) => {
-    alert(`You clicked on ${child.topic}`);
-    updateParentTopic(child, parentId);
-  };
+  // const handleChildClick = (child, parentId) => {
+  //   alert(`You clicked on ${child.topic}`);
+  //   updateParentTopic(child, parentId);
+  // };
 
-  const updateParentTopic = (selectedChild, parentId) => {
-    setGalpilist((prevList) => {
-      const updatedList = prevList.map((parent) => {
-        if (parent.id === parentId) {
-          return {
-            ...parent,
-            topic: selectedChild.topic, // 부모 항목의 제목을 선택된 항목으로 변경하기 !!
-          };
-        }
-        return parent;
-      });
-      return updatedList;
-    });
-  };
+  // const updateParentTopic = (selectedChild, parentId) => {
+  //   setGalpilist((prevList) => {
+  //     const updatedList = prevList.map((parent) => {
+  //       if (parent.id === parentId) {
+  //         return {
+  //           ...parent,
+  //           topic: selectedChild.topic, // 부모 항목의 제목을 선택된 항목으로 변경하기 !!
+  //         };
+  //       }
+  //       return parent;
+  //     });
+  //     return updatedList;
+  //   });
+  // };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    
+    const fetchSetting = () => {
+      const token = localStorage.getItem("token");
+
+      axios
+        .get(`https://likelion.info/bookmark/get/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setSetting(response.data);
+          setCollaborate(response.data.isShared);
+          setGalpiManange(response.data.userList);
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+          navigate("/", { replace: true });
+        });
+    };
+
+    
+
+    fetchSetting();
+    console.log(setting, " 123123 123 123 1231");
+
+
+  }, []);
 
   return (
     <div className="galpi-setting-container">
       <form onSubmit={handleSubmit}>
         <div className="galpi-title">갈피 설정/관리</div>
-
-        <div className="galpi-menu">
-          <div className="galpi-list">
-            <div>갈피 목록</div>
-            <div>
-              <AccordionList
-                items={galpilist}
-                onChildClick={handleChildClick}
-              />
-            </div>
-          </div>
-        </div>
 
         <div className="galpi-menu">
           <div>갈피 관리자</div>
@@ -196,7 +195,7 @@ export default function GalpiUpdate() {
                 id="collaborate-possible"
                 name="collaborate"
                 value="가능"
-                checked={collaborate === "가능"}
+                checked={collaborate}
                 onChange={handleCollaborateChange}
               />
               <label htmlFor="collaborate-possible">가능</label>
@@ -207,7 +206,7 @@ export default function GalpiUpdate() {
                 id="collaborate-impossible"
                 name="collaborate"
                 value="불가능"
-                checked={collaborate === "불가능"}
+                checked={!collaborate}
                 onChange={handleCollaborateChange}
               />
               <label htmlFor="collaborate-impossible">불가능</label>
@@ -224,7 +223,7 @@ export default function GalpiUpdate() {
                 id="concurrentWork-possible"
                 name="concurrentWork"
                 value="가능"
-                checked={concurrentWork === "가능"}
+                checked={concurrentWork}
                 onChange={handleConcurrentWorkChange}
               />
               <label htmlFor="concurrentWork-possible">가능</label>
@@ -235,7 +234,7 @@ export default function GalpiUpdate() {
                 id="concurrentWork-impossible"
                 name="concurrentWork"
                 value="불가능"
-                checked={concurrentWork === "불가능"}
+                checked={!concurrentWork}
                 onChange={handleConcurrentWorkChange}
               />
               <label htmlFor="concurrentWork-impossible">불가능</label>
