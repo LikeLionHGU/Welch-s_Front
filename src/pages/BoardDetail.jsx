@@ -4,8 +4,8 @@ import "../styles/board/boarddetail.scss";
 import CommentArrowImg from "../imgs/commentArrow.svg";
 import GrayLikeImg from "../imgs/grayLike.svg";
 import RedLikeImg from "../imgs/redLike.svg";
-import Delete from "../imgs/delete.png";
 import More from "../imgs/board_more.svg";
+import Zumzumzum from "../imgs/zzumzzumzzum.svg";
 import axios from "axios";
 
 export default function BoardDetail({ id }) {
@@ -99,36 +99,83 @@ export default function BoardDetail({ id }) {
     }
   };
 
-  const Comment = ({ comment }) => (
-    <div id="detail-comments-container">
-      <div className="board-detail-comments-header">
-        <div className="board-detail-comments-name">{comment.user.name}</div>
-        <div className="board-detail-comments-toggle">
-          {comment.user.id === localStorage.getItem("id") && (
-            <div>
-              <img src={More} alt="more" />
+  const Comment = ({ comment }) => {
+    const [toggleDelete, setToggleDelete] = useState(false);
+
+    const handleToggleDelete = () => {
+      setToggleDelete(!toggleDelete);
+      console.log(toggleDelete);
+    };
+    console.log(comment);
+    return (
+      <div id="detail-comments-real-container">
+        <div id="detail-comments-container">
+          <div className="board-detail-comments-header">
+            <div className="board-detail-comments-name">
+              {comment.user.name}
             </div>
+            <div className="board-detail-comments-toggle">
+              {comment.write === localStorage.getItem("id") && (
+                <div>
+                  <img src={More} alt="more" />
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="board-detail-comments-date">
+            {comment.createdDate}
+          </div>
+          <div className="board-detail-comments-contents">
+            {comment.contents}
+          </div>
+          <div className="board-detail-comments-likebtn">
+            <img
+              className="board-detail-comments-like-img"
+              onClick={() => handleSetCommentsLike(comment.id)}
+              src={comment.isLike ? RedLikeImg : GrayLikeImg}
+              alt="like"
+            />
+            <div className="board-detail-comments-likecount">
+              {comment.likeCount}
+            </div>
+          </div>
+        </div>
+        <div id="board-detail-comment-btns">
+          <div
+            id="board-detail-comment-zumzumzum-container"
+            onClick={() => {
+              handleToggleDelete();
+            }}
+          >
+            <img
+              src={Zumzumzum}
+              alt="zumzumzum"
+              id="board-detail-comment-zumzumzum"
+            />
+          </div>
+          {toggleDelete ? (
+            <div
+              id="board-detail-comment-remove-btn"
+              onClick={() => {
+                deleteComment(comment.id);
+              }}
+            >
+              삭제
+            </div>
+          ) : (
+            <div
+              id="board-detail-comment-remove-btn"
+              style={{ border: "none" }}
+            ></div>
           )}
         </div>
+        <div className="board-detail-comments-bottom"></div>
       </div>
-      <div className="board-detail-comments-date">{comment.createdDate}</div>
-      <div className="board-detail-comments-contents">{comment.contents}</div>
-      <div className="board-detail-comments-likebtn">
-        <img
-          className="board-detail-comments-like-img"
-          onClick={() => handleSetCommentsLike(comment.id)}
-          src={comment.isLike ? RedLikeImg : GrayLikeImg}
-          alt="like"
-        />
-        <div className="board-detail-comments-likecount">
-          {comment.likeCount}
-        </div>
-      </div>
-      <div className="board-detail-comments-bottom"></div>
-    </div>
-  );
+    );
+  };
 
   const handleSubmit = async () => {
+    console.log(id);
     if (comment !== "") {
       const token = localStorage.getItem("token");
 
@@ -184,9 +231,8 @@ export default function BoardDetail({ id }) {
   }, [id, navigate]);
 
   return (
-    <div className="board-detail-container">
+    <div className="board-detail-container" style={{ overflowY: "hidden" }}>
       <div className="board-modal-detail-content">
-        <img src={Delete} className="create-close-button" alt="close" />
         <div className="board-detail-date">{post.createdDate}</div>
         <div className="board-detail-title">{post.title}</div>
         <div className="board-detail-content">{post.contents}</div>
