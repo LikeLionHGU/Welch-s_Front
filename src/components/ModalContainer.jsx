@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BoardDetail from "../pages/BoardDetail";
 
-// mode === 0: approval
-export default function ModalContainer({ isOpen, closeModal, style, mode, contents, id }) {
+// mode === 0: approval, mode === 1: board detail
+export default function ModalContainer({
+  isOpen,
+  closeModal,
+  style,
+  mode,
+  contents,
+  id,
+}) {
   const [modalContents, setModalContents] = useState("");
   // const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +34,7 @@ export default function ModalContainer({ isOpen, closeModal, style, mode, conten
       contents: contents,
       id: id,
       rejectedReason: rejectedReason,
-      isAllowed: isAllowed
+      isAllowed: isAllowed,
     };
 
     try {
@@ -91,7 +99,7 @@ export default function ModalContainer({ isOpen, closeModal, style, mode, conten
           </div>
         </div>
       ) : (
-        <>hi</>
+        <BoardDetail id={id} />
       )}
     </Modal>
   );

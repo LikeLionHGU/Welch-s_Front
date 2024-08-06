@@ -179,7 +179,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap; /* 항목을 한 줄에 유지 */
 }
+
+.detail-galpi-title {
+  display: flex;
+  width: 66vw;
+}
+
+
 #detail-galpi-update-setting {
   display: flex;
   /* align-items: center; */
@@ -191,6 +199,7 @@
   padding: 5px;
   margin-right: 10px;
 }
+
 #detail-galpi-update-btn-none {
   border: 1px solid #bfbfbf;
   color: #bfbfbf;

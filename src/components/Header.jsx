@@ -2,6 +2,7 @@ import LogoImg from "../imgs/logo.svg";
 import SearchImg from "../imgs/search.svg";
 import ProfileImg from "../imgs/myprofile.svg";
 import GuideImg from "../imgs/guide.svg";
+import Logout from "../imgs/logout.svg";
 import "../styles/header.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -158,14 +159,14 @@ export default function Header({ mode }) {
         <div className="header-headerRight">
           {onLogin ? (
             <>
-              <button
+              {/* <button
                 id="goWrite"
                 onClick={() => {
                   toLogout();
                 }}
               >
                 로그아웃
-              </button>
+              </button> */}
               <button
                 id="goWrite"
                 onClick={() => {
@@ -180,9 +181,11 @@ export default function Header({ mode }) {
                   className="header-guide-img"
                   src={GuideImg}
                   alt="guide"
-                  onClick={() => {}}
+                  onClick={() => {window.open('https://ordinary-buffer-ba6.notion.site/USER-GUIDE-b74d9fd2d43f4da4b2b1d54a1eeb2889')}}
                 />
-                <button id="goGuide">가이드</button>
+                <button id="goGuide"
+                  onClick={() => {window.open('https://ordinary-buffer-ba6.notion.site/USER-GUIDE-b74d9fd2d43f4da4b2b1d54a1eeb2889')}}
+                >가이드</button>
               </div>
 
               <img
@@ -191,6 +194,14 @@ export default function Header({ mode }) {
                 alt="profile"
                 onClick={() => {
                   toMyPage();
+                }}
+              />
+
+              <img
+                className="header-logout"
+                src={Logout}
+                onClick={() => {
+                  toLogout();
                 }}
               />
             </>

@@ -1,29 +1,231 @@
+@import url('https://webfontbox.github.io/Arita/font.css');
+@import url('https://webfontbox.github.io/Arita/font.min.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
 .create-createContainer {
-  margin: 60px 132px;
-  min-width: 700px;
+  padding: 0 9.17vw;
+  margin-top: 62px;
+  margin-bottom: 62px;
 }
 
 .create-menu {
   margin-bottom: 80px;
 }
 
-#pageTitle {
-  margin-bottom: 107px;
+.create-sub-title{
+  display: flex;
+
+  font-family: 'Arita buri';
+  font-weight: 700;
+  font-size: 1.125em;
+
+  margin-bottom: 12px;
 }
 
-.create-categoryContainer {
+.essential{
+  margin-left: 5px;
+  color: #F4623B;
+}
+
+#pageTitle {
+  font-family: 'Arita buri';
+  font-weight: 700;
+  font-size: 1.625em;
+
+  margin-bottom: 100px;
+}
+
+.create-menu-title{
+    width: 40vw;
+
+    border: none;
+    outline: none;
+    background-color: #F4F4F4;
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    font-family: 'pretendard';
+    font-size: 0.875em;
+    font-weight: 500;
+}
+
+
+.create-categoryContainer{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.create-radio-item {
+.create-category {
+  font-family: 'pretendard';
+  font-size: 1em;
+  font-weight: 600;
+
+  margin-bottom: 20px;
+}
+
+.create-radio-item{
   display: flex;
   align-items: center;
   margin: 12px 0px;
+
+
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 500;
 }
 
-.create-peopleNum {
+input[type='radio'] {
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+  appearance: none; 
+  
+  width: 18px;
+  height: 18px;
+  border: 1.4px solid #5CA54B; 
+  border-radius: 20%;
+
+  outline: none; 
+  cursor: pointer;
+}
+
+.create-radio{
+  margin-right: 8px; 
+}
+
+
+input[type='radio']:checked {
+  background-color: #5CA54B; 
+  border: 3px solid white; 
+  box-shadow: 0 0 0 1.6px #5CA54B; 
+}
+
+
+
+.create-book-intro-input {
+  width: 53.8vw;
+
+  border: none;
+  outline: none;
+  background-color: #F4F4F4;
+  padding: 12px 20px;
+  border-radius: 8px;
+  resize: none; /* 사용자가 크기를 조절할 수 없도록 설정 */
+
+
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 500;
+  line-height: 180%;
+
+  overflow: hidden; /* 스크롤 바를 숨김 */
+}
+
+
+
+.create-book-infor-input {
+  width: 53.8vw;
+
+  border: none;
+  outline: none;
+  background-color: #F4F4F4;
+  padding: 12px 20px;
+  border-radius: 8px;
+  resize: none; /* 사용자가 크기를 조절할 수 없도록 설정 */
+
+
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 500;
+  line-height: 180%;
+
+  overflow: hidden; /* 스크롤 바를 숨김 */
+}
+
+
+.create-visi-radio {
+  display: flex;
+  justify-content: space-between;
+  width: 170px;
+}
+
+.create-radio-item{
   display: flex;
   align-items: center;
+  margin-bottom: 12px;
+
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 500;
 }
+
+
+.create-peopleNum{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+
+  background-color: #F4F4F4;
+  width: 12.2vw;
+  height: 49px;
+  padding: 12px;
+
+  border-radius: 8px;
+}
+
+.create-plus,
+.create-minus{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #5CA54B;
+  color: #FFFF;
+
+  width: 2.3vw;
+  height: 2.3vw;
+
+  border-radius: 50px;
+
+  font-family: 'pretendard';
+  font-size: 1.875em;
+  font-weight: 300;
+
+  cursor: pointer;
+}
+
+.create-num {
+  font-family: 'pretendard';
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+.create-btn-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+.create-btn {
+
+  padding: 20px 6.94vw ;
+  border: none;
+  outline: none;
+  background-color: #5CA54B;
+  color: #FFF;
+
+  cursor: pointer;
+
+  border-radius: 8px;
+
+  font-family: 'pretendard';
+  font-size: 1.125em;
+  font-weight: 700;
+}
+
+
+
