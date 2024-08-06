@@ -1,266 +1,331 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import BoardUpdate from './BoardUpdate';
-import BoardDetail from '../pages/BoardDetail';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import BoardUpdate from "./BoardUpdate";
+import BoardDetail from "../pages/BoardDetail";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
-import BoardProfile from '../imgs/board_profile.png';
-import Notification from './Notification'; // 삭제 모달 컴포넌트 임포트
-import SppechBubble from '../imgs/speechbubble.svg';
-import More from '../imgs/board_more.svg'
-import SppechBubbleDisabled from '../imgs/speechbubble_disabled.svg';
-import '../styles/board/boardcontents.scss';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import BoardProfile from "../imgs/board_profile.png";
+import Notification from "./Notification"; // 삭제 모달 컴포넌트 임포트
+import SppechBubble from "../imgs/speechbubble.svg";
+import More from "../imgs/board_more.svg";
+import SppechBubbleDisabled from "../imgs/speechbubble_disabled.svg";
+import "../styles/board/boardcontents.scss";
 import { useNavigate } from "react-router-dom";
+import ModalContainer from "./ModalContainer";
+import { setDataInElement } from "ckeditor5";
 
 const BoardContents = ({ post, loggedInUser }) => {
-    const [likeCount, setLikeCount] = useState(0);
-    const [liked, setLiked] = useState(false);
-    const [showOptions, setShowOptions] = useState(false);
-    const navigate = useNavigate();
-    const [showNotification, setShowNotification] = useState(false);
-    const [showBoardToggle, setShowBoardToggle] = useState(false);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [detailmodalOpen, setdetailModalOpen] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const navigate = useNavigate();
+  const [showNotification, setShowNotification] = useState(false);
+  const [showBoardToggle, setShowBoardToggle] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
-    const handleClick = (id) => {
-        const user = localStorage.getItem("id");
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
 
-        if (id === user) {
-            navigate("/mypage");
-        } else {
-            navigate("/profile", { state: { id } });
-        }
-    };
+  const handleSetDetailModalOpen = () => {
+    setDetailModalOpen(!detailModalOpen);
+    console.log(detailModalOpen);
+  };
 
-    const handleLike = async (communityPostId) => {
-        const token = localStorage.getItem("token");
+  const detailModalStyle = {
+    overlay: {
+      zIndex: "1000",
+      backgroundColor: " rgba(48, 48, 48, 0.4)",
+    },
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      minWidth: "600px", // 원하는 너비
+      height: "600px", // 원하는 높이
+      zIndex: "1001",
+    },
+  };
 
-        try {
-            const response = await axios.post(
-                `https://likelion.info/community/post/like/switch/${communityPostId}`,
-                {},
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                    withCredentials: true
-                }
-            );
+  const handleClick = (id) => {
+    const user = localStorage.getItem("id");
 
-            if (response.status === 200) {
-                console.log("Post liked/unliked successfully");
-                setLiked(!liked);
-                setLikeCount(liked ? likeCount - 1 : likeCount + 1);
-            } else {
-                console.error("Error toggling like");
-            }
-        } catch (error) {
-            if (error.response) {
-                console.error("Error response from server:", error.response);
-            } else if (error.request) {
-                console.error("No response received:", error.request);
-            } else {
-                console.error("Error in setting up request:", error.message);
-            }
-            console.error("Error toggling like:", error);
-        }
-    };
-
-
-    const handleEdit = () => {
-        console.log("Edit functionality not implemented yet");
+    if (id === user) {
+      navigate("/mypage");
+    } else {
+      navigate("/profile", { state: { id } });
     }
+  };
 
-    const handleDelete = () => {
-        setShowNotification(true);
-    };
+  const handleLike = async (communityPostId) => {
+    const token = localStorage.getItem("token");
 
-    const confirmDelete = () => {
-        axios.delete(`/api/posts/${post.id}`, { withCredentials: true })
-            .then(() => {
-                alert('게시물이 삭제되었습니다.');
-                setShowNotification(false);
-            })
-            .catch(error => {
-                console.error('Error deleting post:', error);
-                localStorage.removeItem("token");
-            });
-    };
+    try {
+      const response = await axios.post(
+        `https://likelion.info/community/post/like/switch/${communityPostId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
 
-    const cancelDelete = () => {
+      if (response.status === 200) {
+        console.log("Post liked/unliked successfully");
+        setLiked(!liked);
+        setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+      } else {
+        console.error("Error toggling like");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error toggling like:", error);
+    }
+  };
+
+  const handleEdit = () => {
+    console.log("Edit functionality not implemented yet");
+  };
+
+  const handleDelete = () => {
+    setShowNotification(true);
+  };
+
+  const confirmDelete = () => {
+    axios
+      .delete(`/api/posts/${post.id}`, { withCredentials: true })
+      .then(() => {
+        alert("게시물이 삭제되었습니다.");
         setShowNotification(false);
-    };
+      })
+      .catch((error) => {
+        console.error("Error deleting post:", error);
+        localStorage.removeItem("token");
+      });
+  };
 
-    useEffect(() => {
-        setLiked(post.isLike);
-        setLikeCount(post.likeCount);
-    }, [post.isLike, post.likeCount]);
+  const cancelDelete = () => {
+    setShowNotification(false);
+  };
 
-    const handlePostClick = () => {
-        navigate("/boardDetail", { state: { id: post.id } });
-    };
+  useEffect(() => {
+    setLiked(post.isLike);
+    setLikeCount(post.likeCount);
+  }, [post.isLike, post.likeCount]);
 
-    const deletePost = async (postId) => {
-        const token = localStorage.getItem("token");
+  const handlePostClick = () => {
+    navigate("/boardDetail", { state: { id: post.id } });
+  };
 
-        try {
-            const response = await axios.delete(
-                `https://likelion.info/post/community/delete/${postId}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                    withCredentials: true,
-                }
-            );
+  const deletePost = async (postId) => {
+    const token = localStorage.getItem("token");
 
-            if (response.status === 200) {
-                console.log("Post uploaded successfully");
-                // alert("게시물 업로드 성공");
-                // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
-                window.location.reload();
-
-            } else {
-                console.error("Error uploading post");
-            }
-        } catch (error) {
-            if (error.response) {
-                console.error("Error response from server:", error.response);
-            } else if (error.request) {
-                console.error("No response received:", error.request);
-            } else {
-                console.error("Error in setting up request:", error.message);
-            }
-            console.error("Error uploading post:", error);
-            alert(`Error uploading post: ${error.message}`);
-            localStorage.removeItem("token");
-            navigate("/", { replace: true });
+    try {
+      const response = await axios.delete(
+        `https://likelion.info/post/community/delete/${postId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         }
+      );
+
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        // alert("게시물 업로드 성공");
+        // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        window.location.reload();
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
     }
+  };
 
-    const BoardToggle = ({postId}) => {
-        console.log("test -> ", postId)
-        return (
-            <div className="button-container">
-                <button className="board-edit-button" 
-                    onClick={() => setModalOpen(true)}>수정
-                </button>
-                <button className="board-delete-button" onClick={()=> deletePost(postId)}>삭제</button>
-                {modalOpen && (
-                <BoardUpdate
-                    onClose={() => setModalOpen(false)}
-                    //onSubmit={}
-                    id={postId}
-                />
-            )}
-            </div>
-        );
-    };
+  //   const BoardToggle = ({ postId }) => {
+  //     console.log("test -> ", postId);
+  //     return (
+  //       <div className="button-container">
+  //         <button
+  //           className="board-edit-button"
+  //           onClick={() => setModalOpen(true)}
+  //         >
+  //           수정
+  //         </button>
+  //         <button
+  //           className="board-delete-button"
+  //           onClick={() => deletePost(postId)}
+  //         >
+  //           삭제
+  //         </button>
+  //         {modalOpen && (
+  //           <BoardUpdate
+  //             onClose={() => setModalOpen(false)}
+  //             //onSubmit={}
+  //             id={postId}
+  //           />
+  //         )}
+  //       </div>
+  //     );
+  //   };
 
-    // const handleOptionsToggle = () => {
-    //     console.log("!!")
-    //     setShowBoardToggle(!showBoardToggle);
-    // };
+  // const handleOptionsToggle = () => {
+  //     console.log("!!")
+  //     setShowBoardToggle(!showBoardToggle);
+  // };
 
-    const handleOptionsToggle = () => {
-        console.log("!!")
-        setShowBoardToggle(prevState => !prevState);
-    };
+  const handleOptionsToggle = () => {
+    console.log("!!");
+    setShowBoardToggle((prevState) => !prevState);
+  };
 
-    const updatePost = async (postId) => {
-        const token = localStorage.getItem("token");
+  const updatePost = async (postId) => {
+    const token = localStorage.getItem("token");
 
-        try {
-            const response = await axios.delete(
-                `https://likelion.info/post/community/delete/${postId}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                    withCredentials: true,
-                }
-            );
-
-            if (response.status === 200) {
-                console.log("Post uploaded successfully");
-                // alert("게시물 업로드 성공");
-                // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
-                window.location.reload();
-
-            } else {
-                console.error("Error uploading post");
-            }
-        } catch (error) {
-            if (error.response) {
-                console.error("Error response from server:", error.response);
-            } else if (error.request) {
-                console.error("No response received:", error.request);
-            } else {
-                console.error("Error in setting up request:", error.message);
-            }
-            console.error("Error uploading post:", error);
-            alert(`Error uploading post: ${error.message}`);
-            localStorage.removeItem("token");
-            navigate("/", { replace: true });
+    try {
+      const response = await axios.delete(
+        `https://likelion.info/post/community/delete/${postId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         }
-    }
-    
+      );
 
-return (
-    <div className="board-post">
+      if (response.status === 200) {
+        console.log("Post uploaded successfully");
+        // alert("게시물 업로드 성공");
+        // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        window.location.reload();
+      } else {
+        console.error("Error uploading post");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error in setting up request:", error.message);
+      }
+      console.error("Error uploading post:", error);
+      alert(`Error uploading post: ${error.message}`);
+      localStorage.removeItem("token");
+      navigate("/", { replace: true });
+    }
+  };
+
+  return (
+    <>
+      <ModalContainer
+        isOpen={detailModalOpen}
+        closeModal={handleSetDetailModalOpen}
+        style={detailModalStyle}
+        mode={1}
+        contents={""}
+        id={post.id}
+      />
+      <div
+        className="board-post"
+        onClick={() => {
+          handleSetDetailModalOpen();
+        }}
+      >
         <div className="post-header">
-            <div className='post-profile'>
-                <img src={post.writer.profile} alt="avatar" className="avatar" onClick={() => {handleClick(post.writer.id)}} />
-                <div className="user-info">
-                    <div className="username" onClick={() => {handleClick(post.writer.id)}}>{post.writer.name}</div>
+          <div className="post-profile">
+            <img
+              src={post.writer.profile}
+              alt="avatar"
+              className="avatar"
+              onClick={() => {
+                handleClick(post.writer.id);
+              }}
+            />
+            <div className="user-info">
+              <div
+                className="username"
+                onClick={() => {
+                  handleClick(post.writer.id);
+                }}
+              >
+                {post.writer.name}
+              </div>
+            </div>
+          </div>
+          <div className="post-detail">
+            {
+              post.writer.id === localStorage.getItem("id") && (
+                <div>
+                  <img src={More} onClick={handleOptionsToggle} alt="" />
+                  {/* {{ showBoardToggle } ? <BoardToggle /> : <></>} */}
+                  {/* {showBoardToggle && <BoardToggle postId={post.id} />} */}
+                  {/* {showBoardDetail} */}
                 </div>
-            </div>
-            <div className='post-detail'>
-                {post.writer.id === localStorage.getItem("id") &&
-                    <div>
-                        <img
-                            src={More}
-                            onClick={handleOptionsToggle}
-                        />
-                        {/* {{showBoardToggle} ? <BoardToggle /> : <></>} */}
-                        {showBoardToggle && <BoardToggle postId={post.id} />}
-                        {/* {showBoardDetail} */}
-                    </div>
-                    // :
-                    // <></>
-                }
-            </div>
+              )
+              // :
+              // <></>
+            }
+          </div>
         </div>
-        <div className="post-content" onClick={() => setdetailModalOpen(true)}>
-            {detailmodalOpen && (
-                <BoardDetail
-                    onClose={() => setdetailModalOpen(false)}
-                    id={post.id}
-                />
-            )}
-            <h2 className="post-title">{post.title}</h2>
-            {/* <p className="post-body" onClick={handlePostClick}>{post.contents}</p> 기존의 방법*/} 
-            <div className="post-body">{post.contents}</div>
+        <div className="post-content" onClick={() => setDetailModalOpen(true)}>
+          {/* {detailmodalOpen && (
+          <ModalContainer
+            onClose={() => setDetailModalOpen(false)}
+            id={post.id}
+          />
+        )} */}
+          <h2 className="post-title">{post.title}</h2>
+          {/* <p className="post-body" onClick={handlePostClick}>{post.contents}</p> 기존의 방법*/}
+          <div className="post-body">{post.contents}</div>
         </div>
         <div className="post-footer">
-            <button className="like-button" onClick={(e) => { e.stopPropagation(); handleLike(post.id); }}>
-                <FontAwesomeIcon icon={liked ? solidHeart : solidHeart} className={`heart-icon ${liked ? 'liked' : 'unliked'}`} />
-                <span className='like-count'>{likeCount}</span>
-            </button>
+          <button
+            className="like-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleLike(post.id);
+            }}
+          >
+            <FontAwesomeIcon
+              icon={liked ? solidHeart : solidHeart}
+              className={`heart-icon ${liked ? "liked" : "unliked"}`}
+            />
+            <span className="like-count">{likeCount}</span>
+          </button>
 
-            <button className="message-button">
-                <img
-                    className='message-btn-img'
-                    src={SppechBubble}
-                />
-                <span className='message-count'>{post.commentCount}</span>
-            </button>
+          <button className="message-button">
+            <img className="message-btn-img" src={SppechBubble} />
+            <span className="message-count">{post.commentCount}</span>
+          </button>
         </div>
 
         {showNotification && (
-            <Notification
-                message="정말로 삭제하시겠습니까?"
-                onConfirm={confirmDelete}
-                onCancel={cancelDelete}
-            />
+          <Notification
+            message="정말로 삭제하시겠습니까?"
+            onConfirm={confirmDelete}
+            onCancel={cancelDelete}
+          />
         )}
-    </div>
-);
+      </div>
+    </>
+  );
 };
 
 export default BoardContents;
