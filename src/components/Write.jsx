@@ -93,6 +93,12 @@ export default function Write({ user, mode, id, updatedId }) {
   const [onBtn, setOnBtn] = useState(false);
   const [tempBtn, setTempBtn] = useState(false);
 
+  const [btnColor, setBtnColor] = useState(false);
+
+  const handleSetBtnColor = () => {
+    setBtnColor(true);
+  };
+
   const toggleHistory = () => {
     setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
   };
@@ -126,7 +132,7 @@ export default function Write({ user, mode, id, updatedId }) {
 
       if (response.status === 200) {
         console.log("Post uploaded successfully");
-        alert("게시물 업로드 성공");
+        alert("제출 성공");
         navigate("/update", { state: { id: id, updatedId: updatedId } });
       } else {
         console.error("Error uploading post");
@@ -167,8 +173,10 @@ export default function Write({ user, mode, id, updatedId }) {
 
       if (response.status === 200) {
         console.log("Post uploaded successfully");
-        alert("게시물 업로드 성공");
-        navigate("/update", { state: { id: id, updatedId: updatedId } });
+        alert("미승인 사유 작성 완료");
+        navigate("/update", {
+          state: { id: id, user: user, updatedId: updatedId },
+        });
       } else {
         console.error("Error uploading post");
       }
@@ -664,7 +672,7 @@ export default function Write({ user, mode, id, updatedId }) {
             </div>
           </div>
         </div>
-        {mode === 0 ? (
+        {mode === 0 || mode === 1 ? (
           <>
             {/* 모든 사람들이 볼 수 있는 페이지 */}
             {user !== 0 && (
@@ -688,7 +696,10 @@ export default function Write({ user, mode, id, updatedId }) {
 
                 {onBtn ? (
                   <button
-                    onClick={addPost}
+                    onClick={() => {
+                      addPost();
+                      window.location.reload();
+                    }}
                     className="write-green-btn"
                     style={{ padding: "10px 16px" }}
                   >
@@ -720,6 +731,17 @@ export default function Write({ user, mode, id, updatedId }) {
               id={updatedId}
             />
             <div className="write-btns">
+              <button
+                id="write-check-btn"
+                style={btnColor ? { opacity: "0.6" } : {}}
+                onClick={() => {
+                  handleSetBtnColor();
+                  approvalBtn();
+                  checkAvailable();
+                }}
+              >
+                글을 확인하셨나요?
+              </button>
               {tempBtn ? (
                 <button
                   className="write-white-btn"
@@ -752,22 +774,14 @@ export default function Write({ user, mode, id, updatedId }) {
                 <button
                   className="write-green-btn"
                   style={{
-                    border: "1px solid #85b285",
-                    background: "#85b285",
+                    border: "none",
+                    background: "#85b28583",
                   }}
                 >
                   승인
                 </button>
               )}
             </div>
-            <button
-              onClick={() => {
-                approvalBtn();
-                checkAvailable();
-              }}
-            >
-              확인하셨습니까?
-            </button>
           </>
         ) : (
           <></>

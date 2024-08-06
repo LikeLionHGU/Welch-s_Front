@@ -187,23 +187,28 @@
   width: 66vw;
 }
 
-
 #detail-galpi-update-setting {
   display: flex;
   /* align-items: center; */
 }
 
 #detail-galpi-update-btn {
+  width: 100px;
+  align-items: center;
+  text-align: center;
   border: 1px solid black;
-  border-radius: 50px;
+  border-radius: 15px;
   padding: 5px;
   margin-right: 10px;
 }
 
 #detail-galpi-update-btn-none {
+  width: 100px;
+  align-items: center;
+  text-align: center;
   border: 1px solid #bfbfbf;
   color: #bfbfbf;
-  border-radius: 50px;
+  border-radius: 15px;
   padding: 5px;
   margin-right: 10px;
 }
@@ -248,7 +253,7 @@
   width: 100%;
 }
 
-#comment-arrow-img{
+#comment-arrow-img {
   height: 18px;
   width: 22px;
 }
@@ -289,4 +294,13 @@
 #detail-right-above-name {
   font-size: 20px;
   font-weight: 600;
+}
+
+#write-check-btn {
+  margin-right: 10px;
+  padding: 0 20px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  background-color: #5ca54b;
 }
