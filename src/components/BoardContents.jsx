@@ -14,6 +14,7 @@ import "../styles/board/boardcontents.scss";
 import { useNavigate } from "react-router-dom";
 import ModalContainer from "./ModalContainer";
 import { setDataInElement } from "ckeditor5";
+import BoardCreate from "./BoardCreate";
 
 const BoardContents = ({ post, loggedInUser }) => {
   const [likeCount, setLikeCount] = useState(0);
@@ -43,9 +44,10 @@ const BoardContents = ({ post, loggedInUser }) => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      minWidth: "600px", // 원하는 너비
-      height: "600px", // 원하는 높이
+      minWidth: "800px", // 원하는 너비
+      height: "650px", // 원하는 높이
       zIndex: "1001",
+      borderRadius: "12px",
     },
   };
 
@@ -192,9 +194,9 @@ const BoardContents = ({ post, loggedInUser }) => {
   //     setShowBoardToggle(!showBoardToggle);
   // };
 
-  const handleOptionsToggle = () => {
-    console.log("!!");
-    setShowBoardToggle((prevState) => !prevState);
+  const handleOptionsToggle = (e) => {
+    setShowBoardToggle(!showBoardToggle);
+    e.stopPropagation();
   };
 
   const updatePost = async (postId) => {
@@ -273,11 +275,46 @@ const BoardContents = ({ post, loggedInUser }) => {
           <div className="post-detail">
             {
               post.writer.id === localStorage.getItem("id") && (
-                <div>
-                  <img src={More} onClick={handleOptionsToggle} alt="" />
-                  {/* {{ showBoardToggle } ? <BoardToggle /> : <></>} */}
-                  {/* {showBoardToggle && <BoardToggle postId={post.id} />} */}
-                  {/* {showBoardDetail} */}
+                <div id="board-contents-zumzumzum-btns">
+                  <img
+                    id="board-contents-zumzumzum"
+                    src={More}
+                    onClick={handleOptionsToggle}
+                    alt=""
+                  />
+                  {showBoardToggle ? (
+                    <div className="board-contents-btns">
+                      <div
+                        id="board-contents-update"
+                        className="board-contents-update-delete"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setModalOpen(true);
+                        }}
+                      >
+                        수정
+                      </div>
+                      {modalOpen && (
+                        <BoardCreate
+                          onClose={() => setModalOpen(false)}
+                          //   onSubmit={handleCreatePost}
+                          //   id={id}
+                        />
+                      )}
+                      <div
+                        className="board-contents-update-delete"
+                        id="board-contents-delete"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deletePost(post.id);
+                        }}
+                      >
+                        삭제
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               )
               // :

@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BoardDetail from "../pages/BoardDetail";
+import Delete from "../imgs/delete.png";
 
 // mode === 0: approval, mode === 1: board detail
 export default function ModalContainer({
@@ -99,7 +100,16 @@ export default function ModalContainer({
           </div>
         </div>
       ) : (
-        <BoardDetail id={id} />
+        <div>
+          <img
+            src={Delete}
+            className="create-close-button"
+            alt="close"
+            onClick={closeModal}
+            style={{ zIndex: "1002", marginRight: "5px" }}
+          />
+          <BoardDetail id={id} />
+        </div>
       )}
     </Modal>
   );

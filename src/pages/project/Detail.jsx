@@ -28,6 +28,7 @@ export default function Detail() {
   
   const navigate = useNavigate();
   const [project, setProject] = useState(false);
+  console.log(project);
   const [userList, setUserList] = useState([]);
   const [commentList, setCommentList] = useState([]);
   const [bookmarkList, setBookmarkList] = useState([]);
@@ -37,6 +38,10 @@ export default function Detail() {
   const toSetting = (id) => {
     console.log(id);
     navigate("/galpi/update", { state: { id } });
+  }
+
+  const toPost = (id) => { // 갈피 아이디
+    navigate("/post", { state: { id } });
   }
 
   const handleCommentClick = (id) => {
@@ -74,7 +79,13 @@ export default function Detail() {
           <div key={index} id="detail-galpi">
             <div className="detail-galpi-title">
               {index + 1}갈피: {item.name}
-            </div> 
+            </div>
+            <div
+                onClick={() => toPost(item.id)}
+                id="detail-galpi-update-btn"
+              >
+                읽기
+            </div>
             {/* 공유 가능 여부로 먼저 한 번 정렬 */}
             {item.isShared ? (item.isCurrentEdit ? <div
                 id="detail-galpi-update-btn-none"
@@ -96,18 +107,7 @@ export default function Detail() {
                 수정하기
               </div>)}
             <div id="detail-galpi-update-setting">
-              {/* <div
-                onClick={() => toWrite(item.id)}
-                id="detail-galpi-update-btn"
-              >
-                수정하기
-              </div>
-              <div
-                onClick={() => toWrite(item.id)}
-                id="detail-galpi-update-btn-none"
-              >
-                수정하기
-              </div> */}
+              
               {item.canEdit ? <img src={SettingImg} alt="setting" style={{ height: "18px" }} onClick={()=>{toSetting(item.id)}} /> : <></>}
               
             </div>
@@ -155,14 +155,28 @@ export default function Detail() {
 
   const Comment = ({ comment }) => (
     <div id="detail-comments-container">
+      <div>
+        <img
+          onClick={() => {
+            handleCommentClick(comment.user.id);
+          }} //여기 이미지 크기 줄여야 함
+          src={comment.user.profile}
+          alt="like"
+          className="setting-people-img"
+        />
+        {/* 이름이랑 같은 줄에 들어가야 함 */}
       <div
         className="detail-comments-name"
         onClick={() => handleCommentClick(comment.user.id)}
-      >
+      > 
+
+      </div>
         {comment.user.name}
       </div>
       <div className="detail-comments-date">{comment.createdDate}</div>
       <div className="detail-comments-contents">{comment.contents}</div>
+      <div>
+
       <img
         onClick={() => {
           handleSetCommentsLike(comment.id);
@@ -170,6 +184,8 @@ export default function Detail() {
         src={comment.isLiked ? RedLikeImg : GrayLikeImg}
         alt="like"
       />
+      <div>{comment.commentLikeCount}명이 좋아합니다.</div>
+      </div>
       {comment.user.id === localStorage.getItem("id") ? (
         <div onClick={() => deleteComment(comment.id)}>삭제하기</div>
       ) : (
@@ -437,21 +453,26 @@ export default function Detail() {
           </div>
           <div className="detail-above-right">
             <div className="detail-above-right-bottom">
-              <div
+              {project.isParticipate ? <div
+                className="detail-mywrite"
+                onClick={() => handleGoCommunity(id)}
+              >
+                게시판 접속하기
+              </div> : (project.isApplication) ? <div
                 className="detail-mywrite"
                 onClick={() => {
                   toParticipate();
                 }}
               >
                 나도 글쓰기
-              </div>
-              <div
-                className="detail-goCommunity"
-                onClick={() => handleGoCommunity(id)}
+              </div> : <div
+                className="detail-mywrite"
+                onClick={() => {
+                }}
               >
-                게시판 접속하기
-              </div>
-              <div className="detail-readbegin">처음부터 읽기</div>
+                신청 완료
+              </div>}
+              {/* <div className="detail-readbegin">처음부터 읽기</div> */}
               <div className="detail-like-container">
                 <img
                   src={like ? LikeImg : WhiteLikeImg}
@@ -462,7 +483,7 @@ export default function Detail() {
                   v
                   style={{ width: "22px", height: "20px" }}
                 />
-                <div>{likeCount}</div>
+                <div>{project.likeCount}</div>
               </div>
             </div>
             <div id="detail-right-above">
