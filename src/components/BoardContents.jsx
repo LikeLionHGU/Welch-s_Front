@@ -284,7 +284,7 @@ const BoardContents = ({ post, loggedInUser }) => {
                   />
                   {showBoardToggle ? (
                     <div className="board-contents-btns">
-                      <div
+                      {/* <div
                         id="board-contents-update"
                         className="board-contents-update-delete"
                         onClick={(e) => {
@@ -299,8 +299,11 @@ const BoardContents = ({ post, loggedInUser }) => {
                           onClose={() => setModalOpen(false)}
                           //   onSubmit={handleCreatePost}
                           //   id={id}
+                          postId={post.id}
+                          isUpdate={true}
+
                         />
-                      )}
+                      )} */}
                       <div
                         className="board-contents-update-delete"
                         id="board-contents-delete"
