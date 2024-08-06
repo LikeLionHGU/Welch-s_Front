@@ -148,19 +148,20 @@ export default function Create() {
       <form onSubmit={handleSubmit}>
         <div id="pageTitle">책 발간</div>
         <div className="create-menu">
-          <div>책 제목 *</div>
+          <div className="create-sub-title">책 제목 <p className="essential">*</p></div>
           <input
+            className="create-menu-title"
             placeholder="책 제목을 입력해 주세요."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="create-menu">
-          <div>책 표지 이미지</div>
+          <div className="create-sub-title">책 표지 이미지</div>
           <ImgUpLoad onImageUpload={handleImageUpload} />
         </div>
         <div className="create-menu">
-          <div>책 장르 *</div>
+          <div className="create-sub-title">책 장르 <p className="essential">*</p></div>
           <div className="create-categoryContainer">
             {Object.keys(categories).map((category) => (
               <div key={category} className="create-category">
@@ -168,6 +169,7 @@ export default function Create() {
                 {categories[category].map((item) => (
                   <div key={item} className="create-radio-item">
                     <input
+                      className="create-radio"
                       type="radio"
                       id={item}
                       name="genre"
@@ -184,26 +186,30 @@ export default function Create() {
           </div>
         </div>
         <div className="create-menu">
-          <div>책 한 줄 소개 *</div>
+          <div className="create-sub-title">책 한 줄 소개 <p className="essential">*</p></div>
           <input
+            className="create-book-intro-input"
             placeholder="책 한 줄 소개를 입력해 주세요."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
         <div className="create-menu">
-          <div>책 정보 *</div>
-          <input
+          <div className="create-sub-title">책 정보 <p className="essential">*</p></div>
+          <textarea
+            className="create-book-infor-input"
             placeholder="책 정보를 입력해주세요."
             value={information}
             onChange={(e) => setInformation(e.target.value)}
+            rows={1}
           />
         </div>
         <div className="create-menu">
-          <div>책 공개 여부</div>
-          <div>
+          <div className="create-sub-title">책 공개 여부</div>
+          <div className="create-visi-radio">
             <div className="create-radio-item">
               <input
+                className="create-radio"
                 type="radio"
                 id="public"
                 name="visibility"
@@ -215,6 +221,7 @@ export default function Create() {
             </div>
             <div className="create-radio-item">
               <input
+                className="create-radio"
                 type="radio"
                 id="private"
                 name="visibility"
@@ -227,14 +234,16 @@ export default function Create() {
           </div>
         </div>
         <div className="create-menu">
-          <div>작가 정원 *</div>
+          <div className="create-sub-title">작가 정원 <p className="essential">*</p></div>
           <div className="create-peopleNum">
-            <div onClick={() => handlePeople(-1)}>-</div>
-            <div>{people}</div>
-            <div onClick={() => handlePeople(+1)}>+</div>
+            <div className="create-minus" onClick={() => handlePeople(-1)}>-</div>
+            <div className="create-num">{people}</div>
+            <div className="create-plus" onClick={() => handlePeople(+1)}>+</div>
           </div>
         </div>
-        <button type="submit">발간하기</button>
+        <div className="create-btn-container">
+          <button className="create-btn" type="submit">발간하기</button>
+        </div>
       </form>
     </div>
   );

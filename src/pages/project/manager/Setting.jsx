@@ -401,8 +401,8 @@ export default function Setting() {
 
         <div className="setting-menu">
           <div className="setting-title">책 공개 여부</div>
-          <div className="visibility-radio">
-            <div>
+          
+            <div className="visibility-radio">
               <div className="visibility-radio-item">
                 <input
                   className="radio"
@@ -428,7 +428,6 @@ export default function Setting() {
                 <label htmlFor="private">비공개</label>
               </div>
             </div>
-          </div>
         </div>
 
         <div className="setting-menu">
