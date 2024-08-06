@@ -623,7 +623,7 @@ export default function Write({ user, mode, id, updatedId }) {
                   onReady={(editor) => {
                     editorRef.current = editor;
                     const toolbarElement = editor.ui.view.toolbar.element;
-                    if (user === 2 && mode === 1) {
+                    if (mode === 1) {
                       editor.enableReadOnlyMode("feature-id");
                     }
 
