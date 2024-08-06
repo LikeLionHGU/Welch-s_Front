@@ -80,16 +80,31 @@ export default function Write({ user, mode, id, updatedId }) {
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [history, setHistory] = useRecoilState(historyState);
-  var data = ""; // contents에 해당하는 부분
+  // var data = ""; // contents에 해당하는 부분
+  const [data, setData] = useState("");
 
-  const [post, setPost] = useState(""); // 현재 선택한 버전의 post
-  const [updatedPost, setUpdatedPost] = useState(""); // 검토 신청이 들어온 post
+  const [post, setPost] = useState(null); // 현재 선택한 버전의 post
+  const [updatedPost, setUpdatedPost] = useState(null); // 검토 신청이 들어온 post
+  const [temporaryPost, setTemporaryPost] = useState(null);
   // 처음 입력되는 부분
 
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
+  const [onBtn, setOnBtn] = useState(false);
+  const [tempBtn, setTempBtn] = useState(false);
+
   const toggleHistory = () => {
     setHistory(!history); // 상태를 토글하여 열림/닫힘 상태 변경
+  };
+
+  const approvalBtn = () => {
+    setTempBtn(true);
+  };
+
+  const checkAvailable = () => {
+    if (!onBtn) {
+      setData(updatedPost);
+    }
   };
 
   const addTemporaryPost = async () => {
@@ -133,12 +148,11 @@ export default function Write({ user, mode, id, updatedId }) {
 
   const approvePost = async (isAllowed, rejectedReason) => {
     const token = localStorage.getItem("token");
-    console.log(updatedId, " 123123123 ")
     const value = {
       contents: data,
       id: updatedId,
       rejectedReason: rejectedReason,
-      isAllowed: isAllowed
+      isAllowed: isAllowed,
     };
 
     try {
@@ -173,15 +187,13 @@ export default function Write({ user, mode, id, updatedId }) {
     }
   };
 
-  
-
   const addPost = async () => {
     const token = localStorage.getItem("token");
     const value = {
       contents: data,
       bookMarkId: id,
     };
-
+    console.log("value", value);
     try {
       const response = await axios.post(
         `https://likelion.info/post/upload`,
@@ -222,7 +234,7 @@ export default function Write({ user, mode, id, updatedId }) {
       return;
     }
 
-    const fetchDefaultPost = () => {
+    const fetchDefaultPost = async () => {
       // 갈피의 가장 최신 승인 post 가져오기
       // 원본
       axios
@@ -232,8 +244,9 @@ export default function Write({ user, mode, id, updatedId }) {
         })
         .then((response1) => {
           setPost(response1.data.contents); // 가장 최신 승인 post를 post 안에 저장
-          console.log(response1.data);
+          console.log("1:", response1.data);
           // setInitialData(response1.data.contents);
+          setData(response1.data.contents);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -255,6 +268,7 @@ export default function Write({ user, mode, id, updatedId }) {
           })
           .then((response2) => {
             setUpdatedPost(response2.data.contents); // 검토 요청이 들어온 post를 updatedPost 안에 저장
+            console.log("2:", response2.data.contents);
             // setInitialData(response2.data.contents);
           })
           .catch((error) => {
@@ -267,21 +281,24 @@ export default function Write({ user, mode, id, updatedId }) {
       if (mode === 2 && user === 2) {
         fetchUpdatedPost();
       }
-      if (mode === 1 && user === 2) {
-        fetchDefaultPost();
-      }
+      // if (mode === 1 && user === 2) {
+      //   fetchDefaultPost();
+      //   console.log("!!!");
+      // }
     } else {
       const fetchTemporaryPost = () => {
-        // 갈피의 가장 최신 승인 post 가져오기
+        // 임시 저장
         axios
           .get(`https://likelion.info/post/temp/get/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
           })
-          .then((response1) => {
-            // console.log(response1.data);
-            setUpdatedPost(response1.data); // 가장 최신 승인 post를 post 안에 저장
-            // setInitialData(response1.data.contents);
+          .then((response3) => {
+            console.log("3:", response3.data.contents);
+            setTemporaryPost(response3.data.contents); // 가장 최신 승인 post를 post 안에 저장
+            // setInitialData(response3.data.contents);
+            setData(response3.data.contents);
+            console.log("data:", data);
           })
           .catch((error) => {
             console.error("Error fetching posts:", error);
@@ -290,47 +307,55 @@ export default function Write({ user, mode, id, updatedId }) {
           });
       };
 
-      fetchTemporaryPost();
-      fetchDefaultPost();
+      if (mode === 0) {
+        fetchTemporaryPost();
+      }
     }
+    fetchDefaultPost();
   }, []);
+  console.log("post", post);
+  console.log("update", updatedPost);
+  console.log("temp", temporaryPost);
 
   useEffect(() => {
-    // update
-    if (mode === 0 && post !== "") {
+    if (mode === 0 && post !== null) {
       setLoading(false);
     } else if (
-      // approval
       (mode === 1 || mode === 2) &&
-      (post !== "" || updatedPost !== "")
+      (post !== null || updatedPost !== null)
     ) {
       setLoading(false);
     }
-  }, [post, updatedPost]);
+  }, [mode, post, updatedPost]); // Only include dependencies that affect the logic
+
+  // useEffect(() => {
+  //   //update
+  //   if (mode === 0) {
+  //     console.log("post", post);
+  //     if (post !== null || temporaryPost !== null) {
+  //       setLoading(false);
+  //     }
+  //   } else {
+  //   }
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1000);
+  //   console.log("post", post);
+  //   console.log("update", updatedPost);
+  //   console.log("temp", temporaryPost);
+  // }, []);
 
   useEffect(() => {
     setIsLayoutReady(true);
     return () => setIsLayoutReady(false);
   }, []);
 
-  // const handleSetEditor = () => {
-  //   if (editorRef.current) {
-  //     const data = editorRef.current.getData();
-  //     console.log(data);
-  //   }
-  // };
-
   const handleSetOpenModal = () => {
     setOpenModal(!openModal);
     console.log(openModal);
   };
-
-  // approval에서 양쪽의 글 로딩
   if (loading) {
-    if (mode === 1) {
-      return <div>원본이 없습니다!</div>;
-    }
-    return <div>로딩중...</div>;
+    return <>loading...</>;
   }
 
   const modalStyle = {
@@ -372,7 +397,7 @@ export default function Write({ user, mode, id, updatedId }) {
       console.log(data);
       approvePost(isAllowed, rejectedReason);
     }
-  }
+  };
 
   const editorConfig = {
     toolbar: {
@@ -518,7 +543,14 @@ export default function Write({ user, mode, id, updatedId }) {
     initialData:
       // (mode === 2 && user === 2 ? updatedPost : post)?.contents ||
       // "둘 다 비었다.",
-      mode === 2 && user === 2 ? updatedPost : post,
+      // loading
+      //   ? "Loading..."
+      //   :
+      mode === 2 && user === 2
+        ? updatedPost
+        : temporaryPost
+        ? temporaryPost
+        : post,
     language: "ko",
     link: {
       addTargetToExternalLinks: true,
@@ -600,6 +632,15 @@ export default function Write({ user, mode, id, updatedId }) {
                     // if (menuBarElement) {
                     //   editorMenuBarRef.current.appendChild(menuBarElement);
                     // }
+                    // editor.setData(
+                    //   loading
+                    //     ? "Loading..."
+                    //     : mode === 2 && user === 2
+                    //     ? updatedPost
+                    //     : temporaryPost
+                    //     ? temporaryPost
+                    //     : post
+                    // );
                   }}
                   onAfterDestroy={() => {
                     if (editorToolbarRef.current) {
@@ -610,7 +651,9 @@ export default function Write({ user, mode, id, updatedId }) {
                     }
                   }}
                   onChange={(event, editor) => {
-                    data = editor.getData();
+                    setData(editor.getData());
+                    setOnBtn(true);
+                    setTempBtn(true);
                   }}
                   editor={DecoupledEditor}
                   config={editorConfig}
@@ -625,21 +668,42 @@ export default function Write({ user, mode, id, updatedId }) {
             {/* 모든 사람들이 볼 수 있는 페이지 */}
             {user !== 0 && (
               <div className="write-btns">
-                <button
-                  onClick={handleSetEditor}
-                  className="write-white-btn"
-                  style={{ padding: "10px 15px" }}
-                >
-                  임시 저장
-                </button>
+                {onBtn ? (
+                  <button
+                    onClick={handleSetEditor}
+                    className="write-white-btn"
+                    style={{ padding: "10px 15px" }}
+                  >
+                    임시 저장
+                  </button>
+                ) : (
+                  <button
+                    className="write-white-btn"
+                    style={{ border: "1px solid #ced4da", color: "#ced4da" }}
+                  >
+                    임시 저장
+                  </button>
+                )}
 
-                <button
-                  onClick={addPost}
-                  className="write-green-btn"
-                  style={{ padding: "10px 16px" }}
-                >
-                  발행 검사
-                </button>
+                {onBtn ? (
+                  <button
+                    onClick={addPost}
+                    className="write-green-btn"
+                    style={{ padding: "10px 16px" }}
+                  >
+                    발행 검사
+                  </button>
+                ) : (
+                  <button
+                    className="write-green-btn"
+                    style={{
+                      border: "1px solid #85b285",
+                      background: "#85b285",
+                    }}
+                  >
+                    발행 검사
+                  </button>
+                )}
               </div>
             )}
           </>
@@ -655,24 +719,54 @@ export default function Write({ user, mode, id, updatedId }) {
               id={updatedId}
             />
             <div className="write-btns">
-              <button
-                className="write-white-btn"
-                onClick={() => {
-                  handleSetOpenModal();
-                }}
-              >
-                미승인
-              </button>
-              <button
-                className="write-green-btn"
-                type="submit"
-                onClick={() => {
-                  handleApprove(true, "");
-                }}
-              >
-                승인
-              </button>
+              {tempBtn ? (
+                <button
+                  className="write-white-btn"
+                  onClick={() => {
+                    handleSetOpenModal();
+                  }}
+                >
+                  미승인
+                </button>
+              ) : (
+                <button
+                  className="write-white-btn"
+                  style={{ border: "1px solid #ced4da", color: "#ced4da" }}
+                >
+                  미승인
+                </button>
+              )}
+
+              {tempBtn ? (
+                <button
+                  className="write-green-btn"
+                  type="submit"
+                  onClick={() => {
+                    handleApprove(true, "");
+                  }}
+                >
+                  승인
+                </button>
+              ) : (
+                <button
+                  className="write-green-btn"
+                  style={{
+                    border: "1px solid #85b285",
+                    background: "#85b285",
+                  }}
+                >
+                  승인
+                </button>
+              )}
             </div>
+            <button
+              onClick={() => {
+                approvalBtn();
+                checkAvailable();
+              }}
+            >
+              확인하셨습니까?
+            </button>
           </>
         ) : (
           <></>
