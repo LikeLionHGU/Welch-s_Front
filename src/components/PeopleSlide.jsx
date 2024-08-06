@@ -15,102 +15,102 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 
-const PeopleSlideContent = ({ mode, data, selected}) => {
-    console.log(mode);
-    console.log(data);
+// const PeopleSlideContent = ({ mode, data, selected}) => {
+//     console.log(mode);
+//     console.log(data);
 
-    const renderContent = () => {
-        switch (mode) {
-            case 0: //작가 네임, 프로필만 
-                return (
-                    <div className='slide-setting-people-container'>
-                        <div className='setting-people-profile'>
-                            <div>
-                                <img
-                                    className="setting-people-img"
-                                    src={data.imageAddress}
-                                />
-                            </div>
-                            <div className="setting-people-name">{data.name}</div>
-                        </div>
-                    </div>
-                );
-            case 1: //내보내기, 권한 위임
-                return (
-                    <div className='slide-setting-people-container'>
-                        <div className='setting-people-profile'>
-                            <div>
-                                <img
-                                    className="setting-people-img"
-                                    src={data.imageAddress}
-                                />
-                            </div>
-                            <div className="setting-people-name">{data.name}</div>
-                        </div>
-                        <div className='slide-setting-manange'>
-                            <button
-                                onClick={Notification}
-                                className="exporting-button"
-                            >
-                                내보내기
-                            </button>
-                            <button
-                                className="permissions-button"
-                            >
-                                권한 위임
-                            </button>
-                        </div>
-                    </div>
-                );
-            case 2: //권한 위임하기 
-                return (
-                    <div className='slide-setting-people-container'>
-                        <div className='setting-people-profile-2'>
-                            <div>
-                                <img
-                                    className="setting-people-img"
-                                    src={data.imageAddress}
-                                />
-                            </div>
-                            <div className="setting-people-name">{data.name}</div>
-                        </div>
-                        <div className='slide-setting-manange'>
-                            <button
-                                className={`permissions-button ${selected ? "active" : ""}`}
-                            >
-                                권한 위임
-                            </button>
-                        </div>
-                    </div>
-                );
-            case 3: //권한 취소하기
-                return (
-                    <div className='slide-setting-people-container'>
-                        <div className='setting-people-profile-2'>
-                            <div>
-                                <img
-                                    className="setting-people-img"
-                                    src={data.imageAddress}
-                                />
-                            </div>
-                            <div className="setting-people-name">{data.name}</div>
-                        </div>
-                        <div className='slide-setting-manange'>
-                            <button
-                                className="permissions-delete-button"
-                            >
-                                권한 위임 취소
-                            </button>
-                        </div>
-                    </div>
-                );
-            default:
-                return null;
-        }
-    }
+//     const renderContent = () => {
+//         switch (mode) {
+//             case 0: //작가 네임, 프로필만 
+//                 return (
+//                     <div className='slide-setting-people-container'>
+//                         <div className='setting-people-profile'>
+//                             <div>
+//                                 <img
+//                                     className="setting-people-img"
+//                                     src={data.imageAddress}
+//                                 />
+//                             </div>
+//                             <div className="setting-people-name">{data.name}</div>
+//                         </div>
+//                     </div>
+//                 );
+//             case 1: //내보내기, 권한 위임
+//                 return (
+//                     <div className='slide-setting-people-container'>
+//                         <div className='setting-people-profile'>
+//                             <div>
+//                                 <img
+//                                     className="setting-people-img"
+//                                     src={data.imageAddress}
+//                                 />
+//                             </div>
+//                             <div className="setting-people-name">{data.name}</div>
+//                         </div>
+//                         <div className='slide-setting-manange'>
+//                             <button
+//                                 onClick={Notification}
+//                                 className="exporting-button"
+//                             >
+//                                 내보내기
+//                             </button>
+//                             <button
+//                                 className="permissions-button"
+//                             >
+//                                 권한 위임
+//                             </button>
+//                         </div>
+//                     </div>
+//                 );
+//             case 2: //권한 위임하기 
+//                 return (
+//                     <div className='slide-setting-people-container'>
+//                         <div className='setting-people-profile-2'>
+//                             <div>
+//                                 <img
+//                                     className="setting-people-img"
+//                                     src={data.imageAddress}
+//                                 />
+//                             </div>
+//                             <div className="setting-people-name">{data.name}</div>
+//                         </div>
+//                         <div className='slide-setting-manange'>
+//                             <button
+//                                 className={`permissions-button ${selected ? "active" : ""}`}
+//                             >
+//                                 권한 위임
+//                             </button>
+//                         </div>
+//                     </div>
+//                 );
+//             case 3: //권한 취소하기
+//                 return (
+//                     <div className='slide-setting-people-container'>
+//                         <div className='setting-people-profile-2'>
+//                             <div>
+//                                 <img
+//                                     className="setting-people-img"
+//                                     src={data.imageAddress}
+//                                 />
+//                             </div>
+//                             <div className="setting-people-name">{data.name}</div>
+//                         </div>
+//                         <div className='slide-setting-manange'>
+//                             <button
+//                                 className="permissions-delete-button"
+//                             >
+//                                 권한 위임 취소
+//                             </button>
+//                         </div>
+//                     </div>
+//                 );
+//             default:
+//                 return null;
+//         }
+//     }
 
-    return renderContent();
-}
+//     return renderContent();
+// }
 
 
 
@@ -301,10 +301,14 @@ export default function PeopleSlide({ mode, data, projectId }) {
                 </div>
                 {mode === 1 ? (
                     <div className='slide-setting-manange'>
-                        <button onClick={() => toDeleteProjectUser(data.id)}>
+                        <button onClick={() => toDeleteProjectUser(data.id)}
+                          className="slide-setting-btn"
+                          >
                             내보내기
                         </button>
-                        <button onClick={() => toUpdate(data.id)}>
+                        <button onClick={() => toUpdate(data.id)}
+                          className="slide-setting-btn"
+                          >
                             권한 위임
                         </button>
                     </div>
@@ -312,10 +316,14 @@ export default function PeopleSlide({ mode, data, projectId }) {
                 ) : mode === 0 ? (
                     <></>
                 ) : (<div className='slide-setting-manange'>
-                    <button onClick={() => toDelete(data.id)}>
+                    <button onClick={() => toDelete(data.id)}
+                      className="slide-setting-btn"
+                      >
                         거절
                     </button>
-                    <button onClick={() => toApprove(data.id)}>
+                    <button onClick={() => toApprove(data.id)}
+                      className="slide-setting-btn"
+                      >
                         수락
                     </button>
                 </div>)}

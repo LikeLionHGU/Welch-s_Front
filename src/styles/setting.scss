@@ -6,6 +6,8 @@
 .setting-container{
     padding: 0 9.17vw;
     margin-top: 62px;
+
+    margin-bottom: 62px;
 }
 
 .setting-menu {
@@ -275,6 +277,49 @@ input[type='radio']:checked {
     border: 1px solid black;
     padding: 5px;
     border-radius: 50px;
+}
+
+.setting-delete-btn{
+    border: none;
+    outline: none;
+    background-color: #FFFF;
+    
+    color: #FF4343;
+    text-decoration: underline;
+    text-underline-offset : 7px;
+    text-decoration-color: #FF4343;
+
+    margin-bottom: 80px;
+
+    font-family: 'pretendard';
+    font-size: 1em;
+    font-weight: 600;
+}
+
+
+
+.setting-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.setting-btn {
+
+    padding: 20px 6.94vw;
+    border: none;
+    outline: none;
+    background-color: #5CA54B;
+    color: #FFF;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+
+    font-family: 'pretendard';
+    font-size: 1.125em;
+    font-weight: 700;
 }
 
 
