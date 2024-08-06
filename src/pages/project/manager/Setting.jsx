@@ -50,7 +50,9 @@ export default function Setting() {
   const [selectedCategories, setSelectedCategories] = useState({});
   const [visibility, setVisibility] = useState(); // isPublic
   const [people, setPeople] = useState();
+
   const [isRecruit, setIsRecruit] = useState(); // isRecruit
+  const [isFinished, setIsFinished] = useState();
 
   const [image, setImage] = useState(`${ImgNone}`);
 
@@ -147,8 +149,8 @@ export default function Setting() {
       description: description,
       isPublic: visibility === "공개",
       maximumNumber: people,
-      isFinished: false,
-      isRecruit: true,
+      isFinished: isFinished,
+      isRecruit: isRecruit,
     };
 
     console.log(value);
@@ -289,6 +291,8 @@ export default function Setting() {
           setBookmarkList(response.data.bookMarkList);
           setImage(response.imageAddress);
           setPeople(response.data.maximumNumber); // 초기값 설정
+          setIsFinished(response.data.isFinished);
+          
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
