@@ -5,6 +5,7 @@ import { useRef, useCallback } from "react";
 import ImgUpLoad from "../../../components/ImgUpLoad";
 import PeopleSlide from "../../../components/PeopleSlide";
 import ImgNone from "../../../imgs/img_none.svg";
+import GalpiPlusImg from "../../../imgs/galpiPlus.svg";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -383,17 +384,24 @@ export default function Setting() {
         <div className="setting-menu">
           <div className="setting-title">갈피 목록</div>
           <div onClick={() => toBookmark(project.id)}>갈피 추가하기</div>
-          <div>
+
+          <div className="setting-galpi-list">
             {bookmarkList.map((it, index) => (
-              <div>
-                {index + 1} 갈피: {it.name}
+              <div className="setting-galpi">
+                {index + 1}갈피: {it.name}
                 <div>
-                  <button onClick={() => deleteBookmark(it.id)}>
+                  <button
+                    onClick={() => deleteBookmark(it.id)}
+                    className="setting-galpi-remove-btn"
+                  >
                     삭제하기
                   </button>
                 </div>
               </div>
             ))}
+            <div onClick={() => toBookmark(project.id)}>
+              <img src={GalpiPlusImg} />
+            </div>
           </div>
         </div>
 
