@@ -152,12 +152,13 @@ export default function Galpi() {
           </div>
         </div>
         <div id="galpi-submit-btn-container">
-          <button type="submit" id="galpi-submit-btn-gray">
-            저장하기
-          </button>
-          <button type="submit" id="galpi-submit-btn-green">
-            저장하기
-          </button>
+          {name === "" ? (
+            <button id="galpi-submit-btn-gray">저장하기</button>
+          ) : (
+            <button type="submit" id="galpi-submit-btn-green">
+              저장하기
+            </button>
+          )}
         </div>
       </form>
     </div>
