@@ -126,7 +126,8 @@ export default function Create() {
       if (response.status === 200) {
         console.log("Post uploaded successfully");
         // alert("게시물 업로드 성공");
-        navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        //navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+        navigate("/mypage");
       } else {
         console.error("Error uploading post");
       }

@@ -215,7 +215,8 @@ const BoardContents = ({ post, loggedInUser }) => {
         console.log("Post uploaded successfully");
         // alert("게시물 업로드 성공");
         // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
-        window.location.reload();
+        navigate("/board");
+        //window.location.reload();
       } else {
         console.error("Error uploading post");
       }

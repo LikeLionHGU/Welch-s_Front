@@ -99,4 +99,29 @@
   font-family: "pretendard";
   font-size: 0.875em;
   font-weight: 500;
-} /*# sourceMappingURL=galpi.css.map */
+}
+
+#galpi-submit-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 60px;
+}
+
+#galpi-submit-btn-gray {
+  width: 200px;
+  height: 45px;
+  border-radius: 8px;
+  border: none;
+  background-color: #bfbfbf;
+  color: white;
+}
+
+#galpi-submit-btn-green {
+  width: 200px;
+  height: 45px;
+  border-radius: 8px;
+  border: none;
+  background-color: #5ca54b;
+  color: white;
+}/*# sourceMappingURL=galpi.css.map */
