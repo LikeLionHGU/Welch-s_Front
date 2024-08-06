@@ -16,15 +16,20 @@ export default function MypageEdit() {
     const [wallpaper, setWallPaper] = useState();
     const [profile, setProFile] = useState();
     const [userInfo, setUserInfo] = useState([]);
+    const [profileSrc, setProfileSrc] = useState();
+    const [backSrc, setBackSrc] = useState();
+    
 
 
     const handleWallPaperUpload = (file) => {
         setWallPaper(file);
+        setBackSrc(URL.createObjectURL(file));
     };
 
 
     const handleProFileUpload = (file) => {
-        setProFile(file);  
+        setProFile(file); 
+        setProfileSrc(URL.createObjectURL(file));
     };
 
     const handleSave = async () => {
@@ -38,8 +43,9 @@ export default function MypageEdit() {
         }
 
         const formData = new FormData();
-        formData.append("back", wallpaper);
+        
         formData.append("profile", profile);
+        formData.append("back", wallpaper);
         formData.append(
             "post",
             new Blob([JSON.stringify(value)], {
@@ -47,16 +53,20 @@ export default function MypageEdit() {
             })
         );
 
+        for (const pair of formData.entries()) {
+            console.log(`${pair[0]}, ${pair[1]}`);
+        }
+
 
 
         try {
-            const response = await axios.patch(
+            const response = await axios.post(
                 "https://likelion.info/user/update",
                 formData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "multipart/form-data",
+                        // "Content-Type": "multipart/form-data",
                     },
                 }
             );
@@ -129,13 +139,13 @@ export default function MypageEdit() {
                     <WallPaperUpLoad 
                         className="edit-wall-paper"
                         onWallPaperUpload={handleWallPaperUpload} 
-                        initialImage={wallpaper} 
+                        initialImage={backSrc || wallpaper} 
                     />
                 </div>
                 <div className="edit-overlay-content">
                         <h1 className="edit-profile-title">나의 프로필</h1>
                         <div className="edit-profile-section">
-                            <ProfileUpload onProFileUpload={handleProFileUpload} initialImage={profile} />
+                            <ProfileUpload onProFileUpload={handleProFileUpload} initialImage={profileSrc || profile} />
                         </div>
                 </div>
 

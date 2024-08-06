@@ -102,6 +102,8 @@ export default function Create() {
         })
     );
 
+    console.log(image);
+
     formData.append(
       "post",
       new Blob([JSON.stringify(value)], {
