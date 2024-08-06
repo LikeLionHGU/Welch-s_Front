@@ -1,0 +1,160 @@
+.board-detail-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.board-modal-detail-content {
+    background: #fff;
+    padding: 65px 10.48vw 60px 10.48vw;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 52vw;
+    max-height: 80vh; /* 높이를 설정하여 화면을 넘어가지 않도록 함 */
+    overflow: auto; /* 스크롤 가능하게 함 */
+    max-width: 100%;
+    position: relative;
+}
+
+.board-detail-comments-likebtn,
+.board-detail-like-container{
+    display: flex;
+    align-items: center;
+}
+
+.board-detail-like-img,
+.board-detail-comments-like-img{
+    margin-right: 6px;
+}
+
+
+.board-detail-comments-likecount,
+.board-detail-like-count{
+    font-family: 'pretendard';
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.board-detail-date{
+    font-family: 'pretendard';
+    font-size: 0.75em;
+    font-weight: 500;
+
+    color: #BFBFBF;
+
+    margin-bottom: 15px;
+}
+
+
+.board-detail-title{
+    font-family: 'pretendard';
+    font-size: 1.25em;
+    font-weight: 500;
+
+    margin-bottom: 12px;
+}
+
+
+.board-detail-content{
+    font-family: 'pretendard';
+    font-size: 0.875em;
+    font-weight: 500;
+    line-height: 180%;
+
+    margin-bottom: 80px;
+}
+
+.board-detail-img{
+    width: 15.14vw;
+    height: 328px;
+
+    object-fit: cover;
+}
+
+#board-detail-comments-container {
+    width: 100%;
+    /* background-color: #F4F4F4 */
+}
+
+.board-detail-comments-header{
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+#board-detail-write-container{
+    border: none;
+    outline: none;
+    background-color: #F4F4F4;
+}
+
+.board-detail-comments-name {
+    margin-top: 20px;
+
+    font-family: 'pretendard';
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.board-detail-comments-toggle{
+    margin-left: auto;
+}
+
+.board-detail-comments-date {
+    font-family: 'pretendard';
+    font-size: 0.8em;
+    font-weight: 500;
+
+    color: #BFBFBF;
+
+    margin-bottom: 8px;
+}
+
+.board-detail-comments-contents {
+    font-family: 'pretendard';
+    font-size: 0.9em;
+    font-weight: 500;
+
+    margin-bottom: 14px;
+}
+
+.board-detail-comments-bottom {
+    margin-top: 16px;
+    border-top: 1px solid #BFBFBF;
+}
+
+
+.board-detail-button-container{
+    margin-top: 5px;
+    display: flex;
+    z-index: 100;
+    position: absolute; /* 위치를 절대 위치로 설정 */
+    right: 0; /* More 버튼과 동일한 위치에 고정 */
+}
+
+.board-detail-delete-button{
+    border: none;
+    outline: none;
+    background-color: #FFFF;
+    border: 1.2px solid #5CA54B;
+    border-radius: 4px;
+    padding: 5px;
+
+    width: 4.16vw;
+    height: 24px;
+
+    font-family: 'pretendard';
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+
+
