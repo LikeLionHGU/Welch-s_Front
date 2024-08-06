@@ -384,15 +384,15 @@ export default function Setting() {
           <div className="setting-title">갈피 목록</div>
           <div onClick={() => toBookmark(project.id)}>갈피 추가하기</div>
           <div>
-            {bookmarkList.map((it) => (
-              <di>
-                {it.index}갈피: {it.name}
-                <di>
+            {bookmarkList.map((it, index) => (
+              <div>
+                {index + 1} 갈피: {it.name}
+                <div>
                   <button onClick={() => deleteBookmark(it.id)}>
                     삭제하기
                   </button>
-                </di>
-              </di>
+                </div>
+              </div>
             ))}
           </div>
         </div>
