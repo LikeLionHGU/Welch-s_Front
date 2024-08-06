@@ -16,7 +16,7 @@ export default function Approval() {
   return (
     <div className="approval-write">
       {/* 원본 */}
-      <Write user={2} mode={1} id={id} updatedId={updatedId} />
+      <Write user={2} mode={1} id={id} />
       {/* 참여자가 수정한 것 */}
       <Write user={2} mode={2} id={id} updatedId={updatedId} />
     </div>

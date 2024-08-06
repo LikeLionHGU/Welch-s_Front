@@ -12,7 +12,7 @@ const BoardUpdate = ({ onClose, onSubmit, id }) => {
     const [imageName, setImageName] = useState('이미지 첨부'); // 파일 이름을 저장할 상태 추가
     const modalBackground = useRef();
     const navigate = useNavigate();
-
+    console.log(id, "!?!?!?!?!?");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -21,7 +21,7 @@ const BoardUpdate = ({ onClose, onSubmit, id }) => {
 
         const value = {
             title: title,
-            projectId: id,
+            postId: id,
             contents: content
         };
 
@@ -36,8 +36,8 @@ const BoardUpdate = ({ onClose, onSubmit, id }) => {
         );
 
         try {
-            const response = await axios.post(
-                "https://likelion.info/post/community/upload",
+            const response = await axios.patch(
+                "https://likelion.info/post/community/update",
                 formData,
                 {
                     headers: {
@@ -50,7 +50,8 @@ const BoardUpdate = ({ onClose, onSubmit, id }) => {
             if (response.status === 200) {
                 console.log("Post uploaded successfully");
                 // alert("게시물 업로드 성공");
-                navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+                // navigate("/"); // 성공적으로 업로드 후 메인 페이지로 이동
+                window.location.reload();
             } else {
                 console.error("Error uploading post");
             }

@@ -6,6 +6,8 @@ import WhiteLikeImg from "../../imgs/whiteLike.svg";
 import GrayLikeImg from "../../imgs/grayLike.svg";
 import RedLikeImg from "../../imgs/redLike.svg";
 import CommentArrowImg from "../../imgs/commentArrow.svg";
+import SettingImg from "../../imgs/setting.svg";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PeopleSlide from "../../components/PeopleSlide";
@@ -31,12 +33,11 @@ export default function Detail() {
   const [bookmarkList, setBookmarkList] = useState([]);
 
   const [commentsLike, setCommentsLike] = useState();
-  
 
   const handleCommentClick = (id) => {
     const user = localStorage.getItem("id");
 
-    if(id === user) {
+    if (id === user) {
       navigate("/mypage");
     } else {
       navigate("/profile", { state: { id } });
@@ -58,14 +59,52 @@ export default function Detail() {
       return null;
     }
 
+    console.log(bookmark);
+
+    
+
     return (
       <div id="detail-galpi-list">
         {bookmark.map((item, index) => (
           <div key={index} id="detail-galpi">
-            <div>{item.name}</div>
             <div>
-              <div onClick={() => toWrite(item.id)}>수정하기</div>
-              <div>설정</div>
+              {index + 1}갈피: {item.name}
+            </div> 
+            {/* 공유 가능 여부로 먼저 한 번 정렬 */}
+            {item.isShared ? (item.isCurrentEdit ? <div
+                id="detail-galpi-update-btn-none"
+              >
+                수정하기
+              </div> : <div
+                onClick={() => toWrite(item.id)}
+                id="detail-galpi-update-btn"
+              >
+                수정하기
+              </div>) : (item.canEdit ? <div
+                onClick={() => toWrite(item.id)}
+                id="detail-galpi-update-btn"
+              >
+                수정하기
+              </div>: <div
+                id="detail-galpi-update-btn-none"
+              >
+                수정하기
+              </div>)}
+            <div id="detail-galpi-update-setting">
+              {/* <div
+                onClick={() => toWrite(item.id)}
+                id="detail-galpi-update-btn"
+              >
+                수정하기
+              </div>
+              <div
+                onClick={() => toWrite(item.id)}
+                id="detail-galpi-update-btn-none"
+              >
+                수정하기
+              </div> */}
+              {item.canEdit ? <img src={SettingImg} alt="setting" style={{ height: "18px" }} /> : <></>}
+              
             </div>
           </div>
         ))}
@@ -107,11 +146,16 @@ export default function Detail() {
       localStorage.removeItem("token");
       navigate("/", { replace: true });
     }
-  }
+  };
 
   const Comment = ({ comment }) => (
     <div id="detail-comments-container">
-      <div className="detail-comments-name" onClick={() => handleCommentClick(comment.user.id)}>{comment.user.name}</div>
+      <div
+        className="detail-comments-name"
+        onClick={() => handleCommentClick(comment.user.id)}
+      >
+        {comment.user.name}
+      </div>
       <div className="detail-comments-date">{comment.createdDate}</div>
       <div className="detail-comments-contents">{comment.contents}</div>
       <img
@@ -121,7 +165,11 @@ export default function Detail() {
         src={comment.isLiked ? RedLikeImg : GrayLikeImg}
         alt="like"
       />
-      {comment.user.id === localStorage.getItem("id") ? <div onClick={()=> deleteComment(comment.id)}>삭제하기</div> : <></>}
+      {comment.user.id === localStorage.getItem("id") ? (
+        <div onClick={() => deleteComment(comment.id)}>삭제하기</div>
+      ) : (
+        <></>
+      )}
       <div className="detail-comments-bottom"></div>
     </div>
   );
@@ -271,7 +319,6 @@ export default function Detail() {
 
   const toParticipate = async () => { // 참여 요청 api
     const token = localStorage.getItem("token");
-    
 
     try {
       const response = await axios.post(
@@ -304,11 +351,7 @@ export default function Detail() {
       localStorage.removeItem("token");
       navigate("/", { replace: true });
     }
-
-
-
-
-  }
+  };
 
   // 글 작성하는 페이지로 이동
   const toWrite = (id) => {
@@ -411,16 +454,14 @@ export default function Detail() {
                     handleSetProjectLike();
                   }}
                   alt="like"
+                  v
                   style={{ width: "22px", height: "20px" }}
                 />
                 <div>{likeCount}</div>
               </div>
             </div>
-            <div>
-              <div>{project.name}</div>
-              <div>
-                <AuthorList authors={userList} />
-              </div>
+            <div id="detail-right-above">
+              <div id="detail-right-above-name">{project.name}</div>
               <div>{project.description}</div>
               <div>{project.maximumNumber}명</div>
             </div>
@@ -428,7 +469,7 @@ export default function Detail() {
         </div>
         <div id="about-the-writer">
           <div className="detail-title">작가 소개</div>
-            <PeopleSlide mode={0} data={userList}/>
+          <PeopleSlide mode={0} data={userList} />
         </div>
         <div id="detail-bookinfo">
           <div className="detail-title">책 소개</div>
